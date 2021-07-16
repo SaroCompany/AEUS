@@ -1,0 +1,11 @@
+<RCC>
+  <qresource prefix="imagenes">
+    <file>MomentoMaximoProbable.png</file>
+    <file>DefinicionResistenciaNominalFlexion.png</file>
+    <file>logoSARO.png</file>
+    <file>DetalleMomentos.png</file>
+    <file>DetalleCorte.png</file>
+    <file>DetalleLongitudinal.png</file>
+    <file>RequisitosAceroLongitudinalDuctilidad.png</file>
+  </qresource>
+</RCC>
