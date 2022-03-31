@@ -96,8 +96,8 @@ class ConexionesVPrincipal():
     def conectar_clicks_frame_dimension(self):
         self.push_button_losa_1d.clicked.connect(
             lambda: self.cambiar_stacks_losa(0))
-        self.push_button_losa_2d.clicked.connect(
-            lambda: self.cambiar_stacks_losa(1))
+        '''self.push_button_losa_2d.clicked.connect(
+            lambda: self.cambiar_stacks_losa(1))'''
 
     def conectar_cambios_texto_frame_dimension(self):
         # SECCION VIGA - LINE EDIT
@@ -207,3 +207,49 @@ class ConexionesVPrincipal():
             lambda: self.calcular_factores_viga_exterior_losa_m2d())
         self.line_edit_altura_viga_exterior_losa_m2d.textChanged.connect(
             lambda: self.calcular_factores_viga_exterior_losa_m2d())
+
+    def conectar_cambios_texto_frame_sismo(self):
+        # SECCION SOBRECARGAS - LINE EDIT
+        self.line_edit_sobrecarga_particiones.textChanged.connect(
+            lambda: self.totalizar_sobrecargas())
+        self.line_edit_sobrecarga_acabados.textChanged.connect(
+            lambda: self.totalizar_sobrecargas())
+        self.line_edit_sobrecarga_cielo_raso.textChanged.connect(
+            lambda: self.totalizar_sobrecargas())
+        self.line_edit_sobrecarga_mortero_nivelacion.textChanged.connect(
+            lambda: self.totalizar_sobrecargas())
+        self.line_edit_sobrecarga_instalaciones.textChanged.connect(
+            lambda: self.totalizar_sobrecargas())
+        self.line_edit_sobrecarga_otros.textChanged.connect(
+            lambda: self.totalizar_sobrecargas())
+        self.line_edit_huella_escalera.textChanged.connect(
+            lambda: self.calcular_sobrecarga_escalera())
+        self.line_edit_contrahuella_escalera.textChanged.connect(
+            lambda: self.calcular_sobrecarga_escalera())
+        # SECCION JUSTIFICACIONES - LINE EDIT
+        self.line_edit_espesor_mortero.textChanged.connect(
+            lambda: self.justificacion_sobrecarga_mortero_nivelacion())
+        self.line_edit_longitud_muro.textChanged.connect(
+            lambda: self.justificacion_sobrecarga_particiones())
+        self.line_edit_altura_muro.textChanged.connect(
+            lambda: self.justificacion_sobrecarga_particiones())
+        self.line_edit_espesor_muro.textChanged.connect(
+            lambda: self.justificacion_sobrecarga_particiones())
+        self.line_edit_area_total_losa.textChanged.connect(
+            lambda: self.justificacion_sobrecarga_particiones())
+        # SECCION FUERZA HORIZONTAL EQUIVALENTE - COMBOBOX
+        self.combo_box_direccion_sismo.currentIndexChanged.connect(
+            lambda: self.funcion_combo_box_direccion_sismo())
+        # SECCION FUERZA HORIZONTAL EQUIVALENTE - LINE EDIT
+        self.line_edit_parametro_Ct.textChanged.connect(
+            lambda: self.calcular_periodos())
+        self.line_edit_parametro_a.textChanged.connect(
+            lambda: self.calcular_periodos())
+        self.line_edit_periodo_elemento_finito.textChanged.connect(
+            lambda: self.funcion_line_edit_periodo_elemento_finito())
+        self.line_edit_periodo_elegido.textChanged.connect(
+            lambda: self.funcion_line_edit_periodo_elegido())
+        # SECCION FUERZA HORIZONTAL EQUIVALENTE - PUSH BUTTON
+        self.push_button_grafico_espectro.clicked.connect(
+            lambda: self.funcion_push_button_grafico_espectro())
+        

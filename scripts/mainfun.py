@@ -1,4 +1,8 @@
 import math
+from multiprocessing.sharedctypes import Value
+import numpy
+import matplotlib.pyplot as plt
+from re import S
 
 
 class FuncionesVPrincipal():
@@ -1161,3 +1165,326 @@ class FuncionesVPrincipal():
         self.factor_hv_h_ve_losa_m2d = self.label_factor_hv_h_ve_losa_m2d.text()
         self.inercia_viga_interior = (self.base_viga_interior_losa_m2d+self.altura_viga_interior_losa_m2d**3)/12*self.parametro_ka_losa_m2d
         self.inercia_viga_exterior = (self.base_viga_exterior_losa_m2d+self.altura_viga_exterior_losa_m2d**3)/12*self.parametro_kb_losa_m2d
+
+    # FRAME SISMO - SECCION SOBRECARGAS
+    def totalizar_sobrecargas(self):
+        try:
+            self.sobrecarga_particiones = float(
+                self.line_edit_sobrecarga_particiones.text())
+        except ValueError:
+            self.sobrecarga_particiones = 0
+        try:
+            self.sobrecarga_acabados = float(
+                self.line_edit_sobrecarga_acabados.text())
+        except ValueError:
+            self.sobrecarga_acabados = 0
+        try:
+            self.sobrecarga_cielo_raso = float(
+                self.line_edit_sobrecarga_cielo_raso.text())
+        except ValueError:
+            self.sobrecarga_cielo_raso = 0
+        try:
+            self.sobrecarga_mortero_nivelacion = float(
+                self.line_edit_sobrecarga_mortero_nivelacion.text())
+        except ValueError:
+            self.sobrecarga_mortero_nivelacion = 0
+        try:
+            self.sobrecarga_instalaciones = float(
+                self.line_edit_sobrecarga_instalaciones.text())
+        except ValueError:
+            self.sobrecarga_instalaciones = 0
+        try:
+            self.sobrecarga_otros = float(
+                self.line_edit_sobrecarga_otros.text())
+        except ValueError:
+            self.sobrecarga_otros = 0
+        self.sobrecarga_total_entrepiso = round((
+            self.sobrecarga_particiones + self.sobrecarga_acabados +
+            self.sobrecarga_cielo_raso + self.sobrecarga_mortero_nivelacion +
+            self.sobrecarga_instalaciones + self.sobrecarga_otros), 3)
+        self.label_sobrecarga_total_entrepiso.setText(str(
+            self.sobrecarga_total_entrepiso))
+        self.guardar_cambio(
+            'Particiones', 'SOBRECARGAS', 'VALOR',
+            self.sobrecarga_particiones)
+        self.guardar_cambio(
+            'Acabados', 'SOBRECARGAS', 'VALOR',
+            self.sobrecarga_acabados)
+        self.guardar_cambio(
+            'Cielo_raso', 'SOBRECARGAS', 'VALOR',
+            self.sobrecarga_cielo_raso)
+        self.guardar_cambio(
+            'Mortero_nivelacion', 'SOBRECARGAS', 'VALOR',
+            self.sobrecarga_mortero_nivelacion)
+        self.guardar_cambio(
+            'Instalaciones', 'SOBRECARGAS', 'VALOR',
+            self.sobrecarga_instalaciones)
+        self.guardar_cambio(
+            'Otros', 'SOBRECARGAS', 'VALOR',
+            self.sobrecarga_otros)
+        self.guardar_cambio(
+            'TOTAL', 'SOBRECARGAS', 'VALOR',
+            self.sobrecarga_total_entrepiso)
+
+    def calcular_sobrecarga_escalera(self):
+        try:
+            self.huella_escalera = float(
+                self.line_edit_huella_escalera.text())
+        except ValueError:
+            self.huella_escalera = 0
+        try:
+            self.contrahuella_escalera = float(
+                self.line_edit_contrahuella_escalera.text())
+        except ValueError:
+            self.contrahuella_escalera = 0
+        # Huella*Contrahuella*PesoConcreto/(2*Huella)
+        self.sobrecarga_peldanos = round(
+            self.contrahuella_escalera*0.024/2, 3)
+        try:
+            self.sobrecarga_acabado_peldano = round(
+                4*(self.huella_escalera+self.contrahuella_escalera)*0.022/self.contrahuella_escalera
+                , 3)
+        except ZeroDivisionError:
+            self.sobrecarga_acabado_peldano = 0
+        try:
+            self.sobrecarga_panete_losa = round(
+                2*0.022/math.cos(math.atan(self.contrahuella_escalera/self.huella_escalera))
+                ,3)
+        except ZeroDivisionError:
+            self.sobrecarga_panete_losa = 0
+        self.sobrecarga_total_escalera = (
+            self.sobrecarga_peldanos + self.sobrecarga_acabado_peldano + self.sobrecarga_panete_losa
+        )
+        self.label_sobrecarga_total_escalera.setText(
+            str(self.sobrecarga_total_escalera))
+        self.guardar_cambio(
+            'Huella', 'SOBRECARGAS', 'VALOR',
+            self.huella_escalera)
+        self.guardar_cambio(
+            'Contrahuella', 'SOBRECARGAS', 'VALOR',
+            self.contrahuella_escalera)
+        self.guardar_cambio(
+            'TOTAL_Escalera', 'SOBRECARGAS', 'VALOR',
+            self.sobrecarga_total_escalera)
+
+    # FRAME SISMO - SECCION JUSTIFICACION
+    def justificacion_sobrecarga_mortero_nivelacion(self):
+        try:
+            self.espesor_mortero = float(
+                self.line_edit_espesor_mortero.text())
+        except ValueError:
+            self.espesor_mortero = 0
+        self.sobrecarga_mortero = round(
+            self.espesor_mortero/100*2.3
+            , 3)
+        self.label_sobrecarga_mortero.setText(str(
+            self.sobrecarga_mortero))
+        self.guardar_cambio(
+            'Espesor_mortero', 'SOBRECARGAS', 'VALOR',
+            self.espesor_mortero)
+        self.guardar_cambio(
+            'Sobrecarga_mortero', 'SOBRECARGAS', 'VALOR',
+            self.sobrecarga_mortero)
+
+    def justificacion_sobrecarga_particiones(self):
+        try:
+            self.longitud_muro = float(
+                self.line_edit_longitud_muro.text())
+        except ValueError:
+            self.longitud_muro = 0
+        try:
+            self.altura_muro = float(
+                self.line_edit_altura_muro.text())
+        except ValueError:
+            self.altura_muro = 0
+        try:
+            self.espesor_muro = float(
+                self.line_edit_espesor_muro.text())
+        except ValueError:
+            self.espesor_muro = 0
+        try:
+            self.area_total_losa = float(
+                self.line_edit_area_total_losa.text())
+        except ValueError:
+            self.area_total_losa = 0
+        self.volumen_muro = round(
+            self.longitud_muro*self.altura_muro*self.espesor_muro/100
+            , 3)
+        self.peso_muro = round(self.volumen_muro*1.6, 3)
+        self.sobrecarga_particiones_calculada = round(
+            self.peso_muro/self.area_total_losa, 3)
+        self.label_volumen_muro.setText(str(
+            self.volumen_muro))
+        self.label_peso_muro.setText(str(
+            self.peso_muro))
+        self.label_sobrecarga_particiones_calculada.setText(str(
+            self.sobrecarga_particiones_calculada))
+        self.guardar_cambio(
+            'Longitud_muro', 'SOBRECARGAS', 'VALOR',
+            self.longitud_muro)
+        self.guardar_cambio(
+            'Altura_muro', 'SOBRECARGAS', 'VALOR',
+            self.altura_muro)
+        self.guardar_cambio(
+            'Espesor_muro', 'SOBRECARGAS', 'VALOR',
+            self.espesor_muro)
+        self.guardar_cambio(
+            'Volumen_muro', 'SOBRECARGAS', 'VALOR',
+            self.volumen_muro)
+        self.guardar_cambio(
+            'Peso_muro', 'SOBRECARGAS', 'VALOR',
+            self.peso_muro)
+        self.guardar_cambio(
+            'Area_losa', 'SOBRECARGAS', 'VALOR',
+            self.area_total_losa)
+        self.guardar_cambio(
+            'Sobrecarga_particiones', 'SOBRECARGAS', 'VALOR',
+            self.sobrecarga_particiones_calculada)
+
+    # FRAME SISMO - SECCION FUERZA HORIZONTAL EQUIVALENTE
+    def funcion_combo_box_direccion_sismo(self):
+        self.sistema_estructural = self.combo_box_sistema.currentText()
+        self.resistencia_horizontal = self.combo_box_resistencia_horizontal.currentText()
+        self.tipo_resistencia = self.combo_box_tipo_resistencia.currentText()
+        self.parametro_Ct = 0
+        self.parametro_a = 0
+        if self.sistema_estructural == 'Sistema de mueros de carga':
+            self.parametro_Ct = 0.049
+            self.parametro_a = 0.75
+        elif self.sistema_estructural == 'Sistema combinado' or self.sistema_estructural == 'Sistema dual':
+            if self.resistencia_horizontal == 'Pórticos de acero con diagonales excéntricas':
+                self.parametro_Ct = 0.073
+                self.parametro_a = 0.75
+        elif self.sistema_estructural == 'Sistema de pórtico resistente a momentos':
+            if self.resistencia_horizontal == 'Pórticos resistentes a momentos con capacidad minima de disipación de energía (DMI)' or self.resistencia_horizontal == 'Pórticos resistentes a momentos con capacidad moderada de disipación de energía (DMO)' or self.resistencia_horizontal == 'Pórticos resistentes a momentos con capacidad especial de disipación de energía (DES)':
+                if self.tipo_resistencia == 'De acero (DMI)' or self.tipo_resistencia == 'De acero (DMO)' or self.tipo_resistencia == 'De acero (DES)':
+                    self.parametro_Ct = 0.072
+                    self.parametro_a = 0.8
+                elif self.tipo_resistencia == 'De concreto (DMI)' or self.tipo_resistencia == 'De concreto (DMO)' or self.tipo_resistencia == 'De concreto (DES)':
+                    self.parametro_Ct = 0.047
+                    self.parametro_a = 0.9
+        self.line_edit_parametro_Ct.setText(str(
+            self.parametro_Ct))
+        self.line_edit_parametro_a.setText(str(
+            self.parametro_a))
+
+    def calcular_periodos(self):
+        self.aceleracion_pico_efectiva = float(self.label_aceleracion_pico_efectiva.text())
+        self.velocidad_pico_efectiva = float(self.label_velocidad_pico_efectiva.text())
+        self.parametro_Fa = float(self.label_parametro_Fa.text())
+        self.parametro_Fv = float(self.label_parametro_Fv.text())
+        try:
+            self.numero_pisos = int(self.line_edit_numero_pisos.text())
+        except ValueError:
+            self.numero_pisos = 2
+        try:
+            self.altura_maxima = float(self.line_edit_altura_maxima.text())
+        except ValueError:
+            self.altura_maxima = 3
+        try:
+            self.altura_total = float(self.line_edit_altura_total.text())
+        except ValueError:
+            self.altura_total = 6
+        try:
+            self.parametro_Ct = float(self.line_edit_parametro_Ct.text())
+        except ValueError:
+            self.parametro_Ct = 0
+        try:
+            self.parametro_a = float(self.line_edit_parametro_a.text())
+        except ValueError:
+            self.parametro_a = 0
+        self.coeficiente_calculo_periodo_maximo = round(max(1.75-1.7*self.velocidad_pico_efectiva*self.parametro_Fv, 1.2), 3)
+        if self.numero_pisos <= 12 and self.altura_maxima <= 3:
+            self.periodo_aproximado = round(0.1*self.numero_pisos, 3)
+        else:
+            self.periodo_aproximado = round(self.parametro_Ct*self.altura_total**self.parametro_a, 3)
+        self.periodo_maximo = self.coeficiente_calculo_periodo_maximo*self.periodo_aproximado
+        self.periodo_inicial = round(
+            0.1*self.velocidad_pico_efectiva*self.parametro_Fv/(self.aceleracion_pico_efectiva*self.parametro_Fa)
+            , 3)
+        self.periodo_corto = round(
+            0.48*self.velocidad_pico_efectiva*self.parametro_Fv/(self.aceleracion_pico_efectiva*self.parametro_Fa)
+            , 3)
+        self.periodo_largo = round(
+            2.4*self.parametro_Fv
+            , 3)
+        self.label_parametro_Cu.setText(str(
+            self.coeficiente_calculo_periodo_maximo))
+        self.label_periodo_aproximado.setText(str(
+            self.periodo_aproximado))
+        self.label_periodo_maximo.setText(str(
+            self.periodo_maximo))
+        self.label_periodo_inicial.setText(str(
+            self.periodo_inicial))
+        self.label_periodo_corto.setText(str(
+            self.periodo_corto))
+        self.label_periodo_largo.setText(str(
+            self.periodo_largo))
+
+    def funcion_line_edit_periodo_elemento_finito(self):
+        self.periodo_maximo = float(self.label_periodo_maximo.text())
+        self.periodo_aproximado = float(self.label_periodo_aproximado.text())
+        try:
+            self.periodo_elemento_finito = float(self.line_edit_periodo_elemento_finito.text())
+        except ValueError:
+            self.periodo_elemento_finito = 0
+        if self.periodo_elemento_finito > self.periodo_maximo:
+            self.periodo_fema = self.periodo_maximo
+        elif self.periodo_aproximado < self.periodo_elemento_finito < self.periodo_maximo:
+            self.periodo_fema = self.periodo_elemento_finito
+        elif self.periodo_elemento_finito < self.periodo_aproximado:
+            self.periodo_fema = self.periodo_aproximado
+        self.label_periodo_fema.setText(str(self.periodo_fema))
+
+    def funcion_line_edit_periodo_elegido(self):
+        self.periodo_fundamental = float(self.line_edit_periodo_elegido.text())
+        self.aceleracion_pico_efectiva = float(self.label_aceleracion_pico_efectiva.text())
+        self.velocidad_pico_efectiva = float(self.label_velocidad_pico_efectiva.text())
+        self.parametro_Fa = float(self.label_parametro_Fa.text())
+        self.parametro_Fv = float(self.label_parametro_Fv.text())
+        self.coeficiente_importancia = float(self.label_coeficiente_importancia.text())
+        self.periodo_corto = float(self.label_periodo_corto.text())
+        self.periodo_largo = float(self.label_periodo_largo.text())
+        if self.periodo_fundamental < self.periodo_corto:
+            self.espectro_aceleracion = 2.5*self.aceleracion_pico_efectiva*self.parametro_Fa*self.coeficiente_importancia
+            self.label_condicion_espectro.setText('Sa = 2.5*Aa*Fa*I')
+        elif self.periodo_corto < self.periodo_fundamental < self.periodo_largo:
+            self.espectro_aceleracion = 1.2*self.velocidad_pico_efectiva*self.parametro_Fv*self.coeficiente_importancia/self.periodo_fundamental
+            self.label_condicion_espectro.setText('Sa = 1.2*Av*Fv*I/T')
+        elif self.periodo_fundamental > self.periodo_largo:
+            self.espectro_aceleracion = 1.2*self.velocidad_pico_efectiva*self.parametro_Fv*self.periodo_largo*self.coeficiente_importancia/(self.periodo_fundamental**2)
+            self.label_condicion_espectro.setText('Sa = 1.2*Av*Fv*TL*I/T**2')
+        self.label_espectro_aceleracion.setText(str(self.espectro_aceleracion))
+
+    def funcion_push_button_grafico_espectro(self):
+        self.aceleracion_pico_efectiva = float(self.label_aceleracion_pico_efectiva.text())
+        self.velocidad_pico_efectiva = float(self.label_velocidad_pico_efectiva.text())
+        self.parametro_Fa = float(self.label_parametro_Fa.text())
+        self.parametro_Fv = float(self.label_parametro_Fv.text())
+        self.coeficiente_importancia = float(self.label_coeficiente_importancia.text())
+        self.periodo_corto = float(self.label_periodo_corto.text())
+        self.periodo_largo = float(self.label_periodo_largo.text())
+        self.coeficiente_disipacion_energia = float(self.label_coeficiente_disipacion_energia.text())
+        self.datos_periodo = list(numpy.linspace(0, 8, 160))
+        self.datos_espectro_aceleracion = []
+        self.datos_espectro_aceleracion_reducido = []
+        for dato in self.datos_periodo:
+            if dato < self.periodo_corto:
+                espectro_aceleracion_corto = 2.5*self.aceleracion_pico_efectiva*self.parametro_Fa*self.coeficiente_importancia
+                self.datos_espectro_aceleracion.append(espectro_aceleracion_corto)
+                self.datos_espectro_aceleracion_reducido.append(espectro_aceleracion_corto/self.coeficiente_disipacion_energia)
+            elif self.periodo_corto < dato < self.periodo_largo:
+                espectro_aceleracion_intermedio = 1.2*self.velocidad_pico_efectiva*self.parametro_Fv*self.coeficiente_importancia/dato
+                self.datos_espectro_aceleracion.append(espectro_aceleracion_intermedio)
+                self.datos_espectro_aceleracion_reducido.append(espectro_aceleracion_intermedio/self.coeficiente_disipacion_energia)
+            elif dato > self.periodo_largo:
+                espectro_aceleracion_largo = 1.2*self.velocidad_pico_efectiva*self.parametro_Fv*self.periodo_largo*self.coeficiente_importancia/(dato**2)
+                self.datos_espectro_aceleracion.append(espectro_aceleracion_largo)
+                self.datos_espectro_aceleracion_reducido.append(espectro_aceleracion_largo/self.coeficiente_disipacion_energia)
+        plt.plot(self.datos_periodo, self.datos_espectro_aceleracion, label = 'Pleno')
+        plt.plot(self.datos_periodo, self.datos_espectro_aceleracion_reducido, label = 'Reducido')
+        plt.ylabel('Sa(g)')
+        plt.xlabel('T(s)')
+        plt.title('ESPECTRO ELASTICO DE ACELERACION')
+        plt.legend()
+        plt.show()

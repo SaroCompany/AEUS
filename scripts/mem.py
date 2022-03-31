@@ -1976,8 +1976,50 @@ class DatosMemoria():
             'h_losa_m1d', ubicacion_base, 'LOSAS', 'DESCRIPCION')
         self.uso_losa_m2d = manejo_base.consultar_dato(
             'UsoLM2D', ubicacion_base, 'LOSAS', 'DESCRIPCION')
-        
-
+        self.sobrecarga_particiones = manejo_base.consultar_dato(
+            'Particiones', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.sobrecarga_acabados = manejo_base.consultar_dato(
+            'Acabados', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.sobrecarga_cielo_raso = manejo_base.consultar_dato(
+            'Cielo_raso', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.sobrecarga_mortero_nivelacion = manejo_base.consultar_dato(
+            'Mortero_nivelacion', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.sobrecarga_instalaciones = manejo_base.consultar_dato(
+            'Instalaciones', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.sobrecarga_otros = manejo_base.consultar_dato(
+            'Otros', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.sobrecarga_total_entrepiso = manejo_base.consultar_dato(
+            'TOTAL', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.huella_escalera = manejo_base.consultar_dato(
+            'Huella', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.contrahuella_escalera = manejo_base.consultar_dato(
+            'Contrahuella', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.sobrecarga_total_escalera = manejo_base.consultar_dato(
+            'TOTAL_Escalera', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.carga_viva_uso = manejo_base.consultar_dato(
+            'Uso', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.carga_viva_balcones = manejo_base.consultar_dato(
+            'Balcones', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.carga_viva_escalera = manejo_base.consultar_dato(
+            'Escalera', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.espesor_mortero = manejo_base.consultar_dato(
+            'Espesor_mortero', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.sobrecarga_mortero = manejo_base.consultar_dato(
+            'Sobrecarga_mortero', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.longitud_muro = manejo_base.consultar_dato(
+            'Longitud_muro', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.altura_muro = manejo_base.consultar_dato(
+            'Altura_muro', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.espesor_muro = manejo_base.consultar_dato(
+            'Espesor_muro', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.volumen_muro = manejo_base.consultar_dato(
+            'Volumen_muro', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.peso_muro = manejo_base.consultar_dato(
+            'Peso_muro', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.area_total_losa = manejo_base.consultar_dato(
+            'Area_losa', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.sobrecarga_particiones_calculada = manejo_base.consultar_dato(
+            'Sobrecarga_particiones', ubicacion_base, 'SOBRECARGAS', 'VALOR')
 
         '''
         self.base_viga = manejo_base.consultar_dato(
@@ -2026,7 +2068,6 @@ class DatosMemoria():
             'Esmin', ubicacion_base, 'PROPMATS', 'VALOR')
         self.sobrerresistencia_acero = manejo_base.consultar_dato(
             'Fsr', ubicacion_base, 'PROPMATS', 'VALOR')
-
         self.d = manejo_base.consultar_dato(
             'd', ubicacion_base, 'CALCVIG', 'VALOR')
         self.Asmin = manejo_base.consultar_dato(

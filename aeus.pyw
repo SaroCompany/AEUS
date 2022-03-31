@@ -8,3 +8,4 @@ if __name__ == "__main__":
     main = VentanaPrincipalAEUS()
     main.show()
     sys.exit(app.exec_())
+ 

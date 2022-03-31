@@ -352,3 +352,61 @@ class CargarDatosVPrincipal():
         # SECCION LOSA MACIZA EN DOS DIRECCIONES - LINE EDIT
 
         # SECCION LOSA MACIZA EN DOS DIRECCIONES - LABEL
+
+    def cargar_datos_frame_sismo(self):
+        # SECCION SOBRECARGA ENTREPISO - LINE EDIT
+        self.line_edit_sobrecarga_particiones.setText(str(
+            self.datos_memoria.sobrecarga_particiones))
+        self.line_edit_sobrecarga_acabados.setText(str(
+            self.datos_memoria.sobrecarga_acabados))
+        self.line_edit_sobrecarga_cielo_raso.setText(str(
+            self.datos_memoria.sobrecarga_cielo_raso))
+        self.line_edit_sobrecarga_mortero_nivelacion.setText(str(
+            self.datos_memoria.sobrecarga_mortero_nivelacion))
+        self.line_edit_sobrecarga_instalaciones.setText(str(
+            self.datos_memoria.sobrecarga_instalaciones))
+        self.line_edit_sobrecarga_otros.setText(str(
+            self.datos_memoria.sobrecarga_otros))
+        self.label_sobrecarga_total_entrepiso.setText(str(
+            self.datos_memoria.sobrecarga_total_entrepiso))
+        # SECCION SOBRECARA ESCALERA - LINE EDIT
+        self.line_edit_huella_escalera.setText(str(
+            self.datos_memoria.huella_escalera))
+        self.line_edit_contrahuella_escalera.setText(str(
+            self.datos_memoria.contrahuella_escalera))
+        # SECCION SOBRECARGA ESCALERA - LABEL
+        self.label_sobrecarga_total_escalera.setText(str(
+            self.datos_memoria.sobrecarga_total_escalera))
+        # SECCION CARGAS VIVAS - LINE EDIT
+        self.line_edit_carga_viva_uso.setText(str(
+            self.datos_memoria.carga_viva_uso))
+        self.line_edit_carga_viva_balcones.setText(str(
+            self.datos_memoria.carga_viva_balcones))
+        self.line_edit_carga_viva_escalera.setText(str(
+            self.datos_memoria.carga_viva_escalera))
+        # SECCION JUSTIFICACION MORTERO - LINE EDIT
+        self.line_edit_espesor_mortero.setText(str(
+            self.datos_memoria.espesor_mortero))
+        # SECCION JUSTIFICAICON MORTERO - LABEL
+        self.label_sobrecarga_mortero.setText(str(
+            self.datos_memoria.sobrecarga_mortero))
+        # SECCION JUSTIFICACION PARTICIONES - LINE EDIT
+        self.line_edit_longitud_muro.setText(str(
+            self.datos_memoria.longitud_muro))
+        self.line_edit_altura_muro.setText(str(
+            self.datos_memoria.altura_muro))
+        self.line_edit_espesor_muro.setText(str(
+            self.datos_memoria.espesor_muro))
+        self.line_edit_area_total_losa.setText(str(
+            self.datos_memoria.area_total_losa))
+        # SECCION JUSTIFICACION PARTICIONES - LABEL
+        self.label_volumen_muro.setText(str(
+            self.datos_memoria.volumen_muro))
+        self.label_peso_muro.setText(str(
+            self.datos_memoria.peso_muro))
+        self.label_sobrecarga_particiones_calculada.setText(str(
+            self.datos_memoria.sobrecarga_particiones_calculada))
+        # SECCION FUERZA HORIZONTAL EQUIVALENTE - COMBO BOX
+        self.combo_box_direccion_sismo.clear()
+        self.combo_box_direccion_sismo.addItems(
+            self.datos_memoria.lista_direcciones)

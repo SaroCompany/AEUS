@@ -31,11 +31,13 @@ class VentanaPrincipalAEUS(
         self.conectar_cambios_texto_frame_general()
         self.conectar_clicks_frame_dimension()
         self.conectar_cambios_texto_frame_dimension()
+        self.conectar_cambios_texto_frame_sismo()
 
     def cargar_datos_en_ventana_principal(self):
         self.cargar_datos_frame_inicio()
         self.cargar_datos_frame_general()
         self.cargar_datos_frame_predimension()
+        self.cargar_datos_frame_sismo()
 
     def closeEvent(self, event):  # Evento de lanzamiento del sistema
         resultado = QtWidgets.QMessageBox.question(
