@@ -2,8 +2,7 @@ import math
 from multiprocessing.sharedctypes import Value
 import numpy
 import matplotlib.pyplot as plt
-from re import S
-
+from scripts.mats import VentanaMateriales
 
 class FuncionesVPrincipal():
 
@@ -1367,6 +1366,12 @@ class FuncionesVPrincipal():
             self.parametro_Ct))
         self.line_edit_parametro_a.setText(str(
             self.parametro_a))
+        self.guardar_cambio(
+            'Parametro_Ct', 'FHE', 'VALOR',
+            self.parametro_Ct)
+        self.guardar_cambio(
+            'Parametro_a', 'FHE', 'VALOR',
+            self.parametro_a)
 
     def calcular_periodos(self):
         self.aceleracion_pico_efectiva = float(self.label_aceleracion_pico_efectiva.text())
@@ -1420,6 +1425,24 @@ class FuncionesVPrincipal():
             self.periodo_corto))
         self.label_periodo_largo.setText(str(
             self.periodo_largo))
+        self.guardar_cambio(
+            'Parametro_Cu', 'FHE', 'VALOR',
+            self.coeficiente_calculo_periodo_maximo)
+        self.guardar_cambio(
+            'Periodo_Aproximado', 'FHE', 'VALOR',
+            self.periodo_aproximado)
+        self.guardar_cambio(
+            'Periodo_Maximo', 'FHE', 'VALOR',
+            self.periodo_maximo)
+        self.guardar_cambio(
+            'Periodo_Inicial', 'FHE', 'VALOR',
+            self.periodo_inicial)
+        self.guardar_cambio(
+            'Periodo_Corto', 'FHE', 'VALOR',
+            self.periodo_corto)
+        self.guardar_cambio(
+            'Periodo_Largo', 'FHE', 'VALOR',
+            self.periodo_largo)
 
     def funcion_line_edit_periodo_elemento_finito(self):
         self.periodo_maximo = float(self.label_periodo_maximo.text())
@@ -1435,6 +1458,12 @@ class FuncionesVPrincipal():
         elif self.periodo_elemento_finito < self.periodo_aproximado:
             self.periodo_fema = self.periodo_aproximado
         self.label_periodo_fema.setText(str(self.periodo_fema))
+        self.guardar_cambio(
+            'Periodo_Ele_Fini', 'FHE', 'VALOR',
+            self.periodo_elemento_finito)
+        self.guardar_cambio(
+            'Periodo_FEMA', 'FHE', 'VALOR',
+            self.periodo_fema)
 
     def funcion_line_edit_periodo_elegido(self):
         self.periodo_fundamental = float(self.line_edit_periodo_elegido.text())
@@ -1455,6 +1484,12 @@ class FuncionesVPrincipal():
             self.espectro_aceleracion = 1.2*self.velocidad_pico_efectiva*self.parametro_Fv*self.periodo_largo*self.coeficiente_importancia/(self.periodo_fundamental**2)
             self.label_condicion_espectro.setText('Sa = 1.2*Av*Fv*TL*I/T**2')
         self.label_espectro_aceleracion.setText(str(self.espectro_aceleracion))
+        self.guardar_cambio(
+            'Periodo_Fundamental', 'FHE', 'VALOR',
+            self.periodo_fundamental)
+        self.guardar_cambio(
+            'Espectro_Aceleracion', 'FHE', 'VALOR',
+            self.espectro_aceleracion)
 
     def funcion_push_button_grafico_espectro(self):
         self.aceleracion_pico_efectiva = float(self.label_aceleracion_pico_efectiva.text())
@@ -1488,3 +1523,8 @@ class FuncionesVPrincipal():
         plt.title('ESPECTRO ELASTICO DE ACELERACION')
         plt.legend()
         plt.show()
+
+    # VENTANA PRINCIPAL
+    def abrir_ventana_materiales(self):
+        self.ventana_materiales = VentanaMateriales()
+        self.ventana_materiales.show()

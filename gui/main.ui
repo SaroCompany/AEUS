@@ -1513,7 +1513,7 @@ QDateEdit::down-arrow:focus
      </size>
     </property>
     <property name="currentIndex">
-     <number>4</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="VIGA_0">
      <widget class="QFrame" name="divi">
@@ -1544,7 +1544,7 @@ QDateEdit::down-arrow:focus
         </rect>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;Diseño de una viga de pórtico resistente a momento con capacidad de disipación especial&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;DISEÑO DE UNA VIGA DE PÓRTICO RESISTENTE A MOMENTO&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
       <widget class="QGroupBox" name="groupBox">
@@ -1575,7 +1575,7 @@ QDateEdit::down-arrow:focus
          <string>Ancho de la viga (bw)</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="entrybw">
+       <widget class="QLineEdit" name="line_edit_base_viga_d">
         <property name="enabled">
          <bool>true</bool>
         </property>
@@ -1610,7 +1610,7 @@ QDateEdit::down-arrow:focus
          <string>cm</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="entryh">
+       <widget class="QLineEdit" name="line_edit_altura_viga_d">
         <property name="geometry">
          <rect>
           <x>150</x>
@@ -1662,7 +1662,7 @@ QDateEdit::down-arrow:focus
          <string>cm</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="entryr">
+       <widget class="QLineEdit" name="line_edit_recubrimiento_inferior_viga">
         <property name="geometry">
          <rect>
           <x>150</x>
@@ -1701,7 +1701,7 @@ QDateEdit::down-arrow:focus
          <string>cm</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="entrydp">
+       <widget class="QLineEdit" name="line_edit_recubrimiento_superior_viga">
         <property name="geometry">
          <rect>
           <x>150</x>
@@ -1740,7 +1740,7 @@ QDateEdit::down-arrow:focus
          <string>m</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="entryLn">
+       <widget class="QLineEdit" name="line_edit_longitud_libre_viga">
         <property name="geometry">
          <rect>
           <x>150</x>
@@ -1821,7 +1821,7 @@ QDateEdit::down-arrow:focus
          <string>Tonf-m</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="entryMu_neg_izq">
+       <widget class="QLineEdit" name="line_edit_momento_negativo_izquierdo_viga">
         <property name="geometry">
          <rect>
           <x>80</x>
@@ -1847,7 +1847,7 @@ QDateEdit::down-arrow:focus
          <string>Mu_pos_izq</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="entryMu_pos_izq">
+       <widget class="QLineEdit" name="line_edit_momento_positivo_izquierdo_viga">
         <property name="geometry">
          <rect>
           <x>80</x>
@@ -1860,7 +1860,7 @@ QDateEdit::down-arrow:focus
          <string/>
         </property>
        </widget>
-       <widget class="QLineEdit" name="entryMu_neg_cen">
+       <widget class="QLineEdit" name="line_edit_momento_negativo_centro_viga">
         <property name="geometry">
          <rect>
           <x>80</x>
@@ -1912,7 +1912,7 @@ QDateEdit::down-arrow:focus
          <string>Tonf-m</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="entryMu_pos_cen">
+       <widget class="QLineEdit" name="line_edit_momento_positivo_centro_viga">
         <property name="geometry">
          <rect>
           <x>80</x>
@@ -1964,7 +1964,7 @@ QDateEdit::down-arrow:focus
          <string>Mu_neg_der</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="entryMu_neg_der">
+       <widget class="QLineEdit" name="line_edit_momento_negativo_derecho_viga">
         <property name="geometry">
          <rect>
           <x>80</x>
@@ -2003,7 +2003,7 @@ QDateEdit::down-arrow:focus
          <string>Mu_pos_der</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="entryMu_pos_der">
+       <widget class="QLineEdit" name="line_edit_momento_positivo_derecho_viga">
         <property name="geometry">
          <rect>
           <x>80</x>
@@ -2071,7 +2071,7 @@ QDateEdit::down-arrow:focus
          <string>Acero mínimo</string>
         </property>
        </widget>
-       <widget class="QLabel" name="etiquetaAsmin">
+       <widget class="QLabel" name="label_acero_minimo">
         <property name="geometry">
          <rect>
           <x>180</x>
@@ -2123,7 +2123,7 @@ QDateEdit::down-arrow:focus
          <string>Acero requerido Mu_neg_izq</string>
         </property>
        </widget>
-       <widget class="QLabel" name="etiquetaAsreq_1">
+       <widget class="QLabel" name="label_acero_requerido_1">
         <property name="geometry">
          <rect>
           <x>180</x>
@@ -2162,7 +2162,7 @@ QDateEdit::down-arrow:focus
          <string>Acero requerido Mu_pos_izq</string>
         </property>
        </widget>
-       <widget class="QLabel" name="etiquetaAsreq_2">
+       <widget class="QLabel" name="label_acero_requerido_2">
         <property name="geometry">
          <rect>
           <x>180</x>
@@ -2175,7 +2175,7 @@ QDateEdit::down-arrow:focus
          <string>0</string>
         </property>
        </widget>
-       <widget class="QLabel" name="etiquetaAsreq_3">
+       <widget class="QLabel" name="label_acero_requerido_3">
         <property name="geometry">
          <rect>
           <x>180</x>
@@ -2214,7 +2214,7 @@ QDateEdit::down-arrow:focus
          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;cm&lt;span style=&quot; vertical-align:super;&quot;&gt;2&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
        </widget>
-       <widget class="QLabel" name="etiquetaAsreq_4">
+       <widget class="QLabel" name="label_acero_requerido_4">
         <property name="geometry">
          <rect>
           <x>180</x>
@@ -2253,7 +2253,7 @@ QDateEdit::down-arrow:focus
          <string>Acero requerido Mu_pos_cen</string>
         </property>
        </widget>
-       <widget class="QLabel" name="etiquetaAsreq_5">
+       <widget class="QLabel" name="label_acero_requerido_5">
         <property name="geometry">
          <rect>
           <x>180</x>
@@ -2292,7 +2292,7 @@ QDateEdit::down-arrow:focus
          <string>Acero requerido Mu_neg_der</string>
         </property>
        </widget>
-       <widget class="QLabel" name="etiquetaAsreq_6">
+       <widget class="QLabel" name="label_acero_requerido_6">
         <property name="geometry">
          <rect>
           <x>180</x>
@@ -11674,8 +11674,8 @@ QDateEdit::down-arrow:focus
     <property name="title">
      <string>Propiedades</string>
     </property>
-    <addaction name="opcionMateriales"/>
-    <addaction name="opcionBarrasAcero"/>
+    <addaction name="action_materiales"/>
+    <addaction name="action_barras_acero"/>
    </widget>
    <widget class="QMenu" name="menuAyuda">
     <property name="title">
@@ -11701,7 +11701,7 @@ QDateEdit::down-arrow:focus
    <addaction name="menuPropiedades"/>
    <addaction name="menuAyuda"/>
   </widget>
-  <action name="opcionMateriales">
+  <action name="action_materiales">
    <property name="text">
     <string>Materiales</string>
    </property>
@@ -11721,7 +11721,7 @@ QDateEdit::down-arrow:focus
     <string>Contacto</string>
    </property>
   </action>
-  <action name="opcionBarrasAcero">
+  <action name="action_barras_acero">
    <property name="text">
     <string>Barras de acero</string>
    </property>

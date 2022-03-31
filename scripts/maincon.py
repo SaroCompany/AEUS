@@ -15,6 +15,10 @@ class ConexionesVPrincipal():
         self.boton_frame_cad_viga.clicked.connect(
             lambda: self.cambiar_stacks(8))
 
+    def conectar_acciones_ventana_principal(self):
+        self.action_materiales.triggered.connect(
+            lambda: self.abrir_ventana_materiales())
+
     def conectar_cambios_texto_frame_inicio(self):
         self.text_edit_proyecto.textChanged.connect(
             lambda: self.guardar_cambio(
@@ -252,4 +256,10 @@ class ConexionesVPrincipal():
         # SECCION FUERZA HORIZONTAL EQUIVALENTE - PUSH BUTTON
         self.push_button_grafico_espectro.clicked.connect(
             lambda: self.funcion_push_button_grafico_espectro())
-        
+
+    def conectar_cambios_texto_frame_diseno_viga(self):
+        self.line_edit_base_viga_d.textChanged.connect(
+            lambda: self.acero_requerido_viga())    
+
+    def conectar_clicks_frame_diseno_viga(self):
+        pass

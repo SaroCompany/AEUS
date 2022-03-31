@@ -88,8 +88,8 @@ class CargarDatosVPrincipal():
         self.combo_box_resistencia_concreto.clear()
         self.combo_box_resistencia_concreto.addItems(
             self.datos_memoria.lista_resistencia_concreto)
-        self.combo_box_resistencia_concreto.setCurrentText(
-            self.datos_memoria.resistencia_concreto)
+        self.combo_box_resistencia_concreto.setCurrentText(str(
+            self.datos_memoria.resistencia_concreto))
         self.combo_box_masa_concreto.clear()
         self.combo_box_masa_concreto.addItems(
             self.datos_memoria.diccionario_modulo_elasticidad_concreto.keys())
@@ -410,3 +410,71 @@ class CargarDatosVPrincipal():
         self.combo_box_direccion_sismo.clear()
         self.combo_box_direccion_sismo.addItems(
             self.datos_memoria.lista_direcciones)
+        # SECCION FUERZA HORIZONTAL EQUIVALENTE - LINE EDIT
+        self.line_edit_parametro_Ct.setText(str(
+            self.datos_memoria.parametro_Ct))
+        self.line_edit_parametro_a.setText(str(
+            self.datos_memoria.parametro_a))
+        self.line_edit_periodo_elemento_finito.setText(str(
+            self.datos_memoria.periodo_elemento_finito))
+        self.line_edit_periodo_elegido.setText(str(
+            self.datos_memoria.periodo_fundamental))
+        # SECCION FUERZA HORIZONTAL EQUIVALENTE - LABEL
+        self.label_parametro_Cu.setText(str(
+            self.datos_memoria.coeficiente_calculo_periodo_maximo))
+        self.label_periodo_aproximado.setText(str(
+            self.datos_memoria.periodo_aproximado))
+        self.label_periodo_maximo.setText(str(
+            self.datos_memoria.periodo_maximo))
+        self.label_periodo_inicial.setText(str(
+            self.datos_memoria.periodo_inicial))
+        self.label_periodo_corto.setText(str(
+            self.datos_memoria.periodo_corto))
+        self.label_periodo_largo.setText(str(
+            self.datos_memoria.periodo_largo))
+        self.label_periodo_fema.setText(str(
+            self.datos_memoria.periodo_fema))
+        self.label_espectro_aceleracion.setText(str(
+            self.datos_memoria.espectro_aceleracion))
+
+    def cargar_datos_frame_diseno_viga(self):
+        # SECCION DATOS VIGA - LINE EDIT
+        self.line_edit_base_viga_d.setText(str(
+            self.datos_memoria.base_viga_d))
+        self.line_edit_altura_viga_d.setText(str(
+            self.datos_memoria.altura_viga_d))
+        self.line_edit_recubrimiento_inferior_viga.setText(str(
+            self.datos_memoria.recubrimiento_inferior_viga))
+        self.line_edit_recubrimiento_superior_viga.setText(str(
+            self.datos_memoria.recubrimiento_superior_viga))
+        self.line_edit_longitud_libre_viga.setText(str(
+            self.datos_memoria.longitud_libre_viga))
+        # SECCION MOMENTOS VIGA - LINE EDIT
+        self.line_edit_momento_negativo_izquierdo_viga.setText(str(
+            self.datos_memoria.momento_negativo_izquierdo_viga))
+        self.line_edit_momento_positivo_izquierdo_viga.setText(str(
+            self.datos_memoria.momento_positivo_izquierdo_viga))
+        self.line_edit_momento_negativo_centro_viga.setText(str(
+            self.datos_memoria.momento_negativo_centro_viga))
+        self.line_edit_momento_positivo_centro_viga.setText(str(
+            self.datos_memoria.momento_positivo_centro_viga))
+        self.line_edit_momento_negativo_derecho_viga.setText(str(
+            self.datos_memoria.momento_negativo_derecho_viga))
+        self.line_edit_momento_positivo_derecho_viga.setText(str(
+            self.datos_memoria.momento_positivo_derecho_viga))
+        # SECCION ACERO REQUERIDO
+        self.label_acero_minimo.setText(str(
+            self.datos_memoria.acero_minimo))
+        self.label_acero_requerido_1.setText(str(
+            self.datos_memoria.acero_requerido_1))
+        self.label_acero_requerido_2.setText(str(
+            self.datos_memoria.acero_requerido_2))
+        self.label_acero_requerido_3.setText(str(
+            self.datos_memoria.acero_requerido_3))
+        self.label_acero_requerido_4.setText(str(
+            self.datos_memoria.acero_requerido_4))
+        self.label_acero_requerido_5.setText(str(
+            self.datos_memoria.acero_requerido_5))
+        self.label_acero_requerido_6.setText(str(
+            self.datos_memoria.acero_requerido_6))
+        

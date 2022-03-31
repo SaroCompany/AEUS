@@ -6,12 +6,12 @@ from scripts.mainload import CargarDatosVPrincipal
 from scripts.mainfun import FuncionesVPrincipal
 from scripts.maincon import ConexionesVPrincipal
 from scripts.mainextra import FuncionesAdicionalesVPrincipal
-
+from scripts.calcs import CalculosInternosVPrincipal
 
 class VentanaPrincipalAEUS(
         QtWidgets.QMainWindow, ConexionesVPrincipal,
         FuncionesAdicionalesVPrincipal, FuncionesVPrincipal,
-        CargarDatosVPrincipal):
+        CargarDatosVPrincipal, CalculosInternosVPrincipal):
 
     def __init__(self):
         super(VentanaPrincipalAEUS, self).__init__()
@@ -32,12 +32,15 @@ class VentanaPrincipalAEUS(
         self.conectar_clicks_frame_dimension()
         self.conectar_cambios_texto_frame_dimension()
         self.conectar_cambios_texto_frame_sismo()
+        self.conectar_cambios_texto_frame_diseno_viga()
+        self.conectar_acciones_ventana_principal()
 
     def cargar_datos_en_ventana_principal(self):
         self.cargar_datos_frame_inicio()
         self.cargar_datos_frame_general()
         self.cargar_datos_frame_predimension()
         self.cargar_datos_frame_sismo()
+        self.cargar_datos_frame_diseno_viga()
 
     def closeEvent(self, event):  # Evento de lanzamiento del sistema
         resultado = QtWidgets.QMessageBox.question(
