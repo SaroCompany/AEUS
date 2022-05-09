@@ -12,12 +12,12 @@ class ConexionesVPrincipal():
             lambda: self.cambiar_stacks(4))
         self.boton_frame_diseno_viga.clicked.connect(
             lambda: self.cambiar_stacks(0))
-        self.boton_frame_cad_viga.clicked.connect(
-            lambda: self.cambiar_stacks(8))
 
     def conectar_acciones_ventana_principal(self):
         self.action_materiales.triggered.connect(
             lambda: self.abrir_ventana_materiales())
+        self.action_barras_acero.triggered.connect(
+            lambda: self.abrir_ventana_barras())
 
     def conectar_cambios_texto_frame_inicio(self):
         self.text_edit_proyecto.textChanged.connect(
@@ -258,8 +258,65 @@ class ConexionesVPrincipal():
             lambda: self.funcion_push_button_grafico_espectro())
 
     def conectar_cambios_texto_frame_diseno_viga(self):
+        # LINE EDIT
         self.line_edit_base_viga_d.textChanged.connect(
-            lambda: self.acero_requerido_viga())    
+            lambda: self.acero_requerido_viga())
+        # COMBO BOX
+        self.combo_box_cantidad1_acero_superior_izquierdo.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_superior_izquierdo())
+        self.combo_box_cantidad2_acero_superior_izquierdo.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_superior_izquierdo())
+        self.combo_box_codigo1_acero_superior_izquierdo.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_superior_izquierdo())
+        self.combo_box_codigo2_acero_superior_izquierdo.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_superior_izquierdo())
+        self.combo_box_cantidad1_acero_superior_derecho.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_superior_derecho())
+        self.combo_box_cantidad2_acero_superior_derecho.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_superior_derecho())
+        self.combo_box_codigo1_acero_superior_derecho.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_superior_derecho())
+        self.combo_box_codigo2_acero_superior_derecho.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_superior_derecho())
+        self.combo_box_cantidad1_acero_inferior_derecho.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_inferior_derecho())
+        self.combo_box_cantidad2_acero_inferior_derecho.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_inferior_derecho())
+        self.combo_box_codigo1_acero_inferior_derecho.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_inferior_derecho())
+        self.combo_box_codigo2_acero_inferior_derecho.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_inferior_derecho())
+        self.combo_box_cantidad1_acero_inferior_izquierdo.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_inferior_izquierdo())
+        self.combo_box_cantidad2_acero_inferior_izquierdo.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_inferior_izquierdo())
+        self.combo_box_codigo1_acero_inferior_izquierdo.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_inferior_izquierdo())
+        self.combo_box_codigo2_acero_inferior_izquierdo.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_inferior_izquierdo())
+        self.combo_box_cantidad1_acero_inferior_centro.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_inferior_centro())
+        self.combo_box_cantidad2_acero_inferior_centro.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_inferior_centro())
+        self.combo_box_codigo1_acero_inferior_centro.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_inferior_centro())
+        self.combo_box_codigo2_acero_inferior_centro.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_inferior_centro())
+        self.combo_box_cantidad1_acero_superior_centro.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_superior_centro())
+        self.combo_box_cantidad2_acero_superior_centro.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_superior_centro())
+        self.combo_box_codigo1_acero_superior_centro.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_superior_centro())
+        self.combo_box_codigo2_acero_superior_centro.currentIndexChanged.connect(
+            lambda: self.acero_impuesto_superior_centro())
+        # LINE EDIT - DEMANDA CORTE
+        self.line_edit_sobrecarga_permanente_viga.textChanged.connect(
+            lambda: self.cortes_maximos())
+        self.line_edit_sobrecarga_variable_viga.textChanged.connect(
+            lambda: self.cortes_maximos())
+        self.line_edit_corte_ultimo_viga.textChanged.connect(
+            lambda: self.cortes_maximos())
 
     def conectar_clicks_frame_diseno_viga(self):
         pass

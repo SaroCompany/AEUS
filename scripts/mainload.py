@@ -214,10 +214,10 @@ class CargarDatosVPrincipal():
         # SECCION COLUMNA - COMBO BOX
         self.combo_box_barras_laterales_columna.clear()
         self.combo_box_barras_laterales_columna.addItems(
-            self.datos_memoria.lista_barras_columna)
+            self.datos_memoria.lista_barras_longitudinales)
         self.combo_box_barras_centrales_columna.clear()
         self.combo_box_barras_centrales_columna.addItems(
-            self.datos_memoria.lista_barras_columna)
+            self.datos_memoria.lista_barras_longitudinales)
         self.combo_box_ubicacion_columna.clear()
         self.combo_box_ubicacion_columna.addItems(
             self.datos_memoria.lista_ubicacion_columna)
@@ -462,7 +462,7 @@ class CargarDatosVPrincipal():
             self.datos_memoria.momento_negativo_derecho_viga))
         self.line_edit_momento_positivo_derecho_viga.setText(str(
             self.datos_memoria.momento_positivo_derecho_viga))
-        # SECCION ACERO REQUERIDO
+        # SECCION ACERO REQUERIDO - LABEL
         self.label_acero_minimo.setText(str(
             self.datos_memoria.acero_minimo))
         self.label_acero_requerido_1.setText(str(
@@ -477,4 +477,112 @@ class CargarDatosVPrincipal():
             self.datos_memoria.acero_requerido_5))
         self.label_acero_requerido_6.setText(str(
             self.datos_memoria.acero_requerido_6))
+        # SECCION ACERO DUCTIL - LABEL
+        self.label_acero_superior_izquierdo_ductil.setText(str(
+            self.datos_memoria.acero_superior_izquierdo_ductil))
+        self.label_acero_superior_derecho_ductil.setText(str(
+            self.datos_memoria.acero_superior_derecho_ductil))
+        self.label_acero_inferior_izquierdo_ductil.setText(str(
+            self.datos_memoria.acero_inferior_izquierdo_ductil))
+        self.label_acero_inferior_derecho_ductil.setText(str(
+            self.datos_memoria.acero_inferior_derecho_ductil))
+        self.label_acero_inferior_centro_ductil.setText(str(
+            self.datos_memoria.acero_inferior_centro_ductil))
+        self.label_acero_superior_centro_ductil.setText(str(
+            self.datos_memoria.acero_superior_centro_ductil))
+        self.label_acero_superior_izquierdo_impuesto.setText(str(
+            self.datos_memoria.acero_superior_izquierdo_impuesto))
+        self.label_acero_inferior_izquierdo_impuesto.setText(str(
+            self.datos_memoria.acero_inferior_izquierdo_impuesto))
+        self.label_acero_superior_derecho_impuesto.setText(str(
+            self.datos_memoria.acero_superior_derecho_impuesto))
+        self.label_acero_inferior_derecho_impuesto.setText(str(
+            self.datos_memoria.acero_inferior_derecho_impuesto))
+        self.label_acero_superior_centro_impuesto.setText(str(
+            self.datos_memoria.acero_superior_centro_impuesto))
+        self.label_acero_inferior_centro_impuesto.setText(str(
+            self.datos_memoria.acero_inferior_centro_impuesto))
+        # SECCION ACERO DUCTIL - COMBO BOX
+        self.combo_box_cantidad1_acero_superior_izquierdo.clear()
+        self.combo_box_cantidad1_acero_superior_izquierdo.addItems(
+            self.datos_memoria.lista_cantidad)
+        self.combo_box_codigo1_acero_superior_izquierdo.clear()
+        self.combo_box_codigo1_acero_superior_izquierdo.addItems(
+            self.datos_memoria.lista_barras_longitudinales)
+        self.combo_box_cantidad2_acero_superior_izquierdo.clear()
+        self.combo_box_cantidad2_acero_superior_izquierdo.addItems(
+            self.datos_memoria.lista_cantidad)
+        self.combo_box_codigo2_acero_superior_izquierdo.clear()
+        self.combo_box_codigo2_acero_superior_izquierdo.addItems(
+            self.datos_memoria.lista_barras_longitudinales)
+        self.combo_box_cantidad1_acero_superior_derecho.clear()
+        self.combo_box_cantidad1_acero_superior_derecho.addItems(
+            self.datos_memoria.lista_cantidad)
+        self.combo_box_codigo1_acero_superior_derecho.clear()
+        self.combo_box_codigo1_acero_superior_derecho.addItems(
+            self.datos_memoria.lista_barras_longitudinales)
+        self.combo_box_cantidad2_acero_superior_derecho.clear()
+        self.combo_box_cantidad2_acero_superior_derecho.addItems(
+            self.datos_memoria.lista_cantidad)
+        self.combo_box_codigo2_acero_superior_derecho.clear()
+        self.combo_box_codigo2_acero_superior_derecho.addItems(
+            self.datos_memoria.lista_barras_longitudinales)
+        self.combo_box_cantidad1_acero_inferior_derecho.clear()
+        self.combo_box_cantidad1_acero_inferior_derecho.addItems(
+            self.datos_memoria.lista_cantidad)
+        self.combo_box_codigo1_acero_inferior_derecho.clear()
+        self.combo_box_codigo1_acero_inferior_derecho.addItems(
+            self.datos_memoria.lista_barras_longitudinales)
+        self.combo_box_cantidad2_acero_inferior_derecho.clear()
+        self.combo_box_cantidad2_acero_inferior_derecho.addItems(
+            self.datos_memoria.lista_cantidad)
+        self.combo_box_codigo2_acero_inferior_derecho.clear()
+        self.combo_box_codigo2_acero_inferior_derecho.addItems(
+            self.datos_memoria.lista_barras_longitudinales)
+        self.combo_box_cantidad1_acero_inferior_izquierdo.clear()
+        self.combo_box_cantidad1_acero_inferior_izquierdo.addItems(
+            self.datos_memoria.lista_cantidad)
+        self.combo_box_codigo1_acero_inferior_izquierdo.clear()
+        self.combo_box_codigo1_acero_inferior_izquierdo.addItems(
+            self.datos_memoria.lista_barras_longitudinales)
+        self.combo_box_cantidad2_acero_inferior_izquierdo.clear()
+        self.combo_box_cantidad2_acero_inferior_izquierdo.addItems(
+            self.datos_memoria.lista_cantidad)
+        self.combo_box_codigo2_acero_inferior_izquierdo.clear()
+        self.combo_box_codigo2_acero_inferior_izquierdo.addItems(
+            self.datos_memoria.lista_barras_longitudinales)
+        self.combo_box_cantidad1_acero_inferior_centro.clear()
+        self.combo_box_cantidad1_acero_inferior_centro.addItems(
+            self.datos_memoria.lista_cantidad)
+        self.combo_box_codigo1_acero_inferior_centro.clear()
+        self.combo_box_codigo1_acero_inferior_centro.addItems(
+            self.datos_memoria.lista_barras_longitudinales)
+        self.combo_box_cantidad2_acero_inferior_centro.clear()
+        self.combo_box_cantidad2_acero_inferior_centro.addItems(
+            self.datos_memoria.lista_cantidad)
+        self.combo_box_codigo2_acero_inferior_centro.clear()
+        self.combo_box_codigo2_acero_inferior_centro.addItems(
+            self.datos_memoria.lista_barras_longitudinales)
+        self.combo_box_cantidad1_acero_superior_centro.clear()
+        self.combo_box_cantidad1_acero_superior_centro.addItems(
+            self.datos_memoria.lista_cantidad)
+        self.combo_box_codigo1_acero_superior_centro.clear()
+        self.combo_box_codigo1_acero_superior_centro.addItems(
+            self.datos_memoria.lista_barras_longitudinales)
+        self.combo_box_cantidad2_acero_superior_centro.clear()
+        self.combo_box_cantidad2_acero_superior_centro.addItems(
+            self.datos_memoria.lista_cantidad)
+        self.combo_box_codigo2_acero_superior_centro.clear()
+        self.combo_box_codigo2_acero_superior_centro.addItems(
+            self.datos_memoria.lista_barras_longitudinales)
+        # SECCION DEMANDA CORTE - LABEL
+        self.label_peso_propio_viga.setText(str(
+            self.datos_memoria.peso_propio_viga))
+        # SECCION DEMANDA CORTE - LINE EDIT
+        self.line_edit_sobrecarga_permanente_viga.setText(str(
+            self.datos_memoria.sobrecarga_permanente_viga))
+        self.line_edit_sobrecarga_variable_viga.setText(str(
+            self.datos_memoria.sobrecarga_variable_viga))
+        self.line_edit_corte_ultimo_viga.setText(str(
+            self.datos_memoria.corte_ultimo_viga))
         

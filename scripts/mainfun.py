@@ -1,8 +1,8 @@
 import math
-from multiprocessing.sharedctypes import Value
 import numpy
-import matplotlib.pyplot as plt
+from scripts.bars import VentanaBarras
 from scripts.mats import VentanaMateriales
+import matplotlib.pyplot as plt
 
 class FuncionesVPrincipal():
 
@@ -1518,13 +1518,16 @@ class FuncionesVPrincipal():
                 self.datos_espectro_aceleracion_reducido.append(espectro_aceleracion_largo/self.coeficiente_disipacion_energia)
         plt.plot(self.datos_periodo, self.datos_espectro_aceleracion, label = 'Pleno')
         plt.plot(self.datos_periodo, self.datos_espectro_aceleracion_reducido, label = 'Reducido')
-        plt.ylabel('Sa(g)')
         plt.xlabel('T(s)')
+        plt.ylabel('Sa(g)')
         plt.title('ESPECTRO ELASTICO DE ACELERACION')
-        plt.legend()
         plt.show()
 
     # VENTANA PRINCIPAL
     def abrir_ventana_materiales(self):
         self.ventana_materiales = VentanaMateriales()
         self.ventana_materiales.show()
+
+    def abrir_ventana_barras(self):
+        self.ventana_barras = VentanaBarras()
+        self.ventana_barras.show()

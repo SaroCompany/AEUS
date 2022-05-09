@@ -1707,9 +1707,10 @@ class DatosMemoria():
             }
         }
         self.lista_uso_losa = ['NO se usa', 'Se usa']
-        self.lista_barras_columna = ['', '#4', '#5', '#6', '#7', '#8', '#9', '#10', '#11', '#12']
+        self.lista_barras_longitudinales = ['', '#4', '#5', '#6', '#7', '#8', '#9', '#10', '#11', '#14', '#18']
         self.lista_ubicacion_columna = ['', 'INTERIOR', 'LATERAL']
         self.lista_direcciones = ['', 'X', 'Y']
+        self.lista_cantidad = ['', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']  
 
     def carga_datos_base(self, ubicacion_base, manejo_base):
         self.proyecto = manejo_base.consultar_dato(
@@ -2090,6 +2091,54 @@ class DatosMemoria():
             'Esmin', ubicacion_base, 'PROPMATS', 'VALOR')
         self.sobrerresistencia_acero = manejo_base.consultar_dato(
             'Fsr', ubicacion_base, 'PROPMATS', 'VALOR')
+        self.diametro_N2 = manejo_base.consultar_dato(
+            '#2', ubicacion_base, 'BARS', 'DIAMETRO')
+        self.area_N2 = manejo_base.consultar_dato(
+            '#2', ubicacion_base, 'BARS', 'AREA')
+        self.diametro_N3 = manejo_base.consultar_dato(
+            '#3', ubicacion_base, 'BARS', 'DIAMETRO')
+        self.area_N3 = manejo_base.consultar_dato(
+            '#3', ubicacion_base, 'BARS', 'AREA')
+        self.diametro_N4 = manejo_base.consultar_dato(
+            '#4', ubicacion_base, 'BARS', 'DIAMETRO')
+        self.area_N4 = manejo_base.consultar_dato(
+            '#4', ubicacion_base, 'BARS', 'AREA')
+        self.diametro_N5 = manejo_base.consultar_dato(
+            '#5', ubicacion_base, 'BARS', 'DIAMETRO')
+        self.area_N5 = manejo_base.consultar_dato(
+            '#5', ubicacion_base, 'BARS', 'AREA')
+        self.diametro_N6 = manejo_base.consultar_dato(
+            '#6', ubicacion_base, 'BARS', 'DIAMETRO')
+        self.area_N6 = manejo_base.consultar_dato(
+            '#6', ubicacion_base, 'BARS', 'AREA')
+        self.diametro_N7 = manejo_base.consultar_dato(
+            '#7', ubicacion_base, 'BARS', 'DIAMETRO')
+        self.area_N7 = manejo_base.consultar_dato(
+            '#7', ubicacion_base, 'BARS', 'AREA')
+        self.diametro_N8 = manejo_base.consultar_dato(
+            '#8', ubicacion_base, 'BARS', 'DIAMETRO')
+        self.area_N8 = manejo_base.consultar_dato(
+            '#8', ubicacion_base, 'BARS', 'AREA')
+        self.diametro_N9 = manejo_base.consultar_dato(
+            '#9', ubicacion_base, 'BARS', 'DIAMETRO')
+        self.area_N9 = manejo_base.consultar_dato(
+            '#9', ubicacion_base, 'BARS', 'AREA')
+        self.diametro_N10 = manejo_base.consultar_dato(
+            '#10', ubicacion_base, 'BARS', 'DIAMETRO')
+        self.area_N10 = manejo_base.consultar_dato(
+            '#10', ubicacion_base, 'BARS', 'AREA')
+        self.diametro_N11 = manejo_base.consultar_dato(
+            '#11', ubicacion_base, 'BARS', 'DIAMETRO')
+        self.area_N11 = manejo_base.consultar_dato(
+            '#11', ubicacion_base, 'BARS', 'AREA')
+        self.diametro_N14 = manejo_base.consultar_dato(
+            '#14', ubicacion_base, 'BARS', 'DIAMETRO')
+        self.area_N14 = manejo_base.consultar_dato(
+            '#14', ubicacion_base, 'BARS', 'AREA')
+        self.diametro_N18 = manejo_base.consultar_dato(
+            '#18', ubicacion_base, 'BARS', 'DIAMETRO')
+        self.area_N18 = manejo_base.consultar_dato(
+            '#18', ubicacion_base, 'BARS', 'AREA')
         self.altura_util = manejo_base.consultar_dato(
             'd', ubicacion_base, 'CALCVIG', 'VALOR')
         self.acero_minimo = manejo_base.consultar_dato(
@@ -2154,38 +2203,42 @@ class DatosMemoria():
             'cmax_6', ubicacion_base, 'CALCVIG', 'VALOR')
         self.acero_calculado_6 = manejo_base.consultar_dato(
             'Ascalc_6', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.acero_inferior_izquierdo_ductil = manejo_base.consultar_dato(
+            'As1_inf_req', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.acero_inferior_derecho_ductil = manejo_base.consultar_dato(
+            'As2_inf_req', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.acero_superior_izquierdo_ductil = manejo_base.consultar_dato(
+            'As1_sup_req', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.acero_superior_derecho_ductil = manejo_base.consultar_dato(
+            'As2_sup_req', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.acero_inferior_centro_ductil = manejo_base.consultar_dato(
+            'As_inf_req', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.acero_superior_centro_ductil = manejo_base.consultar_dato(
+            'As_sup_req', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.acero_superior_izquierdo_impuesto = manejo_base.consultar_dato(
+            'As1_sup', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.acero_inferior_izquierdo_impuesto = manejo_base.consultar_dato(
+            'As1_inf', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.acero_superior_derecho_impuesto = manejo_base.consultar_dato(
+            'As2_sup', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.acero_inferior_derecho_impuesto = manejo_base.consultar_dato(
+            'As2_inf', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.acero_superior_centro_impuesto = manejo_base.consultar_dato(
+            'As_sup', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.acero_inferior_centro_impuesto = manejo_base.consultar_dato(
+            'As_inf', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.peso_propio_viga = manejo_base.consultar_dato(
+            'Wpp', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.sobrecarga_permanente_viga = manejo_base.consultar_dato(
+            'Wscp', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.sobrecarga_variable_viga = manejo_base.consultar_dato(
+            'Wcv', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.corte_ultimo_viga = manejo_base.consultar_dato(
+            'Vu', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.carga_muerta_viga = manejo_base.consultar_dato(
+            'Wcp', ubicacion_base, 'CALCVIG', 'VALOR')
 
         '''
-        self.As1_sup = manejo_base.consultar_dato(
-            'As1_sup', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.As1_inf = manejo_base.consultar_dato(
-            'As1_inf', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.As2_sup = manejo_base.consultar_dato(
-            'As2_sup', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.As2_inf = manejo_base.consultar_dato(
-            'As2_inf', ubicacion_base, 'CALCVIG', 'VALOR')  # cm2
-        self.As1_inf_req = manejo_base.consultar_dato(
-            'As1_inf_req', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.As2_inf_req = manejo_base.consultar_dato(
-            'As2_inf_req', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.As_inf_req = manejo_base.consultar_dato(
-            'As_inf_req', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.As_sup_req = manejo_base.consultar_dato(
-            'As_sup_req', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.As_sup = manejo_base.consultar_dato(
-            'As_sup', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.As_inf = manejo_base.consultar_dato(
-            'As_inf', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Wpp = manejo_base.consultar_dato(
-            'Wpp', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Wscp = manejo_base.consultar_dato(
-            'Wscp', ubicacion_base, 'SHEARVIG', 'VALOR')  # Tonf/m
-        self.Wcv = manejo_base.consultar_dato(
-            'Wcv', ubicacion_base, 'SHEARVIG', 'VALOR')  # Tonf/m
-        self.Fcv = manejo_base.consultar_dato(
-            'Fcv', ubicacion_base, 'SHEARVIG', 'VALOR')
-        self.Vu = manejo_base.consultar_dato(
-            'Vu', ubicacion_base, 'SHEARVIG', 'VALOR')  # Tonf
         self.Pu = manejo_base.consultar_dato(
             'Pu', ubicacion_base, 'SHEARVIG', 'VALOR')  # Tonf
         self.Ve_2 = manejo_base.consultar_dato(
@@ -2206,8 +2259,7 @@ class DatosMemoria():
             'As1_sup_req', ubicacion_base, 'CALCVIG', 'VALOR')
         self.As2_sup_req = manejo_base.consultar_dato(
             'As2_sup_req', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Wcp = manejo_base.consultar_dato(
-            'Wcp', ubicacion_base, 'CALCVIG', 'VALOR')
+        
         self.Wu_1 = manejo_base.consultar_dato(
             'Wu_1', ubicacion_base, 'CALCVIG', 'VALOR')
         self.Vg_1 = manejo_base.consultar_dato(

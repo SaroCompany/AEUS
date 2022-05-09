@@ -5,10 +5,11 @@ from scripts.matscon import ConexionesVMateriales
 from scripts.matsfun import FuncionesVMateriales
 from scripts.mem import DatosMemoria
 from scripts.data import ConexionBaseDatos
+from scripts.mainextra import FuncionesAdicionalesVPrincipal
 
 class VentanaMateriales(
     QtWidgets.QDialog, CargarDatosVMateriales,
-    ConexionesVMateriales, FuncionesVMateriales):
+    ConexionesVMateriales, FuncionesVMateriales, FuncionesAdicionalesVPrincipal):
 
     def __init__(self, parent=None):
         super(VentanaMateriales, self).__init__()
@@ -24,4 +25,4 @@ class VentanaMateriales(
         self.cargar_datos_ventana_materiales()
 
     def conectar_funciones_ventana_materiales(self):
-        pass
+        self.conectar_cambios_texto_materiales()
