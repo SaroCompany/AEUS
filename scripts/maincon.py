@@ -258,10 +258,11 @@ class ConexionesVPrincipal():
             lambda: self.funcion_push_button_grafico_espectro())
 
     def conectar_cambios_texto_frame_diseno_viga(self):
-        # LINE EDIT
+        # DATOS VIGA - LINE EDIT
         self.line_edit_base_viga_d.textChanged.connect(
             lambda: self.acero_requerido_viga())
-        # COMBO BOX
+        # MOMENTOS ANALISIS - LINE EDIT
+        # ACERO DUCTIL - COMBO BOX
         self.combo_box_cantidad1_acero_superior_izquierdo.currentIndexChanged.connect(
             lambda: self.acero_impuesto_superior_izquierdo())
         self.combo_box_cantidad2_acero_superior_izquierdo.currentIndexChanged.connect(
@@ -310,13 +311,15 @@ class ConexionesVPrincipal():
             lambda: self.acero_impuesto_superior_centro())
         self.combo_box_codigo2_acero_superior_centro.currentIndexChanged.connect(
             lambda: self.acero_impuesto_superior_centro())
-        # LINE EDIT - DEMANDA CORTE
+        # DEMANDA CORTE - LINE EDIT
         self.line_edit_sobrecarga_permanente_viga.textChanged.connect(
             lambda: self.cortes_maximos())
         self.line_edit_sobrecarga_variable_viga.textChanged.connect(
             lambda: self.cortes_maximos())
         self.line_edit_corte_ultimo_viga.textChanged.connect(
             lambda: self.cortes_maximos())
+        # ACERO ESTRIBO - COMBO BOX
+        # ACERO ESTRIBO - LINE EDIT
 
     def conectar_clicks_frame_diseno_viga(self):
         pass

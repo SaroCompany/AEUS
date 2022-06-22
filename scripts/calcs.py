@@ -419,16 +419,16 @@ class CalculosInternosVPrincipal():
         return acero_centro_ductil
 
     def corte_maximo_caso_A(self):
-        self.acero_superior_izquierdo_ductil = float(self.label_acero_superior_izquierdo_ductil.text())
-        self.acero_inferior_izquierdo_ductil = float(self.label_acero_inferior_izquierdo_ductil.text())
-        self.caso_A = self.corte_maximo(self.acero_superior_izquierdo_ductil, self.acero_inferior_izquierdo_ductil)
+        self.acero_superior_izquierdo_impuesto = float(self.label_acero_superior_izquierdo_impuesto.text())
+        self.acero_inferior_izquierdo_impuesto = float(self.label_acero_inferior_izquierdo_impuesto.text())
+        self.caso_A = self.corte_maximo(self.acero_superior_izquierdo_impuesto, self.acero_inferior_izquierdo_impuesto)
         self.caso_A.append(self.caso_A[2]+self.caso_A[5]) # Ve1 = Vg + Vp
         self.caso_A.append(self.caso_A[2]-self.caso_A[5]) # Ve2 = Vg - Vp
 
     def corte_maximo_caso_B(self):
-        self.acero_superior_derecho_ductil = float(self.label_acero_superior_derecho_ductil.text())
-        self.acero_inferior_derecho_ductil = float(self.label_acero_inferior_derecho_ductil.text())
-        self.caso_B = self.corte_maximo(self.acero_superior_derecho_ductil, self.acero_inferior_derecho_ductil)
+        self.acero_superior_derecho_impuesto = float(self.label_acero_superior_derecho_impuesto.text())
+        self.acero_inferior_derecho_impuesto = float(self.label_acero_inferior_derecho_impuesto.text())
+        self.caso_B = self.corte_maximo(self.acero_superior_derecho_impuesto, self.acero_inferior_derecho_impuesto)
         self.caso_B.append(self.caso_B[2]-self.caso_B[5]) # Ve1 = Vg - Vp
         self.caso_B.append(self.caso_B[2]+self.caso_B[5]) # Ve2 = Vg + Vp
 
@@ -441,6 +441,57 @@ class CalculosInternosVPrincipal():
         self.label_corte_izquierdo.setText(str(self.corte_izquierdo))
         self.label_corte_derecho.setText(str(self.corte_derecho))
         self.label_corte_capacidad.setText(str(self.corte_capacidad))
+        self.guardar_cambio(
+            'acero1_1', 'CALCVIG', 'VALOR', self.caso_A[0][0]) # Superior
+        self.guardar_cambio(
+            'acero2_1', 'CALCVIG', 'VALOR', self.caso_A[0][1]) # Inferior
+        self.guardar_cambio(
+            'Wu_1', 'CALCVIG', 'VALOR', self.caso_A[1])
+        self.guardar_cambio(
+            'Vg_1', 'CALCVIG', 'VALOR', self.caso_A[2])
+        self.guardar_cambio(
+            'a1_1', 'CALCVIG', 'VALOR', self.caso_A[4][0])
+        self.guardar_cambio(
+            'Mmp1_1', 'CALCVIG', 'VALOR', self.caso_A[3][0])
+        self.guardar_cambio(
+            'a2_1', 'CALCVIG', 'VALOR', self.caso_A[4][1])
+        self.guardar_cambio(
+            'Mmp2_1', 'CALCVIG', 'VALOR', self.caso_A[3][1])
+        self.guardar_cambio(
+            'Vp_1', 'CALCVIG', 'VALOR', self.caso_A[5])
+        self.guardar_cambio(
+            'Ve_1_CasoA', 'CALCVIG', 'VALOR', self.caso_A[6])
+        self.guardar_cambio(
+            'Ve_2_CasoA', 'CALCVIG', 'VALOR', self.caso_A[7])
+        self.guardar_cambio(
+            'acero1_2', 'CALCVIG', 'VALOR', self.caso_B[0][0]) # Superior
+        self.guardar_cambio(
+            'acero2_2', 'CALCVIG', 'VALOR', self.caso_B[0][1]) # Inferior
+        self.guardar_cambio(
+            'Wu_2', 'CALCVIG', 'VALOR', self.caso_B[1])
+        self.guardar_cambio(
+            'Vg_2', 'CALCVIG', 'VALOR', self.caso_B[2])
+        self.guardar_cambio(
+            'a1_2', 'CALCVIG', 'VALOR', self.caso_B[4][0])
+        self.guardar_cambio(
+            'Mmp1_2', 'CALCVIG', 'VALOR', self.caso_B[3][0])
+        self.guardar_cambio(
+            'a2_2', 'CALCVIG', 'VALOR', self.caso_B[4][1])
+        self.guardar_cambio(
+            'Mmp2_2', 'CALCVIG', 'VALOR', self.caso_B[3][1])
+        self.guardar_cambio(
+            'Vp_2', 'CALCVIG', 'VALOR', self.caso_B[5])
+        self.guardar_cambio(
+            'Ve_1_CasoB', 'CALCVIG', 'VALOR', self.caso_B[6])
+        self.guardar_cambio(
+            'Ve_2_CasoB', 'CALCVIG', 'VALOR', self.caso_B[7])
+        self.guardar_cambio(
+            'Ve_1', 'CALCVIG', 'VALOR', self.corte_izquierdo)
+        self.guardar_cambio(
+            'Ve_2', 'CALCVIG', 'VALOR', self.corte_derecho)
+        self.guardar_cambio(
+            'Vp', 'CALCVIG', 'VALOR', self.corte_capacidad)
+        
 
     def corte_maximo(self, acero_sup, acero_inf):
         self.profundidades_bloques_whitney = []

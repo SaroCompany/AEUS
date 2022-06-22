@@ -1342,6 +1342,7 @@ class FuncionesVPrincipal():
 
     # FRAME SISMO - SECCION FUERZA HORIZONTAL EQUIVALENTE
     def funcion_combo_box_direccion_sismo(self):
+        self.direccion_sismo = self.combo_box_direccion_sismo.currentText()
         self.sistema_estructural = self.combo_box_sistema.currentText()
         self.resistencia_horizontal = self.combo_box_resistencia_horizontal.currentText()
         self.tipo_resistencia = self.combo_box_tipo_resistencia.currentText()
@@ -1366,6 +1367,9 @@ class FuncionesVPrincipal():
             self.parametro_Ct))
         self.line_edit_parametro_a.setText(str(
             self.parametro_a))
+        self.guardar_cambio(
+            'Direccion', 'FHE', 'VALOR',
+            self.direccion_sismo)
         self.guardar_cambio(
             'Parametro_Ct', 'FHE', 'VALOR',
             self.parametro_Ct)
@@ -1474,16 +1478,23 @@ class FuncionesVPrincipal():
         self.coeficiente_importancia = float(self.label_coeficiente_importancia.text())
         self.periodo_corto = float(self.label_periodo_corto.text())
         self.periodo_largo = float(self.label_periodo_largo.text())
+        self.condicion_espectro = ''
         if self.periodo_fundamental < self.periodo_corto:
             self.espectro_aceleracion = 2.5*self.aceleracion_pico_efectiva*self.parametro_Fa*self.coeficiente_importancia
-            self.label_condicion_espectro.setText('Sa = 2.5*Aa*Fa*I')
+            self.condicion_espectro = 'Sa = 2.5*Aa*Fa*I'
+            self.label_condicion_espectro.setText(self.condicion_espectro)
         elif self.periodo_corto < self.periodo_fundamental < self.periodo_largo:
             self.espectro_aceleracion = 1.2*self.velocidad_pico_efectiva*self.parametro_Fv*self.coeficiente_importancia/self.periodo_fundamental
-            self.label_condicion_espectro.setText('Sa = 1.2*Av*Fv*I/T')
+            self.condicion_espectro = 'Sa = 1.2*Av*Fv*I/T'
+            self.label_condicion_espectro.setText(self.condicion_espectro)
         elif self.periodo_fundamental > self.periodo_largo:
             self.espectro_aceleracion = 1.2*self.velocidad_pico_efectiva*self.parametro_Fv*self.periodo_largo*self.coeficiente_importancia/(self.periodo_fundamental**2)
-            self.label_condicion_espectro.setText('Sa = 1.2*Av*Fv*TL*I/T**2')
+            self.condicion_espectro = 'Sa = 1.2*Av*Fv*TL*I/T**2'
+            self.label_condicion_espectro.setText(self.condicion_espectro)
         self.label_espectro_aceleracion.setText(str(self.espectro_aceleracion))
+        self.guardar_cambio(
+            'Condicion_Espectro', 'FHE', 'VALOR',
+            self.condicion_espectro)
         self.guardar_cambio(
             'Periodo_Fundamental', 'FHE', 'VALOR',
             self.periodo_fundamental)

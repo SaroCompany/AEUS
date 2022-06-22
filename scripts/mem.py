@@ -2021,6 +2021,8 @@ class DatosMemoria():
             'Area_losa', ubicacion_base, 'SOBRECARGAS', 'VALOR')
         self.sobrecarga_particiones_calculada = manejo_base.consultar_dato(
             'Sobrecarga_particiones', ubicacion_base, 'SOBRECARGAS', 'VALOR')
+        self.direccion_sismo = manejo_base.consultar_dato(
+            'Direccion', ubicacion_base, 'FHE', 'VALOR')
         self.parametro_Ct = manejo_base.consultar_dato(
             'Parametro_Ct', ubicacion_base, 'FHE', 'VALOR')
         self.parametro_a = manejo_base.consultar_dato(
@@ -2041,6 +2043,8 @@ class DatosMemoria():
             'Periodo_Ele_Fini', ubicacion_base, 'FHE', 'VALOR')
         self.periodo_fema = manejo_base.consultar_dato(
             'Periodo_FEMA', ubicacion_base, 'FHE', 'VALOR')
+        self.condicion_espectro = manejo_base.consultar_dato(
+            'Condicion_Espectro', ubicacion_base, 'FHE', 'VALOR')
         self.periodo_fundamental = manejo_base.consultar_dato(
             'Periodo_Fundamental', ubicacion_base, 'FHE', 'VALOR')
         self.espectro_aceleracion = manejo_base.consultar_dato(

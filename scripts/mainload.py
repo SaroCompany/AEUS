@@ -89,7 +89,7 @@ class CargarDatosVPrincipal():
         self.combo_box_resistencia_concreto.addItems(
             self.datos_memoria.lista_resistencia_concreto)
         self.combo_box_resistencia_concreto.setCurrentText(str(
-            self.datos_memoria.resistencia_concreto))
+            int(self.datos_memoria.resistencia_concreto)))
         self.combo_box_masa_concreto.clear()
         self.combo_box_masa_concreto.addItems(
             self.datos_memoria.diccionario_modulo_elasticidad_concreto.keys())
@@ -349,9 +349,6 @@ class CargarDatosVPrincipal():
             self.datos_memoria.uso_losa_m2d)
         if self.combo_box_uso_losa_maciza_2d.currentText() != 'Se usa':
             self.group_box_losa_M2D.setEnabled(0)
-        # SECCION LOSA MACIZA EN DOS DIRECCIONES - LINE EDIT
-
-        # SECCION LOSA MACIZA EN DOS DIRECCIONES - LABEL
 
     def cargar_datos_frame_sismo(self):
         # SECCION SOBRECARGA ENTREPISO - LINE EDIT
@@ -410,6 +407,8 @@ class CargarDatosVPrincipal():
         self.combo_box_direccion_sismo.clear()
         self.combo_box_direccion_sismo.addItems(
             self.datos_memoria.lista_direcciones)
+        self.combo_box_direccion_sismo.setCurrentText(
+            self.datos_memoria.direccion_sismo)
         # SECCION FUERZA HORIZONTAL EQUIVALENTE - LINE EDIT
         self.line_edit_parametro_Ct.setText(str(
             self.datos_memoria.parametro_Ct))
@@ -434,6 +433,8 @@ class CargarDatosVPrincipal():
             self.datos_memoria.periodo_largo))
         self.label_periodo_fema.setText(str(
             self.datos_memoria.periodo_fema))
+        self.label_condicion_espectro.setText(
+            self.datos_memoria.condicion_espectro)
         self.label_espectro_aceleracion.setText(str(
             self.datos_memoria.espectro_aceleracion))
 
