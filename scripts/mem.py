@@ -2241,91 +2241,53 @@ class DatosMemoria():
             'Vu', ubicacion_base, 'CALCVIG', 'VALOR')
         self.carga_muerta_viga = manejo_base.consultar_dato(
             'Wcp', ubicacion_base, 'CALCVIG', 'VALOR')
-
-        '''
-        self.Pu = manejo_base.consultar_dato(
-            'Pu', ubicacion_base, 'SHEARVIG', 'VALOR')  # Tonf
-        self.Ve_2 = manejo_base.consultar_dato(
-            'Ve_2', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Ve_1 = manejo_base.consultar_dato(
-            'Ve_1', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Vp = manejo_base.consultar_dato(
-            'Vp', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.chk1 = manejo_base.consultar_dato(
-            'chk1', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.chk2 = manejo_base.consultar_dato(
-            'chk2', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Asmin_1 = manejo_base.consultar_dato(
-            'Asmin_1', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Asmin_2 = manejo_base.consultar_dato(
-            'Asmin_2', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.As1_sup_req = manejo_base.consultar_dato(
-            'As1_sup_req', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.As2_sup_req = manejo_base.consultar_dato(
-            'As2_sup_req', ubicacion_base, 'CALCVIG', 'VALOR')
-        
-        self.Wu_1 = manejo_base.consultar_dato(
+        self.acero_superior_corte_probable_1 = manejo_base.consultar_dato(
+            'acero1_1', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.acero_inferior_corte_probable_1 = manejo_base.consultar_dato(
+            'acero2_1', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.carga_ultima_viga_1 = manejo_base.consultar_dato(
             'Wu_1', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Vg_1 = manejo_base.consultar_dato(
+        self.corte_gravitacional_1 = manejo_base.consultar_dato(
             'Vg_1', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.a1_1 = manejo_base.consultar_dato(
+        self.profundidad_bloque_whitney_1_1 = manejo_base.consultar_dato(
             'a1_1', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Mmp1_1 = manejo_base.consultar_dato(
+        self.momento_maximo_probable_1_1 = manejo_base.consultar_dato(
             'Mmp1_1', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.a2_1 = manejo_base.consultar_dato(
+        self.profundidad_bloque_whitney_2_1 = manejo_base.consultar_dato(
             'a2_1', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Mmp2_1 = manejo_base.consultar_dato(
+        self.momento_maximo_probable_2_1 = manejo_base.consultar_dato(
             'Mmp2_1', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Vp_1 = manejo_base.consultar_dato(
+        self.corte_por_capacidad_1 = manejo_base.consultar_dato(
             'Vp_1', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Ve1_1 = manejo_base.consultar_dato(
+        self.corte_probable_derecho_1 = manejo_base.consultar_dato(
             'Ve_1_CasoA', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Ve2_1 = manejo_base.consultar_dato(
+        self.corte_probable_izquierdo_1 = manejo_base.consultar_dato(
             'Ve_2_CasoA', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Wu_2 = manejo_base.consultar_dato(
+        self.acero_superior_corte_probable_2 = manejo_base.consultar_dato(
+            'acero1_2', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.acero_inferior_corte_probable_2 = manejo_base.consultar_dato(
+            'acero2_2', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.carga_ultima_viga_2 = manejo_base.consultar_dato(
             'Wu_2', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Vg_2 = manejo_base.consultar_dato(
+        self.corte_gravitacional_2 = manejo_base.consultar_dato(
             'Vg_2', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.a1_2 = manejo_base.consultar_dato(
+        self.profundidad_bloque_whitney_1_2 = manejo_base.consultar_dato(
             'a1_2', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Mmp1_2 = manejo_base.consultar_dato(
+        self.momento_maximo_probable_1_2 = manejo_base.consultar_dato(
             'Mmp1_2', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.a2_2 = manejo_base.consultar_dato(
+        self.profundidad_bloque_whitney_2_2 = manejo_base.consultar_dato(
             'a2_2', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Mmp2_2 = manejo_base.consultar_dato(
+        self.momento_maximo_probable_2_2 = manejo_base.consultar_dato(
             'Mmp2_2', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Vp_2 = manejo_base.consultar_dato(
+        self.corte_por_capacidad_2 = manejo_base.consultar_dato(
             'Vp_2', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Ve1_2 = manejo_base.consultar_dato(
+        self.corte_probable_derecho_2 = manejo_base.consultar_dato(
             'Ve_1_CasoB', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Ve2_2 = manejo_base.consultar_dato(
+        self.corte_probable_izquierdo_2 = manejo_base.consultar_dato(
             'Ve_2_CasoB', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.AV = manejo_base.consultar_dato(
-            'AV', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Pc = manejo_base.consultar_dato(
-            'Pc', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.RC = manejo_base.consultar_dato(
-            'RC', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Ag = manejo_base.consultar_dato(
-            'Ag', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Vc = manejo_base.consultar_dato(
-            'Vc', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Vs = manejo_base.consultar_dato(
-            'Vs', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Smcal = manejo_base.consultar_dato(
-            'Smcal', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Smnorma = manejo_base.consultar_dato(
-            'Smnorma', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Smreq = manejo_base.consultar_dato(
-            'Smreq', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Lc = manejo_base.consultar_dato(
-            'Lc', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Sgm = manejo_base.consultar_dato(
-            'Sgm', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Sgsm = manejo_base.consultar_dato(
-            'Sgsm', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Vd = manejo_base.consultar_dato(
-            'Vd', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.Ve = manejo_base.consultar_dato(
-            'Ve', ubicacion_base, 'CALCVIG', 'VALOR')
-'''
+        self.corte_izquierdo = manejo_base.consultar_dato(
+            'Ve_1', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.corte_derecho = manejo_base.consultar_dato(
+            'Ve_2', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.corte_capacidad = manejo_base.consultar_dato(
+            'Vp', ubicacion_base, 'CALCVIG', 'VALOR')

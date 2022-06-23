@@ -1413,7 +1413,7 @@ QDateEdit::down-arrow:focus
       <string>Viga</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_11">
+    <widget class="QLabel" name="label_logo_pequeno">
      <property name="geometry">
       <rect>
        <x>10</x>
@@ -1423,13 +1423,19 @@ QDateEdit::down-arrow:focus
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-image: url(:/imagenes/logoSARO.png);</string>
+      <string notr="true"/>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
      <property name="text">
       <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap resource="../img/imgs.qrc">:/imagenes/logoSARO.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
     <widget class="QPushButton" name="boton_frame_general">
@@ -1484,7 +1490,7 @@ QDateEdit::down-arrow:focus
      </size>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="VIGA_0">
      <widget class="QFrame" name="divi">
@@ -4052,7 +4058,7 @@ QDateEdit::down-arrow:focus
         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;justify&quot;&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;Equipo de trabajo:&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
-      <widget class="QLabel" name="label_70">
+      <widget class="QLabel" name="label_logo_grande">
        <property name="geometry">
         <rect>
          <x>270</x>
@@ -4062,13 +4068,19 @@ QDateEdit::down-arrow:focus
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">border-image: url(:/imagenes/logoSARO.png);</string>
+        <string notr="true"/>
        </property>
        <property name="frameShape">
         <enum>QFrame::NoFrame</enum>
        </property>
        <property name="text">
         <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap resource="../img/imgs.qrc">:/imagenes/logoSARO.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
        </property>
       </widget>
       <widget class="QLabel" name="label_145">

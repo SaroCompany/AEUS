@@ -1,3 +1,4 @@
+from PyQt5.QtGui import QPixmap
 
 class CargarDatosVPrincipal():
 
@@ -13,6 +14,9 @@ class CargarDatosVPrincipal():
             self.datos_memoria.equipo_trabajo_proyecto)
         self.combo_box_norma.addItem(
             self.datos_memoria.norma_proyecto)
+        qpixmap = QPixmap('img/logoSARO.png')
+        self.label_logo_grande.setPixmap(qpixmap)
+        self.label_logo_pequeno.setPixmap(qpixmap)
 
     def cargar_datos_frame_general(self):
         self.lista_municipios = self.datos_memoria.diccionario_colombia[
@@ -579,6 +583,12 @@ class CargarDatosVPrincipal():
         # SECCION DEMANDA CORTE - LABEL
         self.label_peso_propio_viga.setText(str(
             self.datos_memoria.peso_propio_viga))
+        self.label_corte_izquierdo.setText(str(
+            self.datos_memoria.corte_izquierdo))
+        self.label_corte_derecho.setText(str(
+            self.datos_memoria.corte_derecho))
+        self.label_corte_capacidad.setText(str(
+            self.datos_memoria.corte_capacidad))
         # SECCION DEMANDA CORTE - LINE EDIT
         self.line_edit_sobrecarga_permanente_viga.setText(str(
             self.datos_memoria.sobrecarga_permanente_viga))

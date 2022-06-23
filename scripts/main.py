@@ -1,4 +1,5 @@
 from PyQt5 import QtWidgets, uic
+#from PyQt5.QtGui import QPixmap
 import sys
 from scripts.mem import DatosMemoria
 from scripts.data import ConexionBaseDatos
