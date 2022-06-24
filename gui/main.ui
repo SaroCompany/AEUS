@@ -1490,7 +1490,7 @@ QDateEdit::down-arrow:focus
      </size>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="VIGA_0">
      <widget class="QFrame" name="divi">
@@ -3337,7 +3337,7 @@ QDateEdit::down-arrow:focus
          <string>Relacion de cortes (Vp/Vd)</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="entryPu">
+       <widget class="QLineEdit" name="line_edit_fuerza_axial">
         <property name="enabled">
          <bool>true</bool>
         </property>
@@ -3353,7 +3353,7 @@ QDateEdit::down-arrow:focus
          <string/>
         </property>
        </widget>
-       <widget class="QLabel" name="etiquetaRC">
+       <widget class="QLabel" name="label_relacion_cortes">
         <property name="geometry">
          <rect>
           <x>150</x>
@@ -3392,7 +3392,7 @@ QDateEdit::down-arrow:focus
          <string>Producto (Pc)</string>
         </property>
        </widget>
-       <widget class="QLabel" name="etiquetaPc">
+       <widget class="QLabel" name="label_producto">
         <property name="geometry">
          <rect>
           <x>150</x>
@@ -3418,7 +3418,7 @@ QDateEdit::down-arrow:focus
          <string>Corte (Vc)</string>
         </property>
        </widget>
-       <widget class="QLabel" name="etiquetaVc">
+       <widget class="QLabel" name="label_cortante">
         <property name="geometry">
          <rect>
           <x>150</x>
@@ -3444,7 +3444,7 @@ QDateEdit::down-arrow:focus
          <string>Demanda por corte (Vs)</string>
         </property>
        </widget>
-       <widget class="QLabel" name="etiquetaVs">
+       <widget class="QLabel" name="label_demanda_corte">
         <property name="geometry">
          <rect>
           <x>150</x>
@@ -3457,7 +3457,7 @@ QDateEdit::down-arrow:focus
          <string>0</string>
         </property>
        </widget>
-       <widget class="QComboBox" name="cbNRamas">
+       <widget class="QComboBox" name="combo_box_n_ramas">
         <property name="enabled">
          <bool>true</bool>
         </property>
@@ -3470,7 +3470,7 @@ QDateEdit::down-arrow:focus
          </rect>
         </property>
        </widget>
-       <widget class="QComboBox" name="cbAreaEstribos">
+       <widget class="QComboBox" name="combo_box_diametro_estribo">
         <property name="enabled">
          <bool>true</bool>
         </property>
@@ -3483,7 +3483,7 @@ QDateEdit::down-arrow:focus
          </rect>
         </property>
        </widget>
-       <widget class="QLabel" name="etiquetaAV">
+       <widget class="QLabel" name="label_area_transversal_refuerzo">
         <property name="geometry">
          <rect>
           <x>150</x>
@@ -3509,7 +3509,7 @@ QDateEdit::down-arrow:focus
          <string>Separación máxima requerida (Smr)</string>
         </property>
        </widget>
-       <widget class="QLabel" name="etiquetaSmcal">
+       <widget class="QLabel" name="label_separacion_maxima_requerida">
         <property name="geometry">
          <rect>
           <x>490</x>
@@ -3535,7 +3535,7 @@ QDateEdit::down-arrow:focus
          <string>Separación máxima normativa (Smn)</string>
         </property>
        </widget>
-       <widget class="QLabel" name="etiquetaSmnorma">
+       <widget class="QLabel" name="label_separacion_maxima_norma">
         <property name="geometry">
          <rect>
           <x>490</x>
@@ -3577,7 +3577,7 @@ QDateEdit::down-arrow:focus
          <string/>
         </property>
        </widget>
-       <widget class="QLabel" name="etiquetaLc">
+       <widget class="QLabel" name="label_longitud_confinamiento">
         <property name="geometry">
          <rect>
           <x>490</x>
@@ -3674,7 +3674,7 @@ QDateEdit::down-arrow:focus
          <string>Separación máxima inconfinada solapada (Sgsm)</string>
         </property>
        </widget>
-       <widget class="QLabel" name="etiquetaSgm">
+       <widget class="QLabel" name="label_separacion_maxima_inconfinada">
         <property name="geometry">
          <rect>
           <x>490</x>
@@ -3700,7 +3700,7 @@ QDateEdit::down-arrow:focus
          <string>Separación máxima inconfinada (Sgm)</string>
         </property>
        </widget>
-       <widget class="QLabel" name="etiquetaSgsm">
+       <widget class="QLabel" name="label_separacion_maxima_inconfinada_solapada">
         <property name="geometry">
          <rect>
           <x>490</x>

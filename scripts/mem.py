@@ -1710,7 +1710,9 @@ class DatosMemoria():
         self.lista_barras_longitudinales = ['', '#4', '#5', '#6', '#7', '#8', '#9', '#10', '#11', '#14', '#18']
         self.lista_ubicacion_columna = ['', 'INTERIOR', 'LATERAL']
         self.lista_direcciones = ['', 'X', 'Y']
-        self.lista_cantidad = ['', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']  
+        self.lista_cantidad = ['', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+        self.lista_cantidad_ramales = ['', '1', '2', '3', '4', '5', '6', '7', '8']
+        self.lista_barras_transversales = ['', '#2', '#3', '#4', '#5', '#6', '#7']
 
     def carga_datos_base(self, ubicacion_base, manejo_base):
         self.proyecto = manejo_base.consultar_dato(

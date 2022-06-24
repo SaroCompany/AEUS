@@ -319,7 +319,13 @@ class ConexionesVPrincipal():
         self.line_edit_corte_ultimo_viga.textChanged.connect(
             lambda: self.cortes_maximos())
         # ACERO ESTRIBO - COMBO BOX
+        self.combo_box_n_ramas.currentIndexChanged.connect(
+            lambda: self.ayuda_area_transversal_refuerzo())
+        self.combo_box_diametro_estribo.currentIndexChanged.connect(
+            lambda: self.ayuda_area_transversal_refuerzo())
         # ACERO ESTRIBO - LINE EDIT
+        self.line_edit_fuerza_axial.textChanged.connect(
+            lambda: self.guardar_fuerza_axial())
 
     def conectar_clicks_frame_diseno_viga(self):
         pass

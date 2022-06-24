@@ -491,7 +491,6 @@ class CalculosInternosVPrincipal():
             'Ve_2', 'CALCVIG', 'VALOR', self.corte_derecho)
         self.guardar_cambio(
             'Vp', 'CALCVIG', 'VALOR', self.corte_capacidad)
-        
 
     def corte_maximo(self, acero_sup, acero_inf):
         self.profundidades_bloques_whitney = []
@@ -511,7 +510,7 @@ class CalculosInternosVPrincipal():
             'd', 'data/base', 'CALCVIG', 'VALOR')
         self.carga_muerta_viga = self.sobrecarga_permanente_viga + self.peso_propio_viga
         self.aceros_requeridos = [acero_sup, acero_inf]
-        self.carga_ultima_viga = 1.2*self.carga_muerta_viga + 1.6*self.sobrecarga_variable_viga
+        self.carga_ultima_viga = 1.2*self.carga_muerta_viga + 1.0*self.sobrecarga_variable_viga
         self.corte_gravitacional = self.carga_ultima_viga*self.longitud_libre_viga/2
         #Análisis de casos
         for acero in self.aceros_requeridos:
@@ -523,22 +522,80 @@ class CalculosInternosVPrincipal():
         data = [self.aceros_requeridos, self.carga_ultima_viga, self.corte_gravitacional, self.momentos_maximos_probables, self.profundidades_bloques_whitney, self.corte_por_capacidad]
         return data
 
-    def ayuda_area_transversal_refuerzo(self, nRama, areaEstribo):
-        return nRama*areaEstribo/100
-
-    def diseno_estribos(self, Vp, Vd, Pu, bw, h, fc, d, Phiv, AV, fy, db):
-        self.relacionCortes = Vp/Vd
-        self.Ag = bw*h #Area gruesa de acero
-        self.Pc = self.Ag*fc/20000 #Producto a tonf
-        if self.relacionCortes>=0.5 and Pu<=self.Pc:
-            self.Vc = 0
+    def ayuda_area_transversal_refuerzo(self):
+        try:
+            self.n_ramas = int(self.combo_box_n_ramas.currentText())
+        except ValueError:
+            self.n_ramas = 0
+        self.diametro_estribo = self.combo_box_diametro_estribo.currentText()
+        if self.diametro_estribo != '':
+            self.area_estribo = self.manejo_datos.consultar_dato(
+                self.diametro_estribo, 'data/base', 'BARS', 'AREA')
         else:
-            self.Vc = 0.53*(1+Pu/(140*self.Ag))*(fc**0.5)*bw*d #Cortante
-        self.Vs = Vd/Phiv-self.Vc #Demanda por corte
-        self.Smcal = AV*fy*d/(self.Vs*1000) #Separacion maxima calculada
-        self.Smnorma = min(d/4,6*(db/10),15) #Separacion maxima norma
-        self.Smreq = max(self.Smcal,self.Smnorma) #Separacion maxima requerida
-        self.Lc = 2*h #Longitud de confinamiento
-        self.Sgm = d/2 #Separacion maxima inconfinada
-        self.Sgsm = min(10,d/4) #Separacion maxima inconfinada solapada
-        return self.relacionCortes, self.Ag, self.Pc,self.Vc,self.Vs,self.Smcal,self.Smnorma,self.Smreq,self.Lc,self.Sgm,self.Sgsm
+            self.area_estribo = 0
+        self.area_transversal_refuerzo = self.n_ramas*self.area_estribo/100
+        self.label_area_transversal_refuerzo.setText(str(self.area_transversal_refuerzo))
+        self.guardar_cambio(
+            'AV', 'CALCVIG', 'VALOR', self.area_transversal_refuerzo)
+        self.diseno_estribos()
+    
+    def guardar_fuerza_axial(self):
+        try:
+            self.fuerza_axial = float(self.line_edit_fuerza_axial.text())
+        except ValueError:
+            self.fuerza_axial = 0
+        self.guardar_cambio(
+            'Pu', 'CALCVIG', 'VALOR', self.fuerza_axial)
+        self.diseno_estribos()
+
+    def diseno_estribos(self):
+        self.corte_capacidad = self.manejo_datos.consultar_dato(
+            'Vp', 'data/base', 'CALCVIG', 'VALOR')
+        self.corte_izquierdo = self.manejo_datos.consultar_dato(
+            'Ve_1', 'data/base', 'CALCVIG', 'VALOR')
+        self.corte_derecho = self.manejo_datos.consultar_dato(
+            'Ve_2', 'data/base', 'CALCVIG', 'VALOR')
+        self.corte_ultimo_viga = self.manejo_datos.consultar_dato(
+            'Vu', 'data/base', 'CALCVIG', 'VALOR')
+        self.base_viga_d = self.manejo_datos.consultar_dato(
+            'bw', 'data/base', 'DATVIG', 'VALOR')
+        self.altura_viga_d = self.manejo_datos.consultar_dato(
+            'h', 'data/base', 'DATVIG', 'VALOR')
+        self.resistencia_concreto = self.manejo_datos.consultar_dato(
+            'fc', 'data/base', 'PROPMATS', 'VALOR')
+        self.fluencia_acero = self.manejo_datos.consultar_dato(
+            'fy', 'data/base', 'PROPMATS', 'VALOR')
+        self.fuerza_axial = self.manejo_datos.consultar_dato(
+            'Pu', 'data/base', 'CALCVIG', 'VALOR')
+        self.altura_util = self.manejo_datos.consultar_dato(
+            'd', 'data/base', 'CALCVIG', 'VALOR')
+        self.minoracion_resistencia_corte = self.manejo_datos.consultar_dato(
+            'phiv', 'data/base', 'PROPMATS', 'VALOR')
+        self.area_transversal_refuerzo = self.manejo_datos.consultar_dato(
+            'AV', 'data/base', 'CALCVIG', 'VALOR')
+        self.diametro_mayor_barra_longitudinal = 22.2
+        self.corte_maximo_probable = max(self.corte_izquierdo, self.corte_derecho)
+        self.corte_diseno = max(self.corte_ultimo_viga, self.corte_maximo_probable)
+        self.relacion_cortes = round(self.corte_capacidad/self.corte_diseno, 2)
+        self.area_gruesa = self.base_viga_d*self.altura_viga_d
+        self.producto = self.area_gruesa*self.resistencia_concreto/20000
+        if self.relacion_cortes>=0.5 and self.fuerza_axial<=self.producto:
+            self.cortante = 0
+        else:
+            self.cortante = 0.53*(1+self.fuerza_axial/(140*self.area_gruesa))*(self.resistencia_concreto**0.5)*self.base_viga_d*self.altura_util
+        self.demanda_corte = self.corte_diseno/self.minoracion_resistencia_corte-self.cortante
+        self.separacion_maxima_calculada_estribos = self.area_transversal_refuerzo*self.fluencia_acero*self.altura_util/(self.demanda_corte*1000)
+        self.separacion_maxima_norma = min(self.altura_util/4, 6*(self.diametro_mayor_barra_longitudinal/10), 15)
+        self.separacion_maxima_requerida = min(self.separacion_maxima_calculada_estribos,self.separacion_maxima_norma)
+        self.longitud_confinamiento = 2*self.altura_viga_d
+        self.separacion_maxima_inconfinada = self.altura_util/2
+        self.separacion_maxima_inconfinada_solapada = min(10,self.altura_util/4)
+        self.label_relacion_cortes.setText(str(self.relacion_cortes))
+        self.label_producto.setText(str(self.producto))
+        self.label_cortante.setText(str(self.cortante))
+        self.label_demanda_corte.setText(str(self.demanda_corte))
+        self.label_separacion_maxima_requerida.setText(str(self.separacion_maxima_requerida))
+        self.label_separacion_maxima_norma.setText(str(self.separacion_maxima_norma))
+        self.label_longitud_confinamiento.setText(str(self.longitud_confinamiento))
+        self.label_separacion_maxima_inconfinada.setText(str(self.separacion_maxima_inconfinada))
+        self.label_separacion_maxima_inconfinada_solapada.setText(str(self.separacion_maxima_inconfinada_solapada))

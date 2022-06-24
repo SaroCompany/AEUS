@@ -596,4 +596,11 @@ class CargarDatosVPrincipal():
             self.datos_memoria.sobrecarga_variable_viga))
         self.line_edit_corte_ultimo_viga.setText(str(
             self.datos_memoria.corte_ultimo_viga))
+        # SECCION DISEÑO ESTRIBOS - COMBO BOX
+        self.combo_box_n_ramas.clear()
+        self.combo_box_n_ramas.addItems(
+            self.datos_memoria.lista_cantidad_ramales)
+        self.combo_box_diametro_estribo.clear()
+        self.combo_box_diametro_estribo.addItems(
+            self.datos_memoria.lista_barras_transversales)
         
