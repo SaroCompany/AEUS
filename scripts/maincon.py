@@ -12,6 +12,8 @@ class ConexionesVPrincipal():
             lambda: self.cambiar_stacks(4))
         self.boton_frame_diseno_viga.clicked.connect(
             lambda: self.cambiar_stacks(0))
+        self.boton_pdf_viga.clicked.connect(
+            lambda: self.generar_pdf_viga())
 
     def conectar_acciones_ventana_principal(self):
         self.action_materiales.triggered.connect(

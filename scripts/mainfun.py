@@ -3,6 +3,7 @@ import numpy
 from scripts.bars import VentanaBarras
 from scripts.mats import VentanaMateriales
 import matplotlib.pyplot as plt
+from scripts.pdf import GenerarReportePDF
 
 class FuncionesVPrincipal():
 
@@ -1542,3 +1543,7 @@ class FuncionesVPrincipal():
     def abrir_ventana_barras(self):
         self.ventana_barras = VentanaBarras()
         self.ventana_barras.show()
+    
+    def generar_pdf_viga(self):
+        pdf_viga = GenerarReportePDF()
+        pdf_viga.crear_pdf_viga()

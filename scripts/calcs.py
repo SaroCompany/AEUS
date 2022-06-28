@@ -196,7 +196,7 @@ class CalculosInternosVPrincipal():
         self.momento_ultimo = momento_ultimo_resultado*1000*100
         self.profundidad_bloque_whitney = self.altura_util - (self.altura_util**2 - 2*self.momento_ultimo/(0.85*self.resistencia_concreto*self.parametro_phib*self.base_viga_d))**(1/2)
         self.profundidad_eje_neutro = self.profundidad_bloque_whitney/self.parametro_B1
-        self.profundidad_eje_neutro_maximo_falla_traccion = (self.deformacion_ultima_concreto/(self.deformacion_ultima_concreto+self.deformacion_minima_acero))*self.altura_util
+        self.profundidad_eje_neutro_maximo_falla_traccion = ((self.deformacion_ultima_concreto*self.altura_util)/(self.deformacion_ultima_concreto+self.deformacion_minima_acero))
         try:
             if self.profundidad_eje_neutro <= self.profundidad_eje_neutro_maximo_falla_traccion:
                 self.acero_calculado = self.momento_ultimo/(self.parametro_phib*self.fluencia_acero*(self.altura_util-self.profundidad_bloque_whitney/2))
@@ -599,3 +599,29 @@ class CalculosInternosVPrincipal():
         self.label_longitud_confinamiento.setText(str(self.longitud_confinamiento))
         self.label_separacion_maxima_inconfinada.setText(str(self.separacion_maxima_inconfinada))
         self.label_separacion_maxima_inconfinada_solapada.setText(str(self.separacion_maxima_inconfinada_solapada))
+        self.guardar_cambio(
+            'Ve', 'CALCVIG', 'VALOR', self.corte_maximo_probable)
+        self.guardar_cambio(
+            'Vd', 'CALCVIG', 'VALOR', self.corte_diseno)
+        self.guardar_cambio(
+            'RC', 'CALCVIG', 'VALOR', self.relacion_cortes)
+        self.guardar_cambio(
+            'Ag', 'CALCVIG', 'VALOR', self.area_gruesa)
+        self.guardar_cambio(
+            'Pc', 'CALCVIG', 'VALOR', self.producto)
+        self.guardar_cambio(
+            'Vc', 'CALCVIG', 'VALOR', self.cortante)
+        self.guardar_cambio(
+            'Vs', 'CALCVIG', 'VALOR', self.demanda_corte)
+        self.guardar_cambio(
+            'Smcal', 'CALCVIG', 'VALOR', self.separacion_maxima_calculada_estribos)
+        self.guardar_cambio(
+            'Smnorma', 'CALCVIG', 'VALOR', self.separacion_maxima_norma)
+        self.guardar_cambio(
+            'Smreq', 'CALCVIG', 'VALOR', self.separacion_maxima_requerida)
+        self.guardar_cambio(
+            'Lc', 'CALCVIG', 'VALOR', self.longitud_confinamiento)
+        self.guardar_cambio(
+            'Sgm', 'CALCVIG', 'VALOR', self.separacion_maxima_inconfinada)
+        self.guardar_cambio(
+            'Sgsm', 'CALCVIG', 'VALOR', self.separacion_maxima_inconfinada_solapada)

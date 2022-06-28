@@ -603,4 +603,28 @@ class CargarDatosVPrincipal():
         self.combo_box_diametro_estribo.clear()
         self.combo_box_diametro_estribo.addItems(
             self.datos_memoria.lista_barras_transversales)
+        # SECCION DISEÑO ESTRIBOS - LABEL
+        self.label_area_transversal_refuerzo.setText(str(
+            self.datos_memoria.area_transversal_refuerzo))
+        self.label_relacion_cortes.setText(str(
+            self.datos_memoria.relacion_cortes))
+        self.label_producto.setText(str(
+            self.datos_memoria.producto))
+        self.label_cortante.setText(str(
+            self.datos_memoria.cortante))
+        self.label_demanda_corte.setText(str(
+            self.datos_memoria.demanda_corte))
+        self.label_separacion_maxima_requerida.setText(str(
+            self.datos_memoria.separacion_maxima_requerida))
+        self.label_separacion_maxima_norma.setText(str(
+            self.datos_memoria.separacion_maxima_norma))
+        self.label_longitud_confinamiento.setText(str(
+            self.datos_memoria.longitud_confinamiento))
+        self.label_separacion_maxima_inconfinada.setText(str(
+            self.datos_memoria.separacion_maxima_inconfinada))
+        self.label_separacion_maxima_inconfinada_solapada.setText(str(
+            self.datos_memoria.separacion_maxima_inconfinada_solapada))
+        # SECCION DISEÑO ESTRIBOS - LINE EDIT
+        self.line_edit_fuerza_axial.setText(str(
+            self.datos_memoria.fuerza_axial))
         

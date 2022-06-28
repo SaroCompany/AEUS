@@ -2147,6 +2147,14 @@ class DatosMemoria():
             '#18', ubicacion_base, 'BARS', 'AREA')
         self.altura_util = manejo_base.consultar_dato(
             'd', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.chequeo_limite_1 = manejo_base.consultar_dato(
+            'chk1', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.chequeo_limite_2 = manejo_base.consultar_dato(
+            'chk2', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.acero_minimo_1 = manejo_base.consultar_dato(
+            'Asmin_1', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.acero_minimo_2 = manejo_base.consultar_dato(
+            'Asmin_2', ubicacion_base, 'CALCVIG', 'VALOR')
         self.acero_minimo = manejo_base.consultar_dato(
             'Asmin', ubicacion_base, 'CALCVIG', 'VALOR')
         self.acero_requerido_1 = manejo_base.consultar_dato(
@@ -2293,3 +2301,33 @@ class DatosMemoria():
             'Ve_2', ubicacion_base, 'CALCVIG', 'VALOR')
         self.corte_capacidad = manejo_base.consultar_dato(
             'Vp', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.area_transversal_refuerzo = manejo_base.consultar_dato(
+            'AV', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.fuerza_axial = manejo_base.consultar_dato(
+            'Pu', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.corte_maximo_probable = manejo_base.consultar_dato(
+            'Ve', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.corte_diseno = manejo_base.consultar_dato(
+            'Vd', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.relacion_cortes = manejo_base.consultar_dato(
+            'RC', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.area_gruesa = manejo_base.consultar_dato(
+            'Ag', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.producto = manejo_base.consultar_dato(
+            'Pc', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.cortante = manejo_base.consultar_dato(
+            'Vc', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.demanda_corte = manejo_base.consultar_dato(
+            'Vs', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.separacion_maxima_calculada_estribos = manejo_base.consultar_dato(
+            'Smcal', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.separacion_maxima_norma = manejo_base.consultar_dato(
+            'Smnorma', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.separacion_maxima_requerida = manejo_base.consultar_dato(
+            'Smreq', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.longitud_confinamiento = manejo_base.consultar_dato(
+            'Lc', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.separacion_maxima_inconfinada = manejo_base.consultar_dato(
+            'Sgm', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.separacion_maxima_inconfinada_solapada = manejo_base.consultar_dato(
+            'Sgsm', ubicacion_base, 'CALCVIG', 'VALOR')
