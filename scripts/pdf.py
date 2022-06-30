@@ -40,6 +40,28 @@ class GenerarReportePDF():
         else:
             self.insertar_texto(Story, styles['Justify'], 'c > cmax : Aumentar la sección')
         self.insertar_texto(Story, styles['Justify'], f'Asreq = max( Mu/(Phib*fy*(d-a/2)), Asmin) = {round(Asreq, 2)} cm2')
+    
+    def insertar_texto_acero_centro_ductilidad(self, Story, styles, ide, AsIzq, AsDer, AsCenReq, AsCenDuc, AsCen):
+        self.insertar_texto(Story, styles['Justify'], f'As{ide}Izq impuesto = {AsIzq} ')
+        self.insertar_texto(Story, styles['Justify'], f'As{ide}Der impuesto = {AsDer} ')
+        self.insertar_texto(Story, styles['Justify'], f'As{ide}Cen requerido = {AsCenReq} ')
+        self.insertar_texto(Story, styles['Justify'], f'As{ide}Cen ductil = max(AsCenReq, AsIzq/4, AsDer/4) = {AsCenDuc} ')
+        self.insertar_texto(Story, styles['Justify'], f'As{ide}Cen impuesto = {AsCen} ')
+
+    def insertar_texto_acero_extremo_ductilidad(self, Story, styles, iden, as_supreq, as_sup, as_induc, as_inf):
+        self.insertar_texto(Story, styles['Justify'], f'As{iden}Sup requerido = {round(as_supreq, 2)} cm2')
+        self.insertar_texto(Story, styles['Justify'], f'As{iden}Sup suministrado = {round(as_sup, 2)} cm2')
+        self.insertar_texto(Story, styles['Justify'], f'As{iden}Inf requerido = max(AsInfReq, AsSup/2) = {round(as_induc, 2)} cm2')
+        self.insertar_texto(Story, styles['Justify'], f'As{iden}Inf suministrado = {round(as_inf, 2)} cm2')
+    
+    def insertar_texto_casos_corte(self, Story, styles, Wu, Vg, a1, Mmp1, a2, Mmp2, Vp):
+        self.insertar_texto(Story, styles['Justify'], f'Wu = 1.2*Wcp + 1.6*Wcv = {round(Wu, 2)} tonf/m')
+        self.insertar_texto(Story, styles['Justify'], f'Vg = Wu*Ln/2 = {round(Vg, 2)} tonf')
+        self.insertar_texto(Story, styles['Justify'], f'a1 = Fsr*fy*As1_sup/(0.85*fc*bw) = {round(a1, 2)} cm')
+        self.insertar_texto(Story, styles['Justify'], f'Mmp1 = Fsr*fy*As1_sup*(d-a/2) = {round(Mmp1, 2)} tonf-m')
+        self.insertar_texto(Story, styles['Justify'], f'a2 = Fsr*fy*As1_inf/(0.85*fc*bw) = {round(a2, 2)} cm')
+        self.insertar_texto(Story, styles['Justify'], f'Mmp2 = Fsr*fy*As1_inf*(d-a/2) = {round(Mmp2, 2)} tonf-m')
+        self.insertar_texto(Story, styles['Justify'], f'Vp = (Mmp1+Mmp2)/Ln = {round(Vp, 2)} tonf')
 
     def crear_pdf_viga(self):
         pdfPath = easygui.filesavebox(filetypes=["*.pdf"], default="*.pdf")
@@ -197,247 +219,169 @@ class GenerarReportePDF():
             self.datos_memoria.profundidad_eje_neutro_6,
             self.datos_memoria.profundidad_eje_neutro_maximo_falla_traccion_6,
             self.datos_memoria.acero_requerido_6)
-        
-        
-        
-        
-        
-        '''
-        
-        Story.append(Spacer(1, 24))
-        ptext = '<font size="12">3.1.5 - Requisitos de acero por ductilidad</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
         Story.append(Spacer(1, 12))
-        ptext = '<font size="12">La resistencia a momento positivo en la cara del nodo, debe ser al menos igual que la mitad \
+        self.insertar_texto(Story, styles['Justify'], '3.1.5 - Requisitos de acero por ductilidad')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], 'La resistencia a momento positivo en la cara del nodo, debe ser al menos igual que la mitad \
                 de la resistencia a momento negativo proporcionada en esa misma cara. La resistencia a momento negativo o  \
                 positivo, en cualquier sección a lo largo de la longitud del miembro, debe ser al menos igual a un cuarto de \
-                la resistencia máxima a momento proporcionada en la cara de cualquiera de los nodos. </font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
+                la resistencia máxima a momento proporcionada en la cara de cualquiera de los nodos.')
         Story.append(Spacer(1, 12))
-        Story.append(imDuct)
+        Story.append(im_Duct)
         Story.append(Spacer(1, 12))
-        ptext = '<font size="12">2.5.1 - Extremo izquierdo</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto(Story, styles['Justify'], '3.1.5.1 - Extremo izquierdo')
         Story.append(Spacer(1, 12))
-        ptext = '<font size="12">As1_sup_req = %s cm2</font>'%round(self.datos_memoria.As1_sup_req,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">As1_sup = %s cm2 SUMINISTRADO</font>'%round(self.datos_memoria.As1_sup,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">As1_inf_req = max (As1_inf_cal, As1_sup/2) = %s cm2</font>'%round(self.datos_memoria.As1_inf_req,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">As1_inf = %s cm2 SUMINISTRADO</font>'%round(self.datos_memoria.As1_inf,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto_acero_extremo_ductilidad(Story, styles, 'Izq',
+            self.datos_memoria.acero_superior_izquierdo_ductil,
+            self.datos_memoria.acero_superior_izquierdo_impuesto,
+            self.datos_memoria.acero_inferior_izquierdo_ductil,
+            self.datos_memoria.acero_inferior_izquierdo_impuesto)
         Story.append(Spacer(1, 12))
-        ptext = '<font size="12">2.5.2 - Extremo derecho</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto(Story, styles['Justify'], '3.1.5.2 - Extremo derecho')
         Story.append(Spacer(1, 12))
-        ptext = '<font size="12">As2_sup_req = %s cm2</font>'%round(self.datos_memoria.As2_sup_req,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">As2_sup = %s cm2 SUMINISTRADO</font>'%round(self.datos_memoria.As2_sup,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">As2_inf_req = max (As1_inf_cal, As1_sup/2) = %s cm2</font>'%round(self.datos_memoria.As2_inf_req,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">As2_inf = %s cm2 SUMINISTRADO</font>'%round(self.datos_memoria.As2_inf,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 36))
-        ptext = '<font size="12">2.5.3 - Centro</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto_acero_extremo_ductilidad(Story, styles, 'Der',
+            self.datos_memoria.acero_superior_derecho_ductil,
+            self.datos_memoria.acero_superior_derecho_impuesto,
+            self.datos_memoria.acero_inferior_derecho_ductil,
+            self.datos_memoria.acero_inferior_derecho_impuesto)
         Story.append(Spacer(1, 12))
-        ptext = '<font size="12">As_sup_req = %s cm2</font>'%round(self.datos_memoria.As_sup_req,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">As_sup = %s cm2 SUMINISTRADO</font>'%round(self.datos_memoria.As_sup,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">As_inf_req = max (As_inf_cal, As_sup/2) = %s cm2</font>'%round(self.datos_memoria.As_inf_req,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">As_inf = %s cm2 SUMINISTRADO</font>'%round(self.datos_memoria.As_inf,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto(Story, styles['Justify'], '3.1.5.3 - Centro superior')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto_acero_centro_ductilidad(Story, styles, 'Sup',
+            self.datos_memoria.acero_superior_izquierdo_impuesto,
+            self.datos_memoria.acero_superior_derecho_impuesto,
+            self.datos_memoria.acero_requerido_3,
+            self.datos_memoria.acero_superior_centro_ductil,
+            self.datos_memoria.acero_superior_centro_impuesto)
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], '3.1.5.4 - Centro inferior')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto_acero_centro_ductilidad(Story, styles, 'Inf',
+            self.datos_memoria.acero_inferior_izquierdo_impuesto,
+            self.datos_memoria.acero_inferior_derecho_impuesto,
+            self.datos_memoria.acero_requerido_4,
+            self.datos_memoria.acero_inferior_centro_ductil,
+            self.datos_memoria.acero_inferior_centro_impuesto)
         Story.append(Spacer(1, 24))
-        ptext = '<font size="12">3 - Diseño del refuerzo transversal</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto(Story, styles['Justify'], '3.2 - Diseño del refuerzo transversal')
         Story.append(Spacer(1, 12))
-        ptext = '<font size="12">3.1 - Demanda por corte</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto(Story, styles['Justify'], '3.2.1 - Demanda por corte')
         Story.append(Spacer(1, 12))
-        ptext = '<font size="12">3.1.1 - Definición de casos de estudio:</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto(Story, styles['Justify'], '3.2.1.1 - Definición de casos de estudio:')
         Story.append(Spacer(1, 12))
-        ptext = '<font size="12">3.1.1.1 - Caso A: Momentos probables de la viga en sentido antihorario</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto(Story, styles['Justify'], '3.2.1.1.1 - Caso A: Momentos probables de la viga en sentido antihorario')
         Story.append(Spacer(1, 12))
-        Story.append(imMmpA)
+        Story.append(im_Mmp_A)
         Story.append(Spacer(1, 12))
-        ptext = '<font size="12">3.1.1.2 - Caso B: Momentos probables de la viga en sentido horario</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto(Story, styles['Justify'], '3.2.1.1.2 - Caso B: Momentos probables de la viga en sentido horario')
         Story.append(Spacer(1, 12))
-        Story.append(imMmpB)
+        Story.append(im_Mmp_B)
         Story.append(Spacer(1, 36))
-        ptext = '<font size="12">3.1.1.3 - Resistencia máxima a flexión</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto(Story, styles['Justify'], '3.2.1.1.3 - Resistencia máxima a flexión')
         Story.append(Spacer(1, 12))
-        Story.append(imDef)
+        Story.append(im_Def)
         Story.append(Spacer(1, 12))
-        ptext = '<font size="12">3.1.2 - Cargas distribuidas sobre la viga</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto(Story, styles['Justify'], '3.2.1.2 - Cargas distribuidas sobre la viga')
         Story.append(Spacer(1, 12))
-        ptext = '<font size="12">Wpp = Yc*bw*h = %s tonf/m</font>'%round(self.datos_memoria.Wpp,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Wscp = %s tonf/m</font>'%round(self.datos_memoria.Wscp,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Wcp = Wpp + Wscp = %s tonf/m</font>'%round(self.datos_memoria.Wcp,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Wcv = %s tonf/m</font>'%round(self.datos_memoria.Wcv,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto(Story, styles['Justify'], f'Wpp = Yc*bw*h = {self.datos_memoria.peso_propio_viga} tonf/m')
+        self.insertar_texto(Story, styles['Justify'], f'Wscp = {self.datos_memoria.sobrecarga_permanente_viga} tonf/m')
+        self.insertar_texto(Story, styles['Justify'], f'Wcp = Wpp + Wscp = {self.datos_memoria.carga_muerta_viga} tonf/m')
+        self.insertar_texto(Story, styles['Justify'], f'Wcv = {self.datos_memoria.sobrecarga_variable_viga} tonf/m')
         Story.append(Spacer(1, 12))
-        ptext = '<font size="12">3.1.3 - Análisis del caso A</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto(Story, styles['Justify'], '3.2.1.3 - Análisis del caso A')
         Story.append(Spacer(1, 12))
-        ptext = '<font size="12">Wu = 1.2*Wcp + Y*Wcv = %s tonf/m</font>'%round(self.datos_memoria.Wu_1,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Vg = Wu*Ln/2 = %s tonf</font>'%round(self.datos_memoria.Vg_1,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">a1 = Fsr*fy*As1_sup/(0.85*fc*bw) = %s cm</font>'%round(self.datos_memoria.a1_1,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Mmp1 = Fsr*fy*As1_sup*(d-a/2) = %s tonf-m</font>'%round(self.datos_memoria.Mmp1_1,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">a2 = Fsr*fy*As1_inf/(0.85*fc*bw) = %s cm</font>'%round(self.datos_memoria.a2_1,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Mmp2 = Fsr*fy*As1_inf*(d-a/2) = %s tonf-m</font>'%round(self.datos_memoria.Mmp2_1,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Vp = (Mmp1+Mmp2)/Ln = %s tonf</font>'%round(self.datos_memoria.Vp_1,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Ve1 = Vg + Vp = %s tonf</font>'%round(self.datos_memoria.Ve1_1,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Ve2 = Vg - Vp = %s tonf</font>'%round(self.datos_memoria.Ve2_1,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto_casos_corte(Story, styles,
+            self.datos_memoria.carga_ultima_viga_1,
+            self.datos_memoria.corte_gravitacional_1,
+            self.datos_memoria.profundidad_bloque_whitney_1_1,
+            self.datos_memoria.momento_maximo_probable_1_1,
+            self.datos_memoria.profundidad_bloque_whitney_2_1,
+            self.datos_memoria.momento_maximo_probable_2_1,
+            self.datos_memoria.corte_por_capacidad_1)
+        self.insertar_texto(Story, styles['Justify'], f'Ve1 = Vg + Vp = {round(self.datos_memoria.corte_probable_derecho_1, 3)} tonf')
+        self.insertar_texto(Story, styles['Justify'], f'Ve2 = Vg - Vp = {round(self.datos_memoria.corte_probable_izquierdo_1, 3)} tonf')
         Story.append(Spacer(1, 12))
-        Story.append(imVgA)
+        Story.append(im_Vg_A)
         Story.append(Spacer(1, 12))
-        ptext = '<font size="12">3.1.4 - Análisis del caso B</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto(Story, styles['Justify'], '3.2.1.4 - Análisis del caso B')
         Story.append(Spacer(1, 12))
-        ptext = '<font size="12">Wu = 1.2*Wcp + Fcv*Wcv = %s tonf/m</font>'%round(self.datos_memoria.Wu_2,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Vg = Wu*Ln/2 = %s tonf</font>'%round(self.datos_memoria.Vg_2,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">a1 = Fsr*fy*As1_sup/(0.85*fc*bw) = %s cm</font>'%round(self.datos_memoria.a1_2,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Mmp1 = Fsr*fy*As1_sup*(d-a/2) = %s tonf-m</font>'%round(self.datos_memoria.Mmp1_2,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">a2 = Fsr*fy*As1_inf/(0.85*fc*bw) = %s cm</font>'%round(self.datos_memoria.a2_2,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Mmp2 = Fsr*fy*As1_inf*(d-a/2) = %s tonf-m</font>'%round(self.datos_memoria.Mmp2_2,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Vp = (Mmp1+Mmp2)/Ln = %s tonf</font>'%round(self.datos_memoria.Vp_2,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Ve1 = Vg - Vp = %s tonf</font>'%round(self.datos_memoria.Ve1_2,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Ve2 = Vg + Vp = %s tonf</font>'%round(self.datos_memoria.Ve2_2,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto_casos_corte(Story, styles,
+            self.datos_memoria.carga_ultima_viga_2,
+            self.datos_memoria.corte_gravitacional_2,
+            self.datos_memoria.profundidad_bloque_whitney_1_2,
+            self.datos_memoria.momento_maximo_probable_1_2,
+            self.datos_memoria.profundidad_bloque_whitney_2_2,
+            self.datos_memoria.momento_maximo_probable_2_2,
+            self.datos_memoria.corte_por_capacidad_2)
+        self.insertar_texto(Story, styles['Justify'], f'Ve1 = Vg - Vp = {round(self.datos_memoria.corte_probable_derecho_2, 3)} tonf')
+        self.insertar_texto(Story, styles['Justify'], f'Ve2 = Vg + Vp = {round(self.datos_memoria.corte_probable_izquierdo_2, 3)} tonf')
         Story.append(Spacer(1, 12))
-        Story.append(imVgB)
+        Story.append(im_Vg_B)
         Story.append(Spacer(1, 12))
-        ptext = '<font size="12">Finalmente, se tiene:</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto(Story, styles['Justify'], 'Finalmente, se tiene:')
         Story.append(Spacer(1, 12))
-        ptext = '<font size="12">Ve_1 = max (Ve1_CasoA, Ve1_CasoB) = %s tonf</font>'%round(self.datos_memoria.Ve_1,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Ve_2 = max (Ve2_CasoA, Ve2_CasoB) = %s tonf</font>'%round(self.datos_memoria.Ve_2,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Vp = max (Vp_CasoA, Vp_CasoB) = %s tonf</font>'%round(self.datos_memoria.Vp,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto(Story, styles['Justify'], f'Ve_1 = max (Ve1_CasoA, Ve1_CasoB) = {self.datos_memoria.corte_izquierdo} tonf')
+        self.insertar_texto(Story, styles['Justify'], f'Ve_2 = max (Ve2_CasoA, Ve2_CasoB) = {self.datos_memoria.corte_derecho} tonf')
+        self.insertar_texto(Story, styles['Justify'], f'Vp = max (Vp_CasoA, Vp_CasoB) = {self.datos_memoria.corte_capacidad} tonf')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], '3.2.2 - Diseño del acero transversal')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], '3.2.2.1 - Corte de diseño')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], f'Corte último del análisis (Vu) = {self.datos_memoria.corte_ultimo_viga} tonf')
+        self.insertar_texto(Story, styles['Justify'], f'Corte máximo probable (Ve) = max (Ve_1, Ve_2) = {self.datos_memoria.corte_maximo_probable} tonf')
+        self.insertar_texto(Story, styles['Justify'], f'Corte de diseño (Vd) = max (Vu, Ve) = {self.datos_memoria.corte_diseno} tonf')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], '3.2.2.2 - Definición de la resistencia por corte del concreto')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], 'El refuerzo transversal debe diseñarse para resistir cortante suponiendo Vc = 0, \
+                donde ocurran simultáneamente las siguientes condiciones:')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], 'a) La fuerza cortante inducida por el sísmo Vp, que se determina a tráves de los \
+                momentos máximos probables de la viga, representa la mitad o más del corte de diseño.')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], 'b) La fuerza axial mayorada en la viga Pu, incluyendo la acción sísmica, es menor \
+                que el producto del área gruesa por la resistencia del concreto entre veinte.')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], f'Corte por capacidad (Vp) =  {self.datos_memoria.corte_capacidad} tonf')
+        self.insertar_texto(Story, styles['Justify'], f'Relación de cortes (Vp/Vd) =  {self.datos_memoria.relacion_cortes}')
+        self.insertar_texto(Story, styles['Justify'], f'Fuerza axial (Pu) =  {self.datos_memoria.fuerza_axial} tonf')
+        self.insertar_texto(Story, styles['Justify'], f'Área gruesa (Ag) = bw*h = {round(self.datos_memoria.area_gruesa, 2)} cm2')
+        self.insertar_texto(Story, styles['Justify'], f'Pc =  Ag*fc/20 = {self.datos_memoria.producto} tonf')
+        self.insertar_texto(Story, styles['Justify'], f'Vc =  {self.datos_memoria.cortante} tonf')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], '3.2.2.3 - Disposición del acero transversal en zona de confinamiento')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], 'a) Definición y separación máxima de estribos por demanda.')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], f'Vs =  Vd/phiv-Vc = {self.datos_memoria.demanda_corte} tonf')
+        self.insertar_texto(Story, styles['Justify'], f'AV =  NRamas*Ab = {self.datos_memoria.area_transversal_refuerzo} cm2')
+        self.insertar_texto(Story, styles['Justify'], f'Smcal = AV*fy*d/Vs = {self.datos_memoria.separacion_maxima_calculada_estribos} cm')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], 'b) Separación máxima normativa de estribos y longitud de confinamiento.')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], f'Smnorma = min(d/4, 6*db, 15) = {self.datos_memoria.separacion_maxima_norma} cm')
+        self.insertar_texto(Story, styles['Justify'], f'Lc = 2*h = {self.datos_memoria.longitud_confinamiento} cm')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], '3.2.2.4 - Disposición del acero transversal fuera de la zona de confinamiento')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], 'Se mantiene el mismo diámetro y definición de estribos utilizados en la zona de \
+                confinamiento, pero se hace un ajuste a la separación de los mismos.')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], 'a) sin solapes.')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], f'Sgm = d/2 = {self.datos_memoria.separacion_maxima_inconfinada} cm')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], 'b) con solape.')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], f'Sgsm = min (10, d/4) = {self.datos_memoria.separacion_maxima_inconfinada_solapada} cm')
         Story.append(Spacer(1, 24))
-        ptext = '<font size="12">3.2 - Diseño del acero transversal</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
+        self.insertar_texto(Story, styles['Justify'], '4 - RESULTADOS FINALES')
         Story.append(Spacer(1, 12))
-        ptext = '<font size="12">3.2.1 - Corte de diseño</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 12))
-        ptext = '<font size="12">Corte último del análisis (Vu) = %s tonf</font>'%round(self.datos_memoria.Vu,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        self.Ve = max(self.datos_memoria.Ve_1,self.datos_memoria.Ve_2)
-        ptext = '<font size="12">Corte máximo probable (Ve) = max (Ve_1, Ve_2) = %s tonf</font>'%round(self.Ve,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Corte de diseño (Vd) = max (Vu, Ve) = %s tonf</font>'%round(self.datos_memoria.Vd,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 12))
-        ptext = '<font size="12">3.2.2 - Definición de la resistencia por corte del concreto</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 12))
-        ptext = '<font size="12">El refuerzo transversal debe diseñarse para resistir cortante suponiendo Vc = 0, \
-                donde ocurran simultáneamente las siguientes condiciones:</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 36))
-        ptext = '<font size="12">a) La fuerza cortante inducida por el sísmo Vp, que se determina a tráves de los \
-                momentos máximos probables de la viga, representa la mitad o más del corte de diseño.</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 12))
-        ptext = '<font size="12">b) La fuerza axial mayorada en la viga Pu, incluyendo la acción sísmica, es menor \
-                que el producto del área gruesa por la resistencia del concreto entre veinte.</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 12))
-        ptext = '<font size="12">Corte por capacidad (Vp) =  %s tonf</font>'%round(self.datos_memoria.Vp,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Relación de cortes (Vp/Vd) =  %s</font>'%round(self.datos_memoria.RC,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Fuerza axial (Pu) =  %s tonf</font>'%round(self.datos_memoria.Pu,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Área gruesa (Ag) = bw*h = %s cm2</font>'%round(self.datos_memoria.Ag/1000,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Pc =  Ag*fc/20 = %s tonf</font>'%round(self.datos_memoria.Pc,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Vc =  %s tonf</font>'%round(self.datos_memoria.Vc,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 12))
-        ptext = '<font size="12">3.2.3 - Disposición del acero transversal en zona de confinamiento</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 12))
-        ptext = '<font size="12">a) Definición y separación máxima de estribos por demanda.</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 12))
-        ptext = '<font size="12">Vs =  Vd/phiv-Vc = %s tonf</font>'%round(self.datos_memoria.Vs,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">AV =  NRamas*Ab = %s cm2</font>'%round(self.datos_memoria.AV,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Smcal = AV*fy*d/Vs = %s cm</font>'%round(self.datos_memoria.Smcal,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 12))
-        ptext = '<font size="12">b) Separación máxima normativa de estribos y longitud de confinamiento.</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 12))
-        ptext = '<font size="12">Smnorma = min(d/4, 6*db, 15) = %s cm</font>'%round(self.datos_memoria.Smnorma,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        ptext = '<font size="12">Lc = 2*h = %s cm</font>'%round(self.datos_memoria.Lc,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 12))
-        ptext = '<font size="12">3.2.4 - Disposición del acero transversal fuera de la zona de confinamiento</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 12))
-        ptext = '<font size="12">Se mantiene el mismo diámetro y definición de estribos utilizados en la zona de \
-                confinamiento, pero se hace un ajuste a la separación de los mismos.</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 12))
-        ptext = '<font size="12">a) sin solapes.</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 12))
-        ptext = '<font size="12">Sgm = d/2 = %s cm</font>'%round(self.datos_memoria.Sgm,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 12))
-        ptext = '<font size="12">b) solapes.</font>'
-        Story.append(Paragraph(ptext, styles["Justify"]))
-        Story.append(Spacer(1, 12))
-        ptext = '<font size="12">Sgsm = min (10, d/4) = %s cm</font>'%round(self.datos_memoria.Sgsm,2)
-        Story.append(Paragraph(ptext, styles["Justify"]))
-
-
-
-
-        Story.append(Spacer(1, 24))
-        self.insertar_texto(Story, styles['Justify'], '4 - Resultados finales')
-        Story.append(Spacer(1, 12))
-        self.insertar_texto(Story, styles['Justify'], 'bw = '+str(self.datos_memoria.bw)+' cm')
-        self.insertar_texto(Story, styles['Justify'], 'h = '+str(self.datos_memoria.h)+' cm')
-        self.insertar_texto(Story, styles['Justify'], 'r = '+str(self.datos_memoria.r)+' cm')
-        self.insertar_texto(Story, styles['Justify'], 'dp = '+str(self.datos_memoria.dp)+' cm')
+        self.insertar_texto(Story, styles['Justify'], 'bw =  cm')
+        self.insertar_texto(Story, styles['Justify'], 'h =  cm')
+        self.insertar_texto(Story, styles['Justify'], 'r =  cm')
+        self.insertar_texto(Story, styles['Justify'], 'dp =  cm')
         self.insertar_texto(Story, styles['Justify'], 'As1_sup = ')
         self.insertar_texto(Story, styles['Justify'], 'As1_inf = ')
         self.insertar_texto(Story, styles['Justify'], 'As2_sup = ')
@@ -453,22 +397,10 @@ class GenerarReportePDF():
         Story.append(Spacer(1, 12))
         self.insertar_texto(Story, styles['Justify'], '5.1 - Disposición del acero transversal')
         Story.append(Spacer(1, 12))
-        Story.append(imDisposicionAceroTransversal)
-        Story.append(Spacer(1, 12))
+        Story.append(im_dis_acero_tran)
+        Story.append(Spacer(1, 36))
         self.insertar_texto(Story, styles['Justify'], '5.2 - Ubicación de solapes del acero longitudinal')
         Story.append(Spacer(1, 12))
-        Story.append(imUbicacionSolapesAceroLongitudinal)
-        Story.append(Spacer(1, 24))
-        self.insertar_texto(Story, styles['Justify'], '6 - Revisión de la ductilidad para la sección crítica')
-        Story.append(Spacer(1, 24))
-        Story.append(Spacer(1, 24))
-        self.insertar_texto(Story, styles['Justify'], '7 - Estimación de la ductilidad de entrepiso (mecanismo de columna fuerte-viga débil)')
+        Story.append(im_ubi_solapes_acero_long)
         Story.append(Spacer(1, 12))
-        
-        
-        
-
-        '''
-       
         self.doc.build(Story)
-

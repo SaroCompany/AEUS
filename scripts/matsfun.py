@@ -43,7 +43,7 @@ class FuncionesVMateriales():
         except ValueError:
             self.deformacion_cedente_acero = 0
         try:
-            self.deformacion_minima_acero = float(self.line_edit_deformacion_cedente_acero.text())
+            self.deformacion_minima_acero = float(self.line_edit_deformacion_minima_acero.text())
         except ValueError:
             self.deformacion_minima_acero = 0
         try:

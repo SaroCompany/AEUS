@@ -52,7 +52,7 @@ class CalculosInternosVPrincipal():
         self.altura_util = self.altura_viga_d - self.recubrimiento_inferior_viga
         self.chequeo_limite_1 = 4*self.altura_util/100
         self.chequeo_limite_2 = 0.3*self.altura_viga_d
-        self.peso_propio_viga = self.base_viga_d*self.altura_viga_d*self.longitud_libre_viga
+        self.peso_propio_viga = round((self.base_viga_d/100)*(self.altura_viga_d/100)*2.4, 4)
         self.acero_minimo_1 = 14/self.fluencia_acero*self.base_viga_d*self.altura_util
         self.acero_minimo_2 = 0.80*(self.resistencia_concreto)**(1/2)/self.fluencia_acero*self.base_viga_d*self.altura_util
         self.acero_minimo = round(max(self.acero_minimo_1, self.acero_minimo_2), 2)
@@ -87,6 +87,7 @@ class CalculosInternosVPrincipal():
         self.acero_inferior_derecho_ductil = self.acero_inferior_ductilidad(
             self.lista_aceros_requeridos_momentos[20], self.lista_aceros_requeridos_momentos[25])
         self.label_acero_inferior_derecho_ductil.setText(str(self.acero_inferior_derecho_ductil))
+        self.label_peso_propio_viga.setText(str(self.peso_propio_viga))
         self.guardar_cambio(
             'bw', 'DATVIG', 'VALOR', self.base_viga_d)
         self.guardar_cambio(
@@ -510,7 +511,7 @@ class CalculosInternosVPrincipal():
             'd', 'data/base', 'CALCVIG', 'VALOR')
         self.carga_muerta_viga = self.sobrecarga_permanente_viga + self.peso_propio_viga
         self.aceros_requeridos = [acero_sup, acero_inf]
-        self.carga_ultima_viga = 1.2*self.carga_muerta_viga + 1.0*self.sobrecarga_variable_viga
+        self.carga_ultima_viga = 1.2*self.carga_muerta_viga + 1.6*self.sobrecarga_variable_viga
         self.corte_gravitacional = self.carga_ultima_viga*self.longitud_libre_viga/2
         #Análisis de casos
         for acero in self.aceros_requeridos:
