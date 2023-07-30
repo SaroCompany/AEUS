@@ -263,7 +263,27 @@ class ConexionesVPrincipal():
         # DATOS VIGA - LINE EDIT
         self.line_edit_base_viga_d.textChanged.connect(
             lambda: self.acero_requerido_viga())
+        self.line_edit_altura_viga_d.textChanged.connect(
+            lambda: self.acero_requerido_viga())
+        self.line_edit_recubrimiento_inferior_viga.textChanged.connect(
+            lambda: self.acero_requerido_viga())
+        self.line_edit_recubrimiento_superior_viga.textChanged.connect(
+            lambda: self.acero_requerido_viga())
+        self.line_edit_longitud_libre_viga.textChanged.connect(
+            lambda: self.acero_requerido_viga())
         # MOMENTOS ANALISIS - LINE EDIT
+        self.line_edit_momento_negativo_izquierdo_viga.textChanged.connect(
+            lambda: self.acero_requerido_viga())
+        self.line_edit_momento_positivo_izquierdo_viga.textChanged.connect(
+            lambda: self.acero_requerido_viga())
+        self.line_edit_momento_negativo_centro_viga.textChanged.connect(
+            lambda: self.acero_requerido_viga())
+        self.line_edit_momento_positivo_centro_viga.textChanged.connect(
+            lambda: self.acero_requerido_viga())
+        self.line_edit_momento_negativo_derecho_viga.textChanged.connect(
+            lambda: self.acero_requerido_viga())
+        self.line_edit_momento_positivo_derecho_viga.textChanged.connect(
+            lambda: self.acero_requerido_viga())
         # ACERO DUCTIL - COMBO BOX
         self.combo_box_cantidad1_acero_superior_izquierdo.currentIndexChanged.connect(
             lambda: self.acero_impuesto_superior_izquierdo())

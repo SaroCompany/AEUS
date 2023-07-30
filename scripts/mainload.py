@@ -92,8 +92,11 @@ class CargarDatosVPrincipal():
         self.combo_box_resistencia_concreto.clear()
         self.combo_box_resistencia_concreto.addItems(
             self.datos_memoria.lista_resistencia_concreto)
-        self.combo_box_resistencia_concreto.setCurrentText(str(
-            int(self.datos_memoria.resistencia_concreto)))
+        try:
+            self.combo_box_resistencia_concreto.setCurrentText(str(
+                int(self.datos_memoria.resistencia_concreto_gen)))
+        except ValueError:
+            self.combo_box_resistencia_concreto.setCurrentText('')
         self.combo_box_masa_concreto.clear()
         self.combo_box_masa_concreto.addItems(
             self.datos_memoria.diccionario_modulo_elasticidad_concreto.keys())
@@ -216,12 +219,6 @@ class CargarDatosVPrincipal():
         self.line_edit_dimension_y_columna.setText(
             self.datos_memoria.dimension_y_columna)
         # SECCION COLUMNA - COMBO BOX
-        self.combo_box_barras_laterales_columna.clear()
-        self.combo_box_barras_laterales_columna.addItems(
-            self.datos_memoria.lista_barras_longitudinales)
-        self.combo_box_barras_centrales_columna.clear()
-        self.combo_box_barras_centrales_columna.addItems(
-            self.datos_memoria.lista_barras_longitudinales)
         self.combo_box_ubicacion_columna.clear()
         self.combo_box_ubicacion_columna.addItems(
             self.datos_memoria.lista_ubicacion_columna)

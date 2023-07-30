@@ -1708,7 +1708,7 @@ class DatosMemoria():
         }
         self.lista_uso_losa = ['NO se usa', 'Se usa']
         self.lista_barras_longitudinales = ['', '#4', '#5', '#6', '#7', '#8', '#9', '#10', '#11', '#14', '#18']
-        self.lista_ubicacion_columna = ['', 'INTERIOR', 'LATERAL']
+        self.lista_ubicacion_columna = ['', 'INTERIOR', 'LATERAL', 'ESQUINA']
         self.lista_direcciones = ['', 'X', 'Y']
         self.lista_cantidad = ['', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
         self.lista_cantidad_ramales = ['', '1', '2', '3', '4', '5', '6', '7', '8']
@@ -1785,7 +1785,7 @@ class DatosMemoria():
             'Or', ubicacion_base, 'GENERAL', 'DESCRIPCION')
         self.coeficiente_disipacion_energia = manejo_base.consultar_dato(
             'R', ubicacion_base, 'GENERAL', 'DESCRIPCION')
-        self.resistencia_concreto = manejo_base.consultar_dato(
+        self.resistencia_concreto_gen = manejo_base.consultar_dato(
             'fc', ubicacion_base, 'GENERAL', 'DESCRIPCION')
         self.masa_concreto = manejo_base.consultar_dato(
             'MasaConcreto', ubicacion_base, 'GENERAL', 'DESCRIPCION')

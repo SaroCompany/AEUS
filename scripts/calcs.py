@@ -21,15 +21,42 @@ class CalculosInternosVPrincipal():
             self.altura_viga_d = float(self.line_edit_altura_viga_d.text())
         except ValueError:
             self.altura_viga_d = 0
-        self.recubrimiento_inferior_viga = float(self.line_edit_recubrimiento_inferior_viga.text())
-        self.recubrimiento_superior_viga = float(self.line_edit_recubrimiento_superior_viga.text())
-        self.longitud_libre_viga = float(self.line_edit_longitud_libre_viga.text())
-        self.momento_negativo_izquierdo_viga = float(self.line_edit_momento_negativo_izquierdo_viga.text())
-        self.momento_positivo_izquierdo_viga = float(self.line_edit_momento_positivo_izquierdo_viga.text())
-        self.momento_negativo_centro_viga = float(self.line_edit_momento_negativo_centro_viga.text())
-        self.momento_positivo_centro_viga = float(self.line_edit_momento_positivo_centro_viga.text())
-        self.momento_negativo_derecho_viga = float(self.line_edit_momento_negativo_derecho_viga.text())
-        self.momento_positivo_derecho_viga = float(self.line_edit_momento_positivo_derecho_viga.text())
+        try:
+            self.recubrimiento_inferior_viga = float(self.line_edit_recubrimiento_inferior_viga.text())
+        except ValueError:
+            self.recubrimiento_inferior_viga = 0
+        try:
+            self.recubrimiento_superior_viga = float(self.line_edit_recubrimiento_superior_viga.text())
+        except ValueError:
+            self.recubrimiento_superior_viga = 0
+        try:
+            self.longitud_libre_viga = float(self.line_edit_longitud_libre_viga.text())
+        except ValueError:
+            self.longitud_libre_viga = 0
+        try:
+            self.momento_negativo_izquierdo_viga = float(self.line_edit_momento_negativo_izquierdo_viga.text())
+        except ValueError:
+            self.momento_negativo_izquierdo_viga = 0
+        try:
+            self.momento_positivo_izquierdo_viga = float(self.line_edit_momento_positivo_izquierdo_viga.text())
+        except ValueError:
+            self.momento_positivo_izquierdo_viga = 0
+        try:
+            self.momento_negativo_centro_viga = float(self.line_edit_momento_negativo_centro_viga.text())
+        except ValueError:
+            self.momento_negativo_centro_viga = 0
+        try:
+            self.momento_positivo_centro_viga = float(self.line_edit_momento_positivo_centro_viga.text())
+        except ValueError:
+            self.momento_positivo_centro_viga = 0
+        try:
+            self.momento_negativo_derecho_viga = float(self.line_edit_momento_negativo_derecho_viga.text())
+        except ValueError:
+            self.momento_negativo_derecho_viga = 0
+        try:
+            self.momento_positivo_derecho_viga = float(self.line_edit_momento_positivo_derecho_viga.text())
+        except ValueError:
+            self.momento_positivo_derecho_viga = 0
         self.fluencia_acero = self.manejo_datos.consultar_dato(
             'fy', 'data/base', 'PROPMATS', 'VALOR')
         self.resistencia_concreto = self.manejo_datos.consultar_dato(
@@ -195,13 +222,22 @@ class CalculosInternosVPrincipal():
 
     def acero_requerido_momento(self, momento_ultimo_resultado):
         self.momento_ultimo = momento_ultimo_resultado*1000*100
-        self.profundidad_bloque_whitney = self.altura_util - (self.altura_util**2 - 2*self.momento_ultimo/(0.85*self.resistencia_concreto*self.parametro_phib*self.base_viga_d))**(1/2)
+        try:
+            self.profundidad_bloque_whitney = self.altura_util - (self.altura_util**2 - 2*self.momento_ultimo/(0.85*self.resistencia_concreto*self.parametro_phib*self.base_viga_d))**(1/2)
+        except ZeroDivisionError:
+            self.profundidad_bloque_whitney = 0.0
         self.profundidad_eje_neutro = self.profundidad_bloque_whitney/self.parametro_B1
         self.profundidad_eje_neutro_maximo_falla_traccion = ((self.deformacion_ultima_concreto*self.altura_util)/(self.deformacion_ultima_concreto+self.deformacion_minima_acero))
         try:
             if self.profundidad_eje_neutro <= self.profundidad_eje_neutro_maximo_falla_traccion:
-                self.acero_calculado = self.momento_ultimo/(self.parametro_phib*self.fluencia_acero*(self.altura_util-self.profundidad_bloque_whitney/2))
+                try:
+                    self.acero_calculado = self.momento_ultimo/(self.parametro_phib*self.fluencia_acero*(self.altura_util-self.profundidad_bloque_whitney/2))
+                except ZeroDivisionError:
+                    self.acero_calculado = 0.0
                 self.acero_requerido = max(self.acero_calculado, self.acero_minimo)
+            else:
+                self.acero_calculado = 0
+                self.acero_requerido = 0
         except TypeError:
             self.acero_calculado = 0
             self.acero_requerido = 0
@@ -436,6 +472,10 @@ class CalculosInternosVPrincipal():
     def cortes_maximos(self):
         self.corte_maximo_caso_A()
         self.corte_maximo_caso_B()
+        try:
+            self.corte_ultimo_viga = float(self.line_edit_corte_ultimo_viga.text())
+        except ValueError:
+            self.corte_ultimo_viga = 0
         self.corte_izquierdo = round(max(self.caso_A[6], self.caso_B[6]), 3)
         self.corte_derecho = round(max(self.caso_A[7], self.caso_B[7]), 3)
         self.corte_capacidad = round(max(self.caso_A[5], self.caso_B[5]), 3)
@@ -492,15 +532,29 @@ class CalculosInternosVPrincipal():
             'Ve_2', 'CALCVIG', 'VALOR', self.corte_derecho)
         self.guardar_cambio(
             'Vp', 'CALCVIG', 'VALOR', self.corte_capacidad)
+        self.guardar_cambio(
+            'Vu', 'CALCVIG', 'VALOR', self.corte_ultimo_viga)
 
     def corte_maximo(self, acero_sup, acero_inf):
         self.profundidades_bloques_whitney = []
         self.momentos_maximos_probables = []
-        self.sobrecarga_permanente_viga = float(self.line_edit_sobrecarga_permanente_viga.text())
+        try:
+            self.sobrecarga_permanente_viga = float(self.line_edit_sobrecarga_permanente_viga.text())
+        except ValueError:
+            self.sobrecarga_permanente_viga = 0
         self.peso_propio_viga = float(self.label_peso_propio_viga.text())
-        self.sobrecarga_variable_viga = float(self.line_edit_sobrecarga_variable_viga.text())
-        self.longitud_libre_viga = float(self.line_edit_longitud_libre_viga.text())
-        self.base_viga_d = float(self.line_edit_base_viga_d.text())
+        try:
+            self.sobrecarga_variable_viga = float(self.line_edit_sobrecarga_variable_viga.text())
+        except ValueError:
+            self.sobrecarga_variable_viga = 0
+        try:
+            self.longitud_libre_viga = float(self.line_edit_longitud_libre_viga.text())
+        except ValueError:
+            self.longitud_libre_viga = 0
+        try:
+            self.base_viga_d = float(self.line_edit_base_viga_d.text())
+        except ValueError:
+            self.base_viga_d = 0
         self.sobrerresistencia_acero = self.manejo_datos.consultar_dato(
             'Fsr', 'data/base', 'PROPMATS', 'VALOR')
         self.fluencia_acero = self.manejo_datos.consultar_dato(
@@ -515,12 +569,24 @@ class CalculosInternosVPrincipal():
         self.corte_gravitacional = self.carga_ultima_viga*self.longitud_libre_viga/2
         #Análisis de casos
         for acero in self.aceros_requeridos:
-            self.profundidad_bloque_whitney = self.sobrerresistencia_acero*self.fluencia_acero*acero/(0.85*self.resistencia_concreto*self.base_viga_d)
+            try:
+                self.profundidad_bloque_whitney = self.sobrerresistencia_acero*self.fluencia_acero*acero/(0.85*self.resistencia_concreto*self.base_viga_d)
+            except ZeroDivisionError:
+                self.profundidad_bloque_whitney = 0.0
             self.momento_maximo_probable = (self.sobrerresistencia_acero*self.fluencia_acero*acero*(self.altura_util - self.profundidad_bloque_whitney/2))/100000
             self.profundidades_bloques_whitney.append(self.profundidad_bloque_whitney)
             self.momentos_maximos_probables.append(self.momento_maximo_probable)
-        self.corte_por_capacidad = (self.momentos_maximos_probables[0] + self.momentos_maximos_probables[1])/self.longitud_libre_viga
+        try:
+            self.corte_por_capacidad = (self.momentos_maximos_probables[0] + self.momentos_maximos_probables[1])/self.longitud_libre_viga
+        except ZeroDivisionError:
+            self.corte_por_capacidad = 0.0
         data = [self.aceros_requeridos, self.carga_ultima_viga, self.corte_gravitacional, self.momentos_maximos_probables, self.profundidades_bloques_whitney, self.corte_por_capacidad]
+        self.guardar_cambio(
+            'Wscp', 'CALCVIG', 'VALOR', self.sobrecarga_permanente_viga)
+        self.guardar_cambio(
+            'Wcv', 'CALCVIG', 'VALOR', self.sobrecarga_variable_viga)
+        self.guardar_cambio(
+            'Wpp', 'CALCVIG', 'VALOR', self.peso_propio_viga)
         return data
 
     def ayuda_area_transversal_refuerzo(self):
@@ -577,15 +643,24 @@ class CalculosInternosVPrincipal():
         self.diametro_mayor_barra_longitudinal = 22.2
         self.corte_maximo_probable = max(self.corte_izquierdo, self.corte_derecho)
         self.corte_diseno = max(self.corte_ultimo_viga, self.corte_maximo_probable)
-        self.relacion_cortes = round(self.corte_capacidad/self.corte_diseno, 2)
+        try:
+            self.relacion_cortes = round(self.corte_capacidad/self.corte_diseno, 2)
+        except ZeroDivisionError:
+            self.relacion_cortes = 0.0
         self.area_gruesa = self.base_viga_d*self.altura_viga_d
         self.producto = self.area_gruesa*self.resistencia_concreto/20000
         if self.relacion_cortes>=0.5 and self.fuerza_axial<=self.producto:
             self.cortante = 0
         else:
-            self.cortante = 0.53*(1+self.fuerza_axial/(140*self.area_gruesa))*(self.resistencia_concreto**0.5)*self.base_viga_d*self.altura_util
+            try:
+                self.cortante = 0.53*(1+self.fuerza_axial/(140*self.area_gruesa))*(self.resistencia_concreto**0.5)*self.base_viga_d*self.altura_util
+            except ZeroDivisionError:
+                self.cortante = 0.0
         self.demanda_corte = self.corte_diseno/self.minoracion_resistencia_corte-self.cortante
-        self.separacion_maxima_calculada_estribos = self.area_transversal_refuerzo*self.fluencia_acero*self.altura_util/(self.demanda_corte*1000)
+        try:
+            self.separacion_maxima_calculada_estribos = self.area_transversal_refuerzo*self.fluencia_acero*self.altura_util/(self.demanda_corte*1000)
+        except ZeroDivisionError:
+            self.separacion_maxima_calculada_estribos = 0.0
         self.separacion_maxima_norma = min(self.altura_util/4, 6*(self.diametro_mayor_barra_longitudinal/10), 15)
         self.separacion_maxima_requerida = min(self.separacion_maxima_calculada_estribos,self.separacion_maxima_norma)
         self.longitud_confinamiento = 2*self.altura_viga_d

@@ -592,15 +592,27 @@ class FuncionesVPrincipal():
                 self.line_edit_carga_viva_columna.text())
         except ValueError:
             self.carga_viva_columna = 0
-        self.peso_propio_viga_sobre_columna = self.longitud_viga_sobre_columna*(self.altura_viga_sobre_columna/100)*(self.base_viga_sobre_columna/100)*2.4/self.area_aferente_columna
-        self.carga_muerta_total_columna = self.carga_muerta_columna+self.peso_propio_viga_sobre_columna
+        self.resistencia_concreto = self.datos_memoria.resistencia_concreto/1000 # Ton/cm2
+        self.altura_de_piso = 3.3
+        self.seccion_columna = 35
+        try:
+            self.peso_propio_viga_sobre_columna = self.longitud_viga_sobre_columna*(self.altura_viga_sobre_columna/100)*(self.base_viga_sobre_columna/100)*2.4/self.area_aferente_columna
+        except ZeroDivisionError:
+            self.peso_propio_viga_sobre_columna = 0.0
+        try:
+            self.peso_propio_columnas_sobre_columna = self.altura_de_piso*(self.seccion_columna/100)*(self.seccion_columna/100)*2.4/self.area_aferente_columna
+        except ZeroDivisionError:
+            self.peso_propio_columnas_sobre_columna = 0.0
+        self.carga_muerta_total_columna = self.carga_muerta_columna+self.peso_propio_viga_sobre_columna+self.peso_propio_columnas_sobre_columna
         self.carga_ultima_columna = 1.2*self.area_aferente_columna*self.numero_pisos_columna*self.carga_muerta_total_columna+1.6*self.area_aferente_columna*self.numero_pisos_columna*self.carga_viva_columna
         if self.ubicacion_columna == '':
             self.area_gruesa_columna = 0
         elif self.ubicacion_columna == 'INTERIOR':
-            self.area_gruesa_columna = 18*self.carga_ultima_columna
+            self.area_gruesa_columna = 1.1*self.carga_ultima_columna/(0.65*self.resistencia_concreto)
         elif self.ubicacion_columna == 'LATERAL':
-            self.area_gruesa_columna = 43*self.carga_ultima_columna
+            self.area_gruesa_columna = 1.4*self.carga_ultima_columna/(0.65*self.resistencia_concreto)
+        elif self.ubicacion_columna == 'ESQUINA':
+            self.area_gruesa_columna = 1.5*self.carga_ultima_columna/(0.65*self.resistencia_concreto)
         if self.area_gruesa_columna != 0:
             self.raiz2_ag_columna = self.area_gruesa_columna**(1/2)
         else:
@@ -1311,8 +1323,11 @@ class FuncionesVPrincipal():
             self.longitud_muro*self.altura_muro*self.espesor_muro/100
             , 3)
         self.peso_muro = round(self.volumen_muro*1.6, 3)
-        self.sobrecarga_particiones_calculada = round(
-            self.peso_muro/self.area_total_losa, 3)
+        try:
+            self.sobrecarga_particiones_calculada = round(
+                self.peso_muro/self.area_total_losa, 3)
+        except ZeroDivisionError:
+            self.sobrecarga_particiones_calculada = 0.0
         self.label_volumen_muro.setText(str(
             self.volumen_muro))
         self.label_peso_muro.setText(str(
@@ -1409,12 +1424,18 @@ class FuncionesVPrincipal():
         else:
             self.periodo_aproximado = round(self.parametro_Ct*self.altura_total**self.parametro_a, 3)
         self.periodo_maximo = self.coeficiente_calculo_periodo_maximo*self.periodo_aproximado
-        self.periodo_inicial = round(
-            0.1*self.velocidad_pico_efectiva*self.parametro_Fv/(self.aceleracion_pico_efectiva*self.parametro_Fa)
-            , 3)
-        self.periodo_corto = round(
-            0.48*self.velocidad_pico_efectiva*self.parametro_Fv/(self.aceleracion_pico_efectiva*self.parametro_Fa)
-            , 3)
+        try:
+            self.periodo_inicial = round(
+                0.1*self.velocidad_pico_efectiva*self.parametro_Fv/(self.aceleracion_pico_efectiva*self.parametro_Fa)
+                , 3)
+        except ZeroDivisionError:
+            self.periodo_inicial = 0.0
+        try:
+            self.periodo_corto = round(
+                0.48*self.velocidad_pico_efectiva*self.parametro_Fv/(self.aceleracion_pico_efectiva*self.parametro_Fa)
+                , 3)
+        except ZeroDivisionError:
+            self.periodo_corto = 0.0
         self.periodo_largo = round(
             2.4*self.parametro_Fv
             , 3)
@@ -1471,7 +1492,10 @@ class FuncionesVPrincipal():
             self.periodo_fema)
 
     def funcion_line_edit_periodo_elegido(self):
-        self.periodo_fundamental = float(self.line_edit_periodo_elegido.text())
+        try:
+            self.periodo_fundamental = float(self.line_edit_periodo_elegido.text())
+        except ValueError:
+            self.periodo_fundamental = 0.0
         self.aceleracion_pico_efectiva = float(self.label_aceleracion_pico_efectiva.text())
         self.velocidad_pico_efectiva = float(self.label_velocidad_pico_efectiva.text())
         self.parametro_Fa = float(self.label_parametro_Fa.text())
@@ -1492,6 +1516,8 @@ class FuncionesVPrincipal():
             self.espectro_aceleracion = 1.2*self.velocidad_pico_efectiva*self.parametro_Fv*self.periodo_largo*self.coeficiente_importancia/(self.periodo_fundamental**2)
             self.condicion_espectro = 'Sa = 1.2*Av*Fv*TL*I/T**2'
             self.label_condicion_espectro.setText(self.condicion_espectro)
+        else:
+            self.espectro_aceleracion = 0.0
         self.label_espectro_aceleracion.setText(str(self.espectro_aceleracion))
         self.guardar_cambio(
             'Condicion_Espectro', 'FHE', 'VALOR',
