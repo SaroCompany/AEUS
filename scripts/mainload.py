@@ -504,6 +504,18 @@ class CargarDatosVPrincipal():
             self.datos_memoria.acero_superior_centro_impuesto))
         self.label_acero_inferior_centro_impuesto.setText(str(
             self.datos_memoria.acero_inferior_centro_impuesto))
+        self.label_acero_superior_izquierdo_impuesto_2.setText(str(
+            self.datos_memoria.acero_superior_izquierdo_impuesto))
+        self.label_acero_inferior_izquierdo_impuesto_2.setText(str(
+            self.datos_memoria.acero_inferior_izquierdo_impuesto))
+        self.label_acero_superior_derecho_impuesto_2.setText(str(
+            self.datos_memoria.acero_superior_derecho_impuesto))
+        self.label_acero_inferior_derecho_impuesto_2.setText(str(
+            self.datos_memoria.acero_inferior_derecho_impuesto))
+        self.label_acero_superior_centro_impuesto_2.setText(str(
+            self.datos_memoria.acero_superior_centro_impuesto))
+        self.label_acero_inferior_centro_impuesto_2.setText(str(
+            self.datos_memoria.acero_inferior_centro_impuesto))
         # SECCION ACERO DUCTIL - COMBO BOX
         self.combo_box_cantidad1_acero_superior_izquierdo.clear()
         self.combo_box_cantidad1_acero_superior_izquierdo.addItems(
@@ -603,16 +615,16 @@ class CargarDatosVPrincipal():
         # SECCION DISEÑO ESTRIBOS - LABEL
         self.label_area_transversal_refuerzo.setText(str(
             self.datos_memoria.area_transversal_refuerzo))
-        self.label_relacion_cortes.setText(str(
-            self.datos_memoria.relacion_cortes))
-        self.label_producto.setText(str(
-            self.datos_memoria.producto))
-        self.label_cortante.setText(str(
+        self.label_area_transversal_refuerzo_2.setText(str(
+            self.datos_memoria.area_transversal_refuerzo))
+        self.label_corte_diseno.setText(str(
+            self.datos_memoria.corte_diseno))
+        self.label_corte_concreto.setText(str(
             self.datos_memoria.cortante))
-        self.label_demanda_corte.setText(str(
+        self.label_corte_acero.setText(str(
             self.datos_memoria.demanda_corte))
-        self.label_separacion_maxima_requerida.setText(str(
-            self.datos_memoria.separacion_maxima_requerida))
+        self.label_separacion_estribo.setText(str(
+            self.datos_memoria.separacion_maxima_calculada_estribos))
         self.label_separacion_maxima_norma.setText(str(
             self.datos_memoria.separacion_maxima_norma))
         self.label_longitud_confinamiento.setText(str(
@@ -621,7 +633,17 @@ class CargarDatosVPrincipal():
             self.datos_memoria.separacion_maxima_inconfinada))
         self.label_separacion_maxima_inconfinada_solapada.setText(str(
             self.datos_memoria.separacion_maxima_inconfinada_solapada))
+        self.label_separacion_definitiva.setText(str(
+            self.datos_memoria.separacion_definitiva))
+        self.label_separacion_inconfinada.setText(str(
+            self.datos_memoria.separacion_inconfinada))
+        self.label_separacion_inconfinada_solapada.setText(str(
+            self.datos_memoria.separacion_inconfinada_solapada))
         # SECCION DISEÑO ESTRIBOS - LINE EDIT
-        self.line_edit_fuerza_axial.setText(str(
-            self.datos_memoria.fuerza_axial))
+        self.line_edit_separacion_definitiva.setText(str(
+            self.datos_memoria.separacion_definitiva))
+        self.line_edit_separacion_inconfinada.setText(str(
+            self.datos_memoria.separacion_inconfinada))
+        self.line_edit_separacion_inconfinada_solapada.setText(str(
+            self.datos_memoria.separacion_inconfinada_solapada))
         

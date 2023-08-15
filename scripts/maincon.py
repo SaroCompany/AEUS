@@ -346,8 +346,12 @@ class ConexionesVPrincipal():
         self.combo_box_diametro_estribo.currentIndexChanged.connect(
             lambda: self.ayuda_area_transversal_refuerzo())
         # ACERO ESTRIBO - LINE EDIT
-        self.line_edit_fuerza_axial.textChanged.connect(
-            lambda: self.guardar_fuerza_axial())
+        self.line_edit_separacion_definitiva.textChanged.connect(
+            lambda: self.guardar_separaciones())
+        self.line_edit_separacion_inconfinada.textChanged.connect(
+            lambda: self.guardar_separaciones())
+        self.line_edit_separacion_inconfinada_solapada.textChanged.connect(
+            lambda: self.guardar_separaciones())
 
     def conectar_clicks_frame_diseno_viga(self):
         pass

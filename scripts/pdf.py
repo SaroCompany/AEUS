@@ -29,7 +29,29 @@ class GenerarReportePDF():
     def insertar_texto(self, Story, styles, text):
         ptext = '<font size="12">%s</font>' %text
         Story.append(Paragraph(ptext, styles))
+
     
+    def insertar_texto_acero_requerido_momento(self, Story, styles, Mu, m, k, P, check_P, As, a, c, Et, Mr):
+        self.insertar_texto(Story, styles['Justify'], f'Mu = {round(Mu, 2)} N-mm')
+        self.insertar_texto(Story, styles['Justify'], f'm = fy/(0.85*fc) = {round(m, 5)}')
+        self.insertar_texto(Story, styles['Justify'], f'k = Mu/(b*d^2) = {round(k, 2)} MPa')
+        self.insertar_texto(Story, styles['Justify'], f'P = 1/m*(1-(1-2*m*k/(Phib*fy))^(1/2)) = {round(P, 5)}')
+        self.insertar_texto(Story, styles['Justify'], f'Cuantia requerida = {check_P}')
+        self.insertar_texto(Story, styles['Justify'], f'As = P*b*d = {round(As, 5)} cm2')
+        self.insertar_texto(Story, styles['Justify'], f'a = As*fy/(0.85*fc*b) = {round(a, 5)} mm')
+        self.insertar_texto(Story, styles['Justify'], f'c = a/B1 = {round(c, 5)} mm')
+        self.insertar_texto(Story, styles['Justify'], f'Et = (d-c)/c*Ecu = {round(Et, 3)} >= 0.005')
+        if Et >= 0.005:
+            self.insertar_texto(Story, styles['Justify'], 'Falla dúctil')
+        else:
+            self.insertar_texto(Story, styles['Justify'], 'NO CUMPLE')
+        self.insertar_texto(Story, styles['Justify'], f'Mr = Phib*As*fy*(d-a/2) = {round(Mr, 2)} N-mm >= Mu')
+        if Mr >= Mu:
+            self.insertar_texto(Story, styles['Justify'], 'CUMPLE')
+        else:
+            self.insertar_texto(Story, styles['Justify'], 'NO CUMPLE')
+    '''
+    # PARA UNIDADES TONF
     def insertar_texto_acero_requerido_momento(self, Story, styles, Mu, a, c, cmax, Asreq):
         self.insertar_texto(Story, styles['Justify'], f'Mu = {round(Mu, 2)} Tonf-m')
         self.insertar_texto(Story, styles['Justify'], f'a = d-(d^2-2*Mu/(0.85*fc*Phib*bw))^(1/2) = {round(a, 2)} cm')
@@ -40,7 +62,7 @@ class GenerarReportePDF():
         else:
             self.insertar_texto(Story, styles['Justify'], 'c > cmax : Aumentar la sección')
         self.insertar_texto(Story, styles['Justify'], f'Asreq = max( Mu/(Phib*fy*(d-a/2)), Asmin) = {round(Asreq, 2)} cm2')
-    
+    '''
     def insertar_texto_acero_centro_ductilidad(self, Story, styles, ide, AsIzq, AsDer, AsCenReq, AsCenDuc, AsCen):
         self.insertar_texto(Story, styles['Justify'], f'As{ide}Izq impuesto = {AsIzq} ')
         self.insertar_texto(Story, styles['Justify'], f'As{ide}Der impuesto = {AsDer} ')
@@ -88,6 +110,7 @@ class GenerarReportePDF():
         Story.append(im)
         Story.append(Spacer(1, 24))
         self.insertar_texto(Story, styles['Center'], 'DISEÑO DE UNA VIGA DE PÓRTICO RESISTENTE A MOMENTO')
+        self.insertar_texto(Story, styles['Center'], 'CON DISIPACIÓN ESPECIAL DE ENERGÍA')
         self.insertar_texto(Story, styles['Center'], 'Aplicación de la norma NSR-10 - Colombia')
         Story.append(Spacer(1, 24))
         self.insertar_texto(Story, styles['Justify'], '1 - DATOS')
@@ -98,7 +121,7 @@ class GenerarReportePDF():
         self.insertar_texto(Story, styles['Justify'], f'Altura de la viga (h) = {self.datos_memoria.altura_viga_d} cm')
         self.insertar_texto(Story, styles['Justify'], f'Recubrimiento inferior (r) = {self.datos_memoria.recubrimiento_inferior_viga} cm')
         self.insertar_texto(Story, styles['Justify'], f'Recubrimiento superior (rp) = {self.datos_memoria.recubrimiento_superior_viga} cm')
-        self.insertar_texto(Story, styles['Justify'], f'Longitud libre (Ln) = {self.datos_memoria.longitud_libre_viga} cm')
+        self.insertar_texto(Story, styles['Justify'], f'Longitud libre (Ln) = {self.datos_memoria.longitud_libre_viga} m')
         Story.append(Spacer(1, 12))
         self.insertar_texto(Story, styles['Justify'], '1.2 - Datos de los materiales')
         Story.append(Spacer(1, 12))
@@ -158,67 +181,155 @@ class GenerarReportePDF():
         Story.append(Spacer(1, 12))
         Story.append(im_Def)
         Story.append(Spacer(1, 12))
-        self.insertar_texto(Story, styles['Justify'], '3.1.3 - Acero mínimo')
+        self.insertar_texto(Story, styles['Justify'], '3.1.3 - Cuantia mínima y máxima')
         Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], f'Pmin_1 = 1.4/fy = {round(self.datos_memoria.cuantia_minima_1, 5)}')
+        self.insertar_texto(Story, styles['Justify'], f'Pmin_2 = 0.25*(fc^(1/2))/fy = {round(self.datos_memoria.cuantia_minima_2, 5)}')
+        self.insertar_texto(Story, styles['Justify'], f'Pmin = max(Pmin_1, Pmin_2) = {round(self.datos_memoria.cuantia_minima, 5)}')
+        self.insertar_texto(Story, styles['Justify'], f'Pb = 0.85*B1*fc/fy*(600/(600+fy)) = {round(self.datos_memoria.cuantia_balanceada, 5)}')
+        self.insertar_texto(Story, styles['Justify'], f'Pmax = 0.75*Pb = {round(self.datos_memoria.cuantia_maxima, 5)}')
+        '''
+        # PARA UNIDADES TONF
         self.insertar_texto(Story, styles['Justify'], f'Asmin_1 = 14*bw*d/fy = {round(self.datos_memoria.acero_minimo_1, 2)} cm2')
         self.insertar_texto(Story, styles['Justify'], f'Asmin_2 = 0.8*(fc^(1/2))*bw*d/fy = {round(self.datos_memoria.acero_minimo_2, 2)} cm2')
         self.insertar_texto(Story, styles['Justify'], f'Asmin = max(Asmin_1, Asmin_2) = {round(self.datos_memoria.acero_minimo, 2)} cm2')
+        '''
         Story.append(Spacer(1, 12))
         self.insertar_texto(Story, styles['Justify'], '3.1.4 - Acero longitudinal requerido conforme al análisis')
         Story.append(Spacer(1, 12))
         self.insertar_texto(Story, styles['Justify'], '3.1.4.1 - Acero requerido para el momento negativo izquierdo')
         Story.append(Spacer(1, 12))
+        
+        self.insertar_texto_acero_requerido_momento(Story, styles,
+            self.datos_memoria.momento_ultimo_1,
+            self.datos_memoria.parametro_m_1,
+            self.datos_memoria.parametro_k_1,
+            self.datos_memoria.cuantia_requerida_1,
+            self.datos_memoria.chequeo_cuantia_1,
+            self.datos_memoria.acero_requerido_1,
+            self.datos_memoria.altura_bloque_whitney_1,
+            self.datos_memoria.altura_eje_neutro_1,
+            self.datos_memoria.deformacion_acero_1,
+            self.datos_memoria.momento_resistente_1)
+        '''
+        # PARA UNIDADES TONF
         self.insertar_texto_acero_requerido_momento(Story, styles,
             self.datos_memoria.momento_negativo_izquierdo_viga,
             self.datos_memoria.profundidad_bloque_whitney_1,
             self.datos_memoria.profundidad_eje_neutro_1,
             self.datos_memoria.profundidad_eje_neutro_maximo_falla_traccion_1,
             self.datos_memoria.acero_requerido_1)
+        '''
         Story.append(Spacer(1, 12))
         self.insertar_texto(Story, styles['Justify'], '3.1.4.2 - Acero requerido para el momento positivo izquierdo')
         Story.append(Spacer(1, 12))
+        self.insertar_texto_acero_requerido_momento(Story, styles,
+            self.datos_memoria.momento_ultimo_2,
+            self.datos_memoria.parametro_m_2,
+            self.datos_memoria.parametro_k_2,
+            self.datos_memoria.cuantia_requerida_2,
+            self.datos_memoria.chequeo_cuantia_2,
+            self.datos_memoria.acero_requerido_2,
+            self.datos_memoria.altura_bloque_whitney_2,
+            self.datos_memoria.altura_eje_neutro_2,
+            self.datos_memoria.deformacion_acero_2,
+            self.datos_memoria.momento_resistente_2)
+        '''
         self.insertar_texto_acero_requerido_momento(Story, styles,
             self.datos_memoria.momento_positivo_izquierdo_viga,
             self.datos_memoria.profundidad_bloque_whitney_2,
             self.datos_memoria.profundidad_eje_neutro_2,
             self.datos_memoria.profundidad_eje_neutro_maximo_falla_traccion_2,
             self.datos_memoria.acero_requerido_2)
+        '''
         Story.append(Spacer(1, 12))
         self.insertar_texto(Story, styles['Justify'], '3.1.4.3 - Acero requerido para el momento negativo centro')
         Story.append(Spacer(1, 12))
+        self.insertar_texto_acero_requerido_momento(Story, styles,
+            self.datos_memoria.momento_ultimo_3,
+            self.datos_memoria.parametro_m_3,
+            self.datos_memoria.parametro_k_3,
+            self.datos_memoria.cuantia_requerida_3,
+            self.datos_memoria.chequeo_cuantia_3,
+            self.datos_memoria.acero_requerido_3,
+            self.datos_memoria.altura_bloque_whitney_3,
+            self.datos_memoria.altura_eje_neutro_3,
+            self.datos_memoria.deformacion_acero_3,
+            self.datos_memoria.momento_resistente_3)
+        '''
         self.insertar_texto_acero_requerido_momento(Story, styles,
             self.datos_memoria.momento_negativo_centro_viga,
             self.datos_memoria.profundidad_bloque_whitney_3,
             self.datos_memoria.profundidad_eje_neutro_3,
             self.datos_memoria.profundidad_eje_neutro_maximo_falla_traccion_3,
             self.datos_memoria.acero_requerido_3)
+        '''
         Story.append(Spacer(1, 12))
         self.insertar_texto(Story, styles['Justify'], '3.1.4.4 - Acero requerido para el momento positivo centro')
         Story.append(Spacer(1, 12))
+        self.insertar_texto_acero_requerido_momento(Story, styles,
+            self.datos_memoria.momento_ultimo_4,
+            self.datos_memoria.parametro_m_4,
+            self.datos_memoria.parametro_k_4,
+            self.datos_memoria.cuantia_requerida_4,
+            self.datos_memoria.chequeo_cuantia_4,
+            self.datos_memoria.acero_requerido_4,
+            self.datos_memoria.altura_bloque_whitney_4,
+            self.datos_memoria.altura_eje_neutro_4,
+            self.datos_memoria.deformacion_acero_4,
+            self.datos_memoria.momento_resistente_4)
+        '''
         self.insertar_texto_acero_requerido_momento(Story, styles,
             self.datos_memoria.momento_positivo_centro_viga,
             self.datos_memoria.profundidad_bloque_whitney_4,
             self.datos_memoria.profundidad_eje_neutro_4,
             self.datos_memoria.profundidad_eje_neutro_maximo_falla_traccion_4,
             self.datos_memoria.acero_requerido_4)
+        '''
         Story.append(Spacer(1, 12))
         self.insertar_texto(Story, styles['Justify'], '3.1.4.5 - Acero requerido para el momento negativo derecho')
         Story.append(Spacer(1, 12))
+        self.insertar_texto_acero_requerido_momento(Story, styles,
+            self.datos_memoria.momento_ultimo_5,
+            self.datos_memoria.parametro_m_5,
+            self.datos_memoria.parametro_k_5,
+            self.datos_memoria.cuantia_requerida_5,
+            self.datos_memoria.chequeo_cuantia_5,
+            self.datos_memoria.acero_requerido_5,
+            self.datos_memoria.altura_bloque_whitney_5,
+            self.datos_memoria.altura_eje_neutro_5,
+            self.datos_memoria.deformacion_acero_5,
+            self.datos_memoria.momento_resistente_5)
+        '''
         self.insertar_texto_acero_requerido_momento(Story, styles,
             self.datos_memoria.momento_negativo_derecho_viga,
             self.datos_memoria.profundidad_bloque_whitney_5,
             self.datos_memoria.profundidad_eje_neutro_5,
             self.datos_memoria.profundidad_eje_neutro_maximo_falla_traccion_5,
             self.datos_memoria.acero_requerido_5)
+        '''
         Story.append(Spacer(1, 12))
         self.insertar_texto(Story, styles['Justify'], '3.1.4.6 - Acero requerido para el momento positivo derecho')
         Story.append(Spacer(1, 12))
+        self.insertar_texto_acero_requerido_momento(Story, styles,
+            self.datos_memoria.momento_ultimo_6,
+            self.datos_memoria.parametro_m_6,
+            self.datos_memoria.parametro_k_6,
+            self.datos_memoria.cuantia_requerida_6,
+            self.datos_memoria.chequeo_cuantia_6,
+            self.datos_memoria.acero_requerido_6,
+            self.datos_memoria.altura_bloque_whitney_6,
+            self.datos_memoria.altura_eje_neutro_6,
+            self.datos_memoria.deformacion_acero_6,
+            self.datos_memoria.momento_resistente_6)
+        '''
         self.insertar_texto_acero_requerido_momento(Story, styles,
             self.datos_memoria.momento_positivo_derecho_viga,
             self.datos_memoria.profundidad_bloque_whitney_6,
             self.datos_memoria.profundidad_eje_neutro_6,
             self.datos_memoria.profundidad_eje_neutro_maximo_falla_traccion_6,
             self.datos_memoria.acero_requerido_6)
+        '''
         Story.append(Spacer(1, 12))
         self.insertar_texto(Story, styles['Justify'], '3.1.5 - Requisitos de acero por ductilidad')
         Story.append(Spacer(1, 12))
@@ -332,38 +443,39 @@ class GenerarReportePDF():
         self.insertar_texto(Story, styles['Justify'], f'Corte máximo probable (Ve) = max (Ve_1, Ve_2) = {self.datos_memoria.corte_maximo_probable} tonf')
         self.insertar_texto(Story, styles['Justify'], f'Corte de diseño (Vd) = max (Vu, Ve) = {self.datos_memoria.corte_diseno} tonf')
         Story.append(Spacer(1, 12))
-        self.insertar_texto(Story, styles['Justify'], '3.2.2.2 - Definición de la resistencia por corte del concreto')
+        self.insertar_texto(Story, styles['Justify'], '3.2.2.2 - Resistencia del concreto a cortante')
         Story.append(Spacer(1, 12))
-        self.insertar_texto(Story, styles['Justify'], 'El refuerzo transversal debe diseñarse para resistir cortante suponiendo Vc = 0, \
-                donde ocurran simultáneamente las siguientes condiciones:')
+        self.insertar_texto(Story, styles['Justify'], f'ϕVc =  Phiv*0.17*(fc**(1/2))*b*d = {round(self.datos_memoria.cortante, 3)} tonf')
         Story.append(Spacer(1, 12))
-        self.insertar_texto(Story, styles['Justify'], 'a) La fuerza cortante inducida por el sísmo Vp, que se determina a tráves de los \
-                momentos máximos probables de la viga, representa la mitad o más del corte de diseño.')
+        self.insertar_texto(Story, styles['Justify'], 'a) Si el corte de diseño es menor o igual a la resistencia del concreto a cortante, \
+                entonces teóricamente no se requiere refuerzo, sin embargo, se debe ubicar \
+                            refuerzo mínimo.')
         Story.append(Spacer(1, 12))
-        self.insertar_texto(Story, styles['Justify'], 'b) La fuerza axial mayorada en la viga Pu, incluyendo la acción sísmica, es menor \
-                que el producto del área gruesa por la resistencia del concreto entre veinte.')
+        self.insertar_texto(Story, styles['Justify'], 'b) Si el corte de diseño es superior a la resistencia del concreto a cortante, \
+                entonces se debe calcular la resistencia del acero a cortante.')
         Story.append(Spacer(1, 12))
-        self.insertar_texto(Story, styles['Justify'], f'Corte por capacidad (Vp) =  {self.datos_memoria.corte_capacidad} tonf')
-        self.insertar_texto(Story, styles['Justify'], f'Relación de cortes (Vp/Vd) =  {self.datos_memoria.relacion_cortes}')
-        self.insertar_texto(Story, styles['Justify'], f'Fuerza axial (Pu) =  {self.datos_memoria.fuerza_axial} tonf')
-        self.insertar_texto(Story, styles['Justify'], f'Área gruesa (Ag) = bw*h = {round(self.datos_memoria.area_gruesa, 2)} cm2')
-        self.insertar_texto(Story, styles['Justify'], f'Pc =  Ag*fc/20 = {self.datos_memoria.producto} tonf')
-        self.insertar_texto(Story, styles['Justify'], f'Vc =  {self.datos_memoria.cortante} tonf')
+        self.insertar_texto(Story, styles['Justify'], '3.2.2.3 - Resistencia del acero a cortante')
         Story.append(Spacer(1, 12))
-        self.insertar_texto(Story, styles['Justify'], '3.2.2.3 - Disposición del acero transversal en zona de confinamiento')
+        if self.datos_memoria.corte_diseno >= self.datos_memoria.cortante/2 and self.datos_memoria.corte_diseno <= self.datos_memoria.cortante:
+            self.insertar_texto(Story, styles['Justify'], 'Se requiere refuerzo mínimo.')
+        elif self.datos_memoria.corte_diseno > self.datos_memoria.cortante:
+            self.insertar_texto(Story, styles['Justify'], 'Se debe calcular la resistencia del acero a cortante.')
+            Story.append(Spacer(1, 12))
+            self.insertar_texto(Story, styles['Justify'], f'ϕVs =  Vd-ϕVc = {round(self.datos_memoria.demanda_corte, 2)} tonf')
+            self.insertar_texto(Story, styles['Justify'], 'ϕVs <= Phiv*0.67*(fc**(1/2))*b*d')
+            self.insertar_texto(Story, styles['Justify'], f'La sección {self.datos_memoria.chequeo_estribo} para realizar el diseño de estribos')
         Story.append(Spacer(1, 12))
-        self.insertar_texto(Story, styles['Justify'], 'a) Definición y separación máxima de estribos por demanda.')
+        self.insertar_texto(Story, styles['Justify'], '3.2.2.4 - Disposición del acero transversal en zona de confinamiento')
         Story.append(Spacer(1, 12))
-        self.insertar_texto(Story, styles['Justify'], f'Vs =  Vd/phiv-Vc = {round(self.datos_memoria.demanda_corte, 2)} tonf')
         self.insertar_texto(Story, styles['Justify'], f'AV =  NRamas*Ab = {self.datos_memoria.area_transversal_refuerzo} cm2')
-        self.insertar_texto(Story, styles['Justify'], f'Smcal = AV*fy*d/Vs = {round(self.datos_memoria.separacion_maxima_calculada_estribos, 2)} cm')
+        self.insertar_texto(Story, styles['Justify'], f'Smcal = Phiv*AV*fy*d/ϕVs = {round(self.datos_memoria.separacion_maxima_calculada_estribos, 2)} cm')
         Story.append(Spacer(1, 12))
-        self.insertar_texto(Story, styles['Justify'], 'b) Separación máxima normativa de estribos y longitud de confinamiento.')
+        self.insertar_texto(Story, styles['Justify'], 'Separación máxima normativa de estribos y longitud de confinamiento.')
         Story.append(Spacer(1, 12))
         self.insertar_texto(Story, styles['Justify'], f'Smnorma = min(d/4, 6*db, 15) = {self.datos_memoria.separacion_maxima_norma} cm')
         self.insertar_texto(Story, styles['Justify'], f'Lc = 2*h = {self.datos_memoria.longitud_confinamiento} cm')
         Story.append(Spacer(1, 12))
-        self.insertar_texto(Story, styles['Justify'], '3.2.2.4 - Disposición del acero transversal fuera de la zona de confinamiento')
+        self.insertar_texto(Story, styles['Justify'], '3.2.2.5 - Disposición del acero transversal fuera de la zona de confinamiento')
         Story.append(Spacer(1, 12))
         self.insertar_texto(Story, styles['Justify'], 'Se mantiene el mismo diámetro y definición de estribos utilizados en la zona de \
                 confinamiento, pero se hace un ajuste a la separación de los mismos.')
@@ -378,20 +490,20 @@ class GenerarReportePDF():
         Story.append(Spacer(1, 24))
         self.insertar_texto(Story, styles['Justify'], '4 - RESULTADOS FINALES')
         Story.append(Spacer(1, 12))
-        self.insertar_texto(Story, styles['Justify'], 'bw =  cm')
-        self.insertar_texto(Story, styles['Justify'], 'h =  cm')
-        self.insertar_texto(Story, styles['Justify'], 'r =  cm')
-        self.insertar_texto(Story, styles['Justify'], 'dp =  cm')
-        self.insertar_texto(Story, styles['Justify'], 'As1_sup = ')
-        self.insertar_texto(Story, styles['Justify'], 'As1_inf = ')
-        self.insertar_texto(Story, styles['Justify'], 'As2_sup = ')
-        self.insertar_texto(Story, styles['Justify'], 'As2_inf = ')
-        self.insertar_texto(Story, styles['Justify'], 'As_sup = ')
-        self.insertar_texto(Story, styles['Justify'], 'As_inf = ')
-        self.insertar_texto(Story, styles['Justify'], 'AV = ')
-        self.insertar_texto(Story, styles['Justify'], 'S =  cm')
-        self.insertar_texto(Story, styles['Justify'], 'Sg =  cm')
-        self.insertar_texto(Story, styles['Justify'], 'Sgs =  cm')
+        self.insertar_texto(Story, styles['Justify'], f'bw = {self.datos_memoria.base_viga_d} cm')
+        self.insertar_texto(Story, styles['Justify'], f'h = {self.datos_memoria.altura_viga_d} cm')
+        self.insertar_texto(Story, styles['Justify'], f'r = {self.datos_memoria.recubrimiento_inferior_viga} cm')
+        self.insertar_texto(Story, styles['Justify'], f'Ln = {self.datos_memoria.longitud_libre_viga} m')
+        self.insertar_texto(Story, styles['Justify'], f'As1_sup = {self.datos_memoria.acero_superior_izquierdo_impuesto} cm2')
+        self.insertar_texto(Story, styles['Justify'], f'As1_inf = {self.datos_memoria.acero_inferior_izquierdo_impuesto} cm2')
+        self.insertar_texto(Story, styles['Justify'], f'As_sup = {self.datos_memoria.acero_superior_centro_impuesto} cm2')
+        self.insertar_texto(Story, styles['Justify'], f'As_inf = {self.datos_memoria.acero_inferior_centro_impuesto} cm2')
+        self.insertar_texto(Story, styles['Justify'], f'As2_sup = {self.datos_memoria.acero_superior_derecho_impuesto} cm2')
+        self.insertar_texto(Story, styles['Justify'], f'As2_inf = {self.datos_memoria.acero_inferior_derecho_impuesto} cm2')
+        self.insertar_texto(Story, styles['Justify'], f'AV = {self.datos_memoria.area_transversal_refuerzo} cm2')
+        self.insertar_texto(Story, styles['Justify'], f'S = {self.datos_memoria.separacion_definitiva} cm')
+        self.insertar_texto(Story, styles['Justify'], f'Sg = {self.datos_memoria.separacion_inconfinada} cm')
+        self.insertar_texto(Story, styles['Justify'], f'Sgs = {self.datos_memoria.separacion_inconfinada_solapada} cm')
         Story.append(Spacer(1, 24))
         self.insertar_texto(Story, styles['Justify'], '5 - DETALLES TÍPICOS')
         Story.append(Spacer(1, 12))
