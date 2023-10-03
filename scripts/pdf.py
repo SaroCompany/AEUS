@@ -445,34 +445,45 @@ class GenerarReportePDF():
         Story.append(Spacer(1, 12))
         self.insertar_texto(Story, styles['Justify'], '3.2.2.2 - Resistencia del concreto a cortante')
         Story.append(Spacer(1, 12))
-        self.insertar_texto(Story, styles['Justify'], f'ϕVc =  Phiv*0.17*(fc**(1/2))*b*d = {round(self.datos_memoria.cortante, 3)} tonf')
+        self.insertar_texto(Story, styles['Justify'], 'El refuerzo transversal debe diseñarse para resistir cortante suponiendo Vc = 0 cuando se produzcan simultaneamente: \
+                a) La fuerza cortante inducida por el sismo calculada representa la mitad o mas de la resistencia maxima requerida. \
+                            b) La fuerza axial de compresion mayorada es menor que Ag*fc/20.')
         Story.append(Spacer(1, 12))
-        self.insertar_texto(Story, styles['Justify'], 'a) Si el corte de diseño es menor o igual a la resistencia del concreto a cortante, \
-                entonces teóricamente no se requiere refuerzo, sin embargo, se debe ubicar \
-                            refuerzo mínimo.')
-        Story.append(Spacer(1, 12))
-        self.insertar_texto(Story, styles['Justify'], 'b) Si el corte de diseño es superior a la resistencia del concreto a cortante, \
-                entonces se debe calcular la resistencia del acero a cortante.')
+        self.insertar_texto(Story, styles['Justify'], f'Rv = Vp/Vd = {round(self.datos_memoria.relacion_cortes, 3)} > 0.5')
+        self.insertar_texto(Story, styles['Justify'], f'Ag = b*h = {round(self.datos_memoria.area_gruesa, 3)} cm2')
+        self.insertar_texto(Story, styles['Justify'], f'Pc = Ag*fc/20 = {round(self.datos_memoria.producto, 3)} tonf >= Pu')
+        self.insertar_texto(Story, styles['Justify'], f'Vc =  0.17*(fc**(1/2))*b*d = {round(self.datos_memoria.cortante, 3)} tonf')
         Story.append(Spacer(1, 12))
         self.insertar_texto(Story, styles['Justify'], '3.2.2.3 - Resistencia del acero a cortante')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], 'a) Si el corte de diseño es menor que el corte resistente del concreto minorado pero mayor que la mitad \
+                de la resistencia del concreto minorado, se requiere refuerzo mínimo.')
+        Story.append(Spacer(1, 12))
+        self.insertar_texto(Story, styles['Justify'], 'b) Si el corte de diseño es superior a la resistencia del concreto a cortante minorado, \
+                entonces se debe calcular la resistencia del acero a cortante.')
         Story.append(Spacer(1, 12))
         if self.datos_memoria.corte_diseno >= self.datos_memoria.cortante/2 and self.datos_memoria.corte_diseno <= self.datos_memoria.cortante:
             self.insertar_texto(Story, styles['Justify'], 'Se requiere refuerzo mínimo.')
         elif self.datos_memoria.corte_diseno > self.datos_memoria.cortante:
             self.insertar_texto(Story, styles['Justify'], 'Se debe calcular la resistencia del acero a cortante.')
             Story.append(Spacer(1, 12))
-            self.insertar_texto(Story, styles['Justify'], f'ϕVs =  Vd-ϕVc = {round(self.datos_memoria.demanda_corte, 2)} tonf')
-            self.insertar_texto(Story, styles['Justify'], 'ϕVs <= Phiv*0.67*(fc**(1/2))*b*d')
+            self.insertar_texto(Story, styles['Justify'], f'Vs1 =  Vd-Vc = {round(self.datos_memoria.demanda_corte_1, 2)} tonf')
+            self.insertar_texto(Story, styles['Justify'], f'Vs2 =  Av*fyt*d/s = {round(self.datos_memoria.demanda_corte_2, 2)} tonf')
+            self.insertar_texto(Story, styles['Justify'], f'Vs =  max(Vs1 , Vs2) = {round(self.datos_memoria.demanda_corte, 2)} tonf')
+            self.insertar_texto(Story, styles['Justify'], 'Vs <= 0.66*(fc**(1/2))*b*d')
             self.insertar_texto(Story, styles['Justify'], f'La sección {self.datos_memoria.chequeo_estribo} para realizar el diseño de estribos')
+        else:
+            Story.append(Spacer(1, 12))
+            self.insertar_texto(Story, styles['Justify'], 'La sección NO CUMPLE')
         Story.append(Spacer(1, 12))
         self.insertar_texto(Story, styles['Justify'], '3.2.2.4 - Disposición del acero transversal en zona de confinamiento')
         Story.append(Spacer(1, 12))
         self.insertar_texto(Story, styles['Justify'], f'AV =  NRamas*Ab = {self.datos_memoria.area_transversal_refuerzo} cm2')
-        self.insertar_texto(Story, styles['Justify'], f'Smcal = Phiv*AV*fy*d/ϕVs = {round(self.datos_memoria.separacion_maxima_calculada_estribos, 2)} cm')
+        self.insertar_texto(Story, styles['Justify'], f'Smcal = Phiv*AV*fy*d/Vs = {round(self.datos_memoria.separacion_maxima_calculada_estribos, 2)} cm')
         Story.append(Spacer(1, 12))
         self.insertar_texto(Story, styles['Justify'], 'Separación máxima normativa de estribos y longitud de confinamiento.')
         Story.append(Spacer(1, 12))
-        self.insertar_texto(Story, styles['Justify'], f'Smnorma = min(d/4, 6*db, 15) = {self.datos_memoria.separacion_maxima_norma} cm')
+        self.insertar_texto(Story, styles['Justify'], f'Smnorma = min(d/4, 8dbl, 24dbe, 30) = {self.datos_memoria.separacion_maxima_norma} cm')
         self.insertar_texto(Story, styles['Justify'], f'Lc = 2*h = {self.datos_memoria.longitud_confinamiento} cm')
         Story.append(Spacer(1, 12))
         self.insertar_texto(Story, styles['Justify'], '3.2.2.5 - Disposición del acero transversal fuera de la zona de confinamiento')

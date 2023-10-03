@@ -2283,75 +2283,6 @@ class DatosMemoria():
             'Et_6', ubicacion_base, 'CALCVIG', 'VALOR')
         self.momento_resistente_6 = manejo_base.consultar_dato(
             'Mr_6', ubicacion_base, 'CALCVIG', 'VALOR')
-        '''
-        # PARA UNIDADES TONF
-        self.acero_minimo_1 = manejo_base.consultar_dato(
-            'Asmin_1', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.acero_minimo_2 = manejo_base.consultar_dato(
-            'Asmin_2', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.acero_minimo = manejo_base.consultar_dato(
-            'Asmin', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.acero_requerido_1 = manejo_base.consultar_dato(
-            'Asreq_1', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.profundidad_bloque_whitney_1 = manejo_base.consultar_dato(
-            'a_1', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.profundidad_eje_neutro_1 = manejo_base.consultar_dato(
-            'c_1', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.profundidad_eje_neutro_maximo_falla_traccion_1 = manejo_base.consultar_dato(
-            'cmax_1', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.acero_calculado_1 = manejo_base.consultar_dato(
-            'Ascalc_1', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.acero_requerido_2 = manejo_base.consultar_dato(
-            'Asreq_2', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.profundidad_bloque_whitney_2 = manejo_base.consultar_dato(
-            'a_2', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.profundidad_eje_neutro_2 = manejo_base.consultar_dato(
-            'c_2', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.profundidad_eje_neutro_maximo_falla_traccion_2 = manejo_base.consultar_dato(
-            'cmax_2', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.acero_calculado_2 = manejo_base.consultar_dato(
-            'Ascalc_2', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.acero_requerido_3 = manejo_base.consultar_dato(
-            'Asreq_3', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.profundidad_bloque_whitney_3 = manejo_base.consultar_dato(
-            'a_3', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.profundidad_eje_neutro_3 = manejo_base.consultar_dato(
-            'c_3', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.profundidad_eje_neutro_maximo_falla_traccion_3 = manejo_base.consultar_dato(
-            'cmax_3', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.acero_calculado_3 = manejo_base.consultar_dato(
-            'Ascalc_3', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.acero_requerido_4 = manejo_base.consultar_dato(
-            'Asreq_4', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.profundidad_bloque_whitney_4 = manejo_base.consultar_dato(
-            'a_4', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.profundidad_eje_neutro_4 = manejo_base.consultar_dato(
-            'c_4', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.profundidad_eje_neutro_maximo_falla_traccion_4 = manejo_base.consultar_dato(
-            'cmax_4', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.acero_calculado_4 = manejo_base.consultar_dato(
-            'Ascalc_4', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.acero_requerido_5 = manejo_base.consultar_dato(
-            'Asreq_5', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.profundidad_bloque_whitney_5 = manejo_base.consultar_dato(
-            'a_5', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.profundidad_eje_neutro_5 = manejo_base.consultar_dato(
-            'c_5', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.profundidad_eje_neutro_maximo_falla_traccion_5 = manejo_base.consultar_dato(
-            'cmax_5', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.acero_calculado_5 = manejo_base.consultar_dato(
-            'Ascalc_5', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.acero_requerido_6 = manejo_base.consultar_dato(
-            'Asreq_6', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.profundidad_bloque_whitney_6 = manejo_base.consultar_dato(
-            'a_6', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.profundidad_eje_neutro_6 = manejo_base.consultar_dato(
-            'c_6', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.profundidad_eje_neutro_maximo_falla_traccion_6 = manejo_base.consultar_dato(
-            'cmax_6', ubicacion_base, 'CALCVIG', 'VALOR')
-        self.acero_calculado_6 = manejo_base.consultar_dato(
-            'Ascalc_6', ubicacion_base, 'CALCVIG', 'VALOR')
-        '''
         self.acero_inferior_izquierdo_ductil = manejo_base.consultar_dato(
             'As1_inf_req', ubicacion_base, 'CALCVIG', 'VALOR')
         self.acero_inferior_derecho_ductil = manejo_base.consultar_dato(
@@ -2438,16 +2369,14 @@ class DatosMemoria():
             'Vp', ubicacion_base, 'CALCVIG', 'VALOR')
         self.area_transversal_refuerzo = manejo_base.consultar_dato(
             'AV', ubicacion_base, 'CALCVIG', 'VALOR')
-        '''
-        self.fuerza_axial = manejo_base.consultar_dato(
-            'Pu', ubicacion_base, 'CALCVIG', 'VALOR')
         self.relacion_cortes = manejo_base.consultar_dato(
             'RC', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.fuerza_axial = manejo_base.consultar_dato(
+            'Pu', ubicacion_base, 'CALCVIG', 'VALOR')
         self.area_gruesa = manejo_base.consultar_dato(
             'Ag', ubicacion_base, 'CALCVIG', 'VALOR')
         self.producto = manejo_base.consultar_dato(
             'Pc', ubicacion_base, 'CALCVIG', 'VALOR')
-        '''
         self.corte_maximo_probable = manejo_base.consultar_dato(
             'Ve', ubicacion_base, 'CALCVIG', 'VALOR')
         self.corte_diseno = manejo_base.consultar_dato(
@@ -2456,6 +2385,10 @@ class DatosMemoria():
             'Vc', ubicacion_base, 'CALCVIG', 'VALOR')
         self.demanda_corte = manejo_base.consultar_dato(
             'Vs', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.demanda_corte_1 = manejo_base.consultar_dato(
+            'Vs1', ubicacion_base, 'CALCVIG', 'VALOR')
+        self.demanda_corte_2 = manejo_base.consultar_dato(
+            'Vs2', ubicacion_base, 'CALCVIG', 'VALOR')
         self.separacion_maxima_calculada_estribos = manejo_base.consultar_dato(
             'Smcal', ubicacion_base, 'CALCVIG', 'VALOR')
         self.separacion_maxima_norma = manejo_base.consultar_dato(

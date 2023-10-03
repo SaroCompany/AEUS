@@ -86,7 +86,7 @@ class CalculosInternosVPrincipal():
         self.cuantia_minima = max(self.cuantia_minima_1, self.cuantia_minima_2)
         self.acero_minimo = self.cuantia_minima*(self.base_viga_d)*(self.altura_util) # cm2
         self.cuantia_balanceada = (0.85*self.parametro_B1*(self.resistencia_concreto/10)/(self.fluencia_acero/10))*(600/(600+(self.fluencia_acero/10)))
-        self.cuantia_maxima = 0.75*self.cuantia_balanceada
+        self.cuantia_maxima = min(0.75*self.cuantia_balanceada, 0.025)
         for momento in self.lista_momentos:
             self.acero_momento = self.acero_requerido_momento(momento)
             self.lista_aceros_requeridos_momentos.append(round(self.acero_momento, 2))          # 0
@@ -285,148 +285,7 @@ class CalculosInternosVPrincipal():
             'As2_sup_req', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[40])
         self.guardar_cambio(
             'As2_inf_req', 'CALCVIG', 'VALOR', self.acero_inferior_derecho_ductil)
-        '''
-        # PARA UNIDADES TONF
-        self.acero_minimo_1 = 1.4/(self.fluencia_acero/10)*self.base_viga_d*self.altura_util
-        self.acero_minimo_2 = 0.25*(self.resistencia_concreto/10)**(1/2)/(self.fluencia_acero/10)*self.base_viga_d*self.altura_util
-        self.acero_minimo = round(max(self.acero_minimo_1, self.acero_minimo_2), 2)
-        for momento in self.lista_momentos:
-            self.acero_momento = self.acero_requerido_momento(momento)
-            self.lista_aceros_requeridos_momentos.append(round(self.acero_momento, 2)) # 0
-            try:
-                self.lista_aceros_requeridos_momentos.append(round(self.profundidad_bloque_whitney, 2)) # 1
-            except TypeError:
-                self.lista_aceros_requeridos_momentos.append(0)
-            try:
-                self.lista_aceros_requeridos_momentos.append(round(self.profundidad_eje_neutro, 2)) # 2
-            except TypeError:
-                self.lista_aceros_requeridos_momentos.append(0)
-            try:
-                self.lista_aceros_requeridos_momentos.append(round(self.profundidad_eje_neutro_maximo_falla_traccion, 2)) # 3
-            except TypeError:
-                self.lista_aceros_requeridos_momentos.append(0)
-            self.lista_aceros_requeridos_momentos.append(round(self.acero_calculado, 2)) # 4
-        self.label_acero_minimo.setText(str(self.acero_minimo))
-        self.label_acero_requerido_1.setText(str(self.lista_aceros_requeridos_momentos[0]))
-        self.label_acero_requerido_2.setText(str(self.lista_aceros_requeridos_momentos[5]))
-        self.label_acero_requerido_3.setText(str(self.lista_aceros_requeridos_momentos[10]))
-        self.label_acero_requerido_4.setText(str(self.lista_aceros_requeridos_momentos[15]))
-        self.label_acero_requerido_5.setText(str(self.lista_aceros_requeridos_momentos[20]))
-        self.label_acero_requerido_6.setText(str(self.lista_aceros_requeridos_momentos[25]))
-        self.label_acero_superior_izquierdo_ductil.setText(str(self.lista_aceros_requeridos_momentos[0]))
-        self.label_acero_superior_derecho_ductil.setText(str(self.lista_aceros_requeridos_momentos[20]))
-        self.acero_inferior_izquierdo_ductil = self.acero_inferior_ductilidad(
-            self.lista_aceros_requeridos_momentos[0], self.lista_aceros_requeridos_momentos[5])
-        self.label_acero_inferior_izquierdo_ductil.setText(str(self.acero_inferior_izquierdo_ductil))
-        self.acero_inferior_derecho_ductil = self.acero_inferior_ductilidad(
-            self.lista_aceros_requeridos_momentos[20], self.lista_aceros_requeridos_momentos[25])
-        self.label_acero_inferior_derecho_ductil.setText(str(self.acero_inferior_derecho_ductil))
-        self.label_peso_propio_viga.setText(str(self.peso_propio_viga))
-        self.guardar_cambio(
-            'bw', 'DATVIG', 'VALOR', self.base_viga_d)
-        self.guardar_cambio(
-            'h', 'DATVIG', 'VALOR', self.altura_viga_d)
-        self.guardar_cambio(
-            'r', 'DATVIG', 'VALOR', self.recubrimiento_inferior_viga)
-        self.guardar_cambio(
-            'rp', 'DATVIG', 'VALOR', self.recubrimiento_superior_viga)
-        self.guardar_cambio(
-            'Ln', 'DATVIG', 'VALOR', self.longitud_libre_viga)
-        self.guardar_cambio(
-            'Mu_neg_izq', 'MOMVIG', 'VALOR', self.momento_negativo_izquierdo_viga)
-        self.guardar_cambio(
-            'Mu_pos_izq', 'MOMVIG', 'VALOR', self.momento_positivo_izquierdo_viga)
-        self.guardar_cambio(
-            'Mu_neg_cen', 'MOMVIG', 'VALOR', self.momento_negativo_centro_viga)
-        self.guardar_cambio(
-            'Mu_pos_cen', 'MOMVIG', 'VALOR', self.momento_positivo_centro_viga)
-        self.guardar_cambio(
-            'Mu_neg_der', 'MOMVIG', 'VALOR', self.momento_negativo_derecho_viga)
-        self.guardar_cambio(
-            'Mu_pos_der', 'MOMVIG', 'VALOR', self.momento_positivo_derecho_viga)
-        self.guardar_cambio(
-            'd', 'CALCVIG', 'VALOR', self.altura_util)
-        self.guardar_cambio(
-            'chk1', 'CALCVIG', 'VALOR', self.chequeo_limite_1)
-        self.guardar_cambio(
-            'chk2', 'CALCVIG', 'VALOR', self.chequeo_limite_2)
-        self.guardar_cambio(
-            'Asmin_1', 'CALCVIG', 'VALOR', self.acero_minimo_1)
-        self.guardar_cambio(
-            'Asmin_2', 'CALCVIG', 'VALOR', self.acero_minimo_2)
-        self.guardar_cambio(
-            'Asmin', 'CALCVIG', 'VALOR', self.acero_minimo)
-        self.guardar_cambio(
-            'Wpp', 'CALCVIG', 'VALOR', self.peso_propio_viga)
-        self.guardar_cambio(
-            'Asreq_1', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[0])
-        self.guardar_cambio(
-            'a_1', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[1])
-        self.guardar_cambio(
-            'c_1', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[2])
-        self.guardar_cambio(
-            'cmax_1', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[3])
-        self.guardar_cambio(
-            'Ascalc_1', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[4])
-        self.guardar_cambio(
-            'Asreq_2', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[5])
-        self.guardar_cambio(
-            'a_2', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[6])
-        self.guardar_cambio(
-            'c_2', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[7])
-        self.guardar_cambio(
-            'cmax_2', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[8])
-        self.guardar_cambio(
-            'Ascalc_2', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[9])
-        self.guardar_cambio(
-            'Asreq_3', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[10])
-        self.guardar_cambio(
-            'a_3', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[11])
-        self.guardar_cambio(
-            'c_3', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[12])
-        self.guardar_cambio(
-            'cmax_3', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[13])
-        self.guardar_cambio(
-            'Ascalc_3', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[14])
-        self.guardar_cambio(
-            'Asreq_4', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[15])
-        self.guardar_cambio(
-            'a_4', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[16])
-        self.guardar_cambio(
-            'c_4', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[17])
-        self.guardar_cambio(
-            'cmax_4', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[18])
-        self.guardar_cambio(
-            'Ascalc_4', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[19])
-        self.guardar_cambio(
-            'Asreq_5', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[20])
-        self.guardar_cambio(
-            'a_5', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[21])
-        self.guardar_cambio(
-            'c_5', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[22])
-        self.guardar_cambio(
-            'cmax_5', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[23])
-        self.guardar_cambio(
-            'Ascalc_5', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[24])
-        self.guardar_cambio(
-            'Asreq_6', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[25])
-        self.guardar_cambio(
-            'a_6', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[26])
-        self.guardar_cambio(
-            'c_6', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[27])
-        self.guardar_cambio(
-            'cmax_6', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[28])
-        self.guardar_cambio(
-            'Ascalc_6', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[29])
-        self.guardar_cambio(
-            'As1_sup_req', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[0])
-        self.guardar_cambio(
-            'As1_inf_req', 'CALCVIG', 'VALOR', self.acero_inferior_izquierdo_ductil)
-        self.guardar_cambio(
-            'As2_sup_req', 'CALCVIG', 'VALOR', self.lista_aceros_requeridos_momentos[20])
-        self.guardar_cambio(
-            'As2_inf_req', 'CALCVIG', 'VALOR', self.acero_inferior_derecho_ductil)
-    '''
+
     def acero_requerido_momento(self, momento_ultimo_resultado):
         # Tonf-m*10 => kN-m
         momento_ultimo_resultado = momento_ultimo_resultado*10
@@ -444,15 +303,12 @@ class CalculosInternosVPrincipal():
             self.cuantia_requerida = 0
         if self.cuantia_requerida <= self.cuantia_minima:
             self.chequeo_cuantia = 'MINIMO'
+            self.acero_calculado = self.acero_minimo
         elif self.cuantia_requerida >= self.cuantia_minima and self.cuantia_requerida <= self.cuantia_maxima:
             self.chequeo_cuantia = 'DISEÑO'
+            self.acero_calculado = self.cuantia_requerida*(self.base_viga_d)*(self.altura_util) # cm2
         else:
             self.chequeo_cuantia = 'SUPERA LIMITES'
-        if self.chequeo_cuantia == 'DISEÑO':
-            self.acero_calculado = self.cuantia_requerida*(self.base_viga_d)*(self.altura_util) # cm2
-        elif self.chequeo_cuantia == 'MINIMO':
-            self.acero_calculado = self.acero_minimo
-        else:
             self.acero_calculado = 0
         if self.acero_calculado != 0:
             self.acero_requerido = self.acero_calculado
@@ -471,31 +327,7 @@ class CalculosInternosVPrincipal():
             self.deformacion_acero = 0
             self.momento_resistente = 0
         return self.acero_requerido
-    '''
-    # PARA UNIDADES TONF
-    def acero_requerido_momento(self, momento_ultimo_resultado):
-        self.momento_ultimo = momento_ultimo_resultado*1000*100
-        try:
-            self.profundidad_bloque_whitney = self.altura_util - (self.altura_util**2 - 2*self.momento_ultimo/(0.85*self.resistencia_concreto*self.parametro_phib*self.base_viga_d))**(1/2)
-        except ZeroDivisionError:
-            self.profundidad_bloque_whitney = 0.0
-        self.profundidad_eje_neutro = self.profundidad_bloque_whitney/self.parametro_B1
-        self.profundidad_eje_neutro_maximo_falla_traccion = ((self.deformacion_ultima_concreto*self.altura_util)/(self.deformacion_ultima_concreto+self.deformacion_minima_acero))
-        try:
-            if self.profundidad_eje_neutro <= self.profundidad_eje_neutro_maximo_falla_traccion:
-                try:
-                    self.acero_calculado = self.momento_ultimo/(self.parametro_phib*self.fluencia_acero*(self.altura_util-self.profundidad_bloque_whitney/2))
-                except ZeroDivisionError:
-                    self.acero_calculado = 0.0
-                self.acero_requerido = max(self.acero_calculado, self.acero_minimo)
-            else:
-                self.acero_calculado = 0
-                self.acero_requerido = 0
-        except TypeError:
-            self.acero_calculado = 0
-            self.acero_requerido = 0
-        return self.acero_requerido
-    '''
+
     def acero_inferior_ductilidad(self, acero_superior, acero_inferior_requerido):
         self.acero_inferior = max(acero_superior/2, acero_inferior_requerido)
         return self.acero_inferior
@@ -816,44 +648,29 @@ class CalculosInternosVPrincipal():
             self.base_viga_d = 0
         self.sobrerresistencia_acero = self.manejo_datos.consultar_dato(
             'Fsr', 'data/base', 'PROPMATS', 'VALOR')
+        self.minoracion_resistencia_corte = self.manejo_datos.consultar_dato(
+            'phiv', 'data/base', 'PROPMATS', 'VALOR')
         self.fluencia_acero = self.manejo_datos.consultar_dato(
             'fy', 'data/base', 'PROPMATS', 'VALOR')
         self.resistencia_concreto = self.manejo_datos.consultar_dato(
             'fc', 'data/base', 'PROPMATS', 'VALOR')
         self.altura_util = self.manejo_datos.consultar_dato(
             'd', 'data/base', 'CALCVIG', 'VALOR')
-        self.carga_muerta_viga = self.sobrecarga_permanente_viga + self.peso_propio_viga
+        self.carga_muerta_viga = self.sobrecarga_permanente_viga + self.peso_propio_viga # tonf/m
         self.aceros_requeridos = [acero_sup, acero_inf]
-        self.carga_ultima_viga = 1.2*self.carga_muerta_viga + 1.6*self.sobrecarga_variable_viga
-        '''
-        # kN
-        self.corte_gravitacional = (self.carga_ultima_viga*self.longitud_libre_viga/2)/1000
-        # Análisis de casos
-        for acero in self.aceros_requeridos:
-            try:
-                self.profundidad_bloque_whitney = (self.acero_requerido*100)*(self.fluencia_acero/10)/(0.85*(self.resistencia_concreto/10)*(self.base_viga_d*10))
-            except ZeroDivisionError:
-                self.profundidad_bloque_whitney = 0.0
-            self.momento_maximo_probable = self.parametro_phib*(self.acero_requerido*100)*(self.fluencia_acero/10)(self.altura_util*10-self.altura_bloque_whitney/2)
-            self.profundidades_bloques_whitney.append(self.profundidad_bloque_whitney)
-            self.momentos_maximos_probables.append(self.momento_maximo_probable)
-        try:
-            self.corte_por_capacidad = (self.momentos_maximos_probables[0] + self.momentos_maximos_probables[1])/(self.longitud_libre_viga*1000)
-        except ZeroDivisionError:
-            self.corte_por_capacidad = 0.0
-        '''
-        self.corte_gravitacional = self.carga_ultima_viga*self.longitud_libre_viga/2
+        self.carga_ultima_viga = 1.2*self.carga_muerta_viga + 1.6*self.sobrecarga_variable_viga # tonf/m
+        self.corte_gravitacional = self.carga_ultima_viga*self.longitud_libre_viga/2 # tonf
         # Análisis de casos
         for acero in self.aceros_requeridos:
             try:
                 self.profundidad_bloque_whitney = self.sobrerresistencia_acero*self.fluencia_acero*acero/(0.85*self.resistencia_concreto*self.base_viga_d)
             except ZeroDivisionError:
                 self.profundidad_bloque_whitney = 0.0
-            self.momento_maximo_probable = (self.sobrerresistencia_acero*self.fluencia_acero*acero*(self.altura_util - self.profundidad_bloque_whitney/2))/100000
+            self.momento_maximo_probable = (self.sobrerresistencia_acero*self.minoracion_resistencia_corte*self.fluencia_acero*acero*(self.altura_util - self.profundidad_bloque_whitney/2))/100000 # tonf-m
             self.profundidades_bloques_whitney.append(self.profundidad_bloque_whitney)
             self.momentos_maximos_probables.append(self.momento_maximo_probable)
         try:
-            self.corte_por_capacidad = (self.momentos_maximos_probables[0] + self.momentos_maximos_probables[1])/self.longitud_libre_viga
+            self.corte_por_capacidad = (self.momentos_maximos_probables[0] + self.momentos_maximos_probables[1])/self.longitud_libre_viga # tonf
         except ZeroDivisionError:
             self.corte_por_capacidad = 0.0
         data = [self.aceros_requeridos, self.carga_ultima_viga, self.corte_gravitacional, self.momentos_maximos_probables, self.profundidades_bloques_whitney, self.corte_por_capacidad]
@@ -861,6 +678,8 @@ class CalculosInternosVPrincipal():
             'Wscp', 'CALCVIG', 'VALOR', self.sobrecarga_permanente_viga)
         self.guardar_cambio(
             'Wcv', 'CALCVIG', 'VALOR', self.sobrecarga_variable_viga)
+        self.guardar_cambio(
+            'Wcp', 'CALCVIG', 'VALOR', self.carga_muerta_viga)
         self.guardar_cambio(
             'Wpp', 'CALCVIG', 'VALOR', self.peso_propio_viga)
         return data
@@ -883,14 +702,14 @@ class CalculosInternosVPrincipal():
             'AV', 'CALCVIG', 'VALOR', self.area_transversal_refuerzo)
         self.diseno_estribos()
     
-    '''def guardar_fuerza_axial(self):
+    def guardar_fuerza_axial(self):
         try:
             self.fuerza_axial = float(self.line_edit_fuerza_axial.text())
         except ValueError:
             self.fuerza_axial = 0
         self.guardar_cambio(
             'Pu', 'CALCVIG', 'VALOR', self.fuerza_axial)
-        self.diseno_estribos()'''
+        self.diseno_estribos()
 
     def diseno_estribos(self):
         self.corte_capacidad = self.manejo_datos.consultar_dato(
@@ -915,56 +734,59 @@ class CalculosInternosVPrincipal():
             'd', 'data/base', 'CALCVIG', 'VALOR')
         self.minoracion_resistencia_corte = self.manejo_datos.consultar_dato(
             'phiv', 'data/base', 'PROPMATS', 'VALOR')
-        self.minoracion_resistencia_flexion = self.manejo_datos.consultar_dato(
-            'phib', 'data/base', 'PROPMATS', 'VALOR')
         self.area_transversal_refuerzo = self.manejo_datos.consultar_dato(
             'AV', 'data/base', 'CALCVIG', 'VALOR')
-        self.diametro_mayor_barra_longitudinal = 22.2
+        self.acero_superior_izquierdo_impuesto = self.manejo_datos.consultar_dato(
+            'As1_sup', 'data/base', 'CALCVIG', 'VALOR')
+        self.acero_inferior_izquierdo_impuesto = self.manejo_datos.consultar_dato(
+            'As1_inf', 'data/base', 'CALCVIG', 'VALOR')
+        self.acero_superior_derecho_impuesto = self.manejo_datos.consultar_dato(
+            'As2_sup', 'data/base', 'CALCVIG', 'VALOR')
+        self.acero_inferior_derecho_impuesto = self.manejo_datos.consultar_dato(
+            'As2_inf', 'data/base', 'CALCVIG', 'VALOR')
+        self.diametro_mayor_barra_longitudinal = 19.1
+        self.diametro_barra_estribo = 9.5
+        self.separacion_estribo = 100
+        self.separacion_minima_estribo = 50
         self.chequeo_estribo = 'cumple'
         self.corte_maximo_probable = max(self.corte_izquierdo, self.corte_derecho)
         self.corte_diseno = max(self.corte_ultimo_viga, self.corte_maximo_probable)
-        self.corte_resistente_concreto = (self.minoracion_resistencia_corte*0.17*((self.resistencia_concreto/10)**(1/2))*(self.base_viga_d*10)*(self.altura_viga_d*10))/1000
-        if self.corte_diseno >= (self.corte_resistente_concreto/10)/2 and self.corte_diseno <= (self.corte_resistente_concreto/10):
-            self.separacion_minima_estribo = min(
-                                        16*self.area_transversal_refuerzo*(self.fluencia_acero/10)/(self.base_viga_d*(self.resistencia_concreto/10)**(1/2)),
-                                        2.86*self.area_transversal_refuerzo*(self.fluencia_acero/10)/self.base_viga_d,
-                                        self.altura_util/2)
-        elif self.corte_diseno >= (self.corte_resistente_concreto/10):
-            self.corte_resistente_acero = self.corte_diseno - (self.corte_resistente_concreto/10)
-            if self.corte_resistente_acero*10 <= (self.minoracion_resistencia_corte*0.67*((self.resistencia_concreto/10)**(1/2))*(self.base_viga_d*10)*(self.altura_viga_d*10))/1000:
-                self.separacion_estribo = round((self.minoracion_resistencia_corte*self.area_transversal_refuerzo*100*(self.fluencia_acero/10)*self.altura_util*10/(self.corte_resistente_acero*10000))/10, 0)
-            else:
-                self.chequeo_estribo = 'NO cumple'
-        else:
-            self.chequeo_estribo = 'NO cumple'
-        '''
-        # PARA UNIDADES TONF
         try:
             self.relacion_cortes = round(self.corte_capacidad/self.corte_diseno, 2)
         except ZeroDivisionError:
             self.relacion_cortes = 0.0
-        self.area_gruesa = self.base_viga_d*self.altura_viga_d
-        self.producto = self.area_gruesa*self.resistencia_concreto/20000
+        self.area_gruesa = self.base_viga_d*self.altura_viga_d #cm2
+        self.producto = self.area_gruesa*self.resistencia_concreto/20000 # tonf
         if self.relacion_cortes>=0.5 and self.fuerza_axial<=self.producto:
-            self.cortante = 0
+            self.corte_resistente_concreto = 0
         else:
             try:
-                self.cortante = 0.53*(1+self.fuerza_axial/(140*self.area_gruesa))*(self.resistencia_concreto**0.5)*self.base_viga_d*self.altura_util
+                self.corte_resistente_concreto = (0.17*((self.resistencia_concreto/10)**(1/2))*(self.base_viga_d*10)*(self.altura_viga_d*10))/10000 # tonf
             except ZeroDivisionError:
-                self.cortante = 0.0
-        self.demanda_corte = self.corte_diseno/self.minoracion_resistencia_corte-self.cortante
-        try:
-            self.separacion_maxima_calculada_estribos = self.area_transversal_refuerzo*self.fluencia_acero*self.altura_util/(self.demanda_corte*1000)
-        except ZeroDivisionError:
-            self.separacion_maxima_calculada_estribos = 0.0
-        '''
-        self.separacion_maxima_norma = min(self.altura_util/4, 6*(self.diametro_mayor_barra_longitudinal/10), 15)
+                self.corte_resistente_concreto = 0.0
+        if self.corte_diseno >= (self.corte_resistente_concreto*self.minoracion_resistencia_corte)/2 and self.corte_diseno <= (self.corte_resistente_concreto*self.minoracion_resistencia_corte):
+            self.separacion_minima_estribo = min(
+                                        16*self.area_transversal_refuerzo*(self.fluencia_acero/10)/(self.base_viga_d*(self.resistencia_concreto/10)**(1/2)),
+                                        2.86*self.area_transversal_refuerzo*(self.fluencia_acero/10)/self.base_viga_d,
+                                        self.altura_util/2)
+        elif self.corte_diseno >= (self.corte_resistente_concreto*self.minoracion_resistencia_corte):
+            self.corte_resistente_acero_1 = self.corte_diseno - self.corte_resistente_concreto
+            self.corte_resistente_acero_2 = ((self.area_transversal_refuerzo*100)*(self.fluencia_acero/10)*(self.altura_util*10)/self.separacion_estribo)/10000
+            self.corte_resistente_acero = max(self.corte_resistente_acero_1, self.corte_resistente_acero_2)
+            self.limite_superior_corte_resistente_acero = (0.66*((self.resistencia_concreto/10)**(1/2))*(self.base_viga_d*10)*(self.altura_viga_d*10))/10000
+            if self.corte_resistente_acero <= self.limite_superior_corte_resistente_acero:
+                self.separacion_estribo = round((self.minoracion_resistencia_corte*self.area_transversal_refuerzo*100*(self.fluencia_acero/10)*self.altura_util*10/(self.corte_resistente_acero*10000))/10, 2)
+            else:
+                self.chequeo_estribo = 'NO cumple'
+        else:
+            self.chequeo_estribo = 'NO cumple'
+        self.separacion_maxima_norma = min(self.altura_util/4, 8*(self.diametro_mayor_barra_longitudinal/10), 24*self.diametro_barra_estribo, 30)
         self.separacion_maxima_requerida = min(self.separacion_estribo, self.separacion_maxima_norma)
         self.longitud_confinamiento = 2*self.altura_viga_d
         self.separacion_maxima_inconfinada = self.altura_util/2
         self.separacion_maxima_inconfinada_solapada = min(10, self.altura_util/4)
         self.label_corte_diseno.setText(str(self.corte_diseno))
-        self.label_corte_concreto.setText(str(self.corte_resistente_concreto/10))
+        self.label_corte_concreto.setText(str(self.corte_resistente_concreto))
         self.label_corte_acero.setText(str(self.corte_resistente_acero))
         self.label_separacion_estribo.setText(str(self.separacion_estribo))
         self.label_separacion_maxima_norma.setText(str(self.separacion_maxima_norma))
@@ -976,9 +798,19 @@ class CalculosInternosVPrincipal():
         self.guardar_cambio(
             'Vd', 'CALCVIG', 'VALOR', self.corte_diseno)
         self.guardar_cambio(
-            'Vc', 'CALCVIG', 'VALOR', self.corte_resistente_concreto/10)
+            'Vc', 'CALCVIG', 'VALOR', self.corte_resistente_concreto)
         self.guardar_cambio(
-            'Vs', 'CALCVIG', 'VALOR', self.corte_resistente_acero)       
+            'Vs', 'CALCVIG', 'VALOR', self.corte_resistente_acero)
+        self.guardar_cambio(
+            'Vs1', 'CALCVIG', 'VALOR', self.corte_resistente_acero_1)
+        self.guardar_cambio(
+            'Vs2', 'CALCVIG', 'VALOR', self.corte_resistente_acero_2)
+        self.guardar_cambio(
+            'RC', 'CALCVIG', 'VALOR', self.relacion_cortes)
+        self.guardar_cambio(
+            'Pc', 'CALCVIG', 'VALOR', self.producto) 
+        self.guardar_cambio(
+            'Ag', 'CALCVIG', 'VALOR', self.area_gruesa)        
         self.guardar_cambio(
             'Smcal', 'CALCVIG', 'VALOR', self.separacion_estribo)
         self.guardar_cambio(
